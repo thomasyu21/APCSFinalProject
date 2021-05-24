@@ -8,5 +8,5 @@ The TI-∞ is a scientific calculator with two distinct modes. The Normal Mode a
 
 Classwork Log May 24 2021
 - Created processing files for all custom Objects
-	- Began filling in base method headers
+	- Began filling in base method headers and instance variables
 - Created gamma() and factorial() Calculator methods
