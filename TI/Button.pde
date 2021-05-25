@@ -3,8 +3,12 @@ class Button{
   private String identityA; // identity assigned by shuffle in Annoying Mode
   public int x, y, wid, hei; //location and dimensions
   
-  public Button(String identity, int X, int Y, int w, int h){
-    
+  public Button(String Identity, int X, int Y, int w, int h){
+    identity = Identity;
+    x = X;
+    y = Y;
+    wid = w;
+    hei = h;
   }
   
   public String getIdentity(){
