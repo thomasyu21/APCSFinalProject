@@ -12,11 +12,11 @@ class Button{
   }
   
   public String getIdentity(){
-    return "";
+    return (calc.annoying)? identityA : identity;
   }
   
   public void setIdentity(String newIdentity){
-    
+    identityA = newIdentity;
   }
   
 }
