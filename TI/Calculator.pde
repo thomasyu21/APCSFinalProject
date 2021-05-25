@@ -1,7 +1,6 @@
 class Calculator{
   public ArrayList<Button> buttons;
-  public boolean annoying;
-  private boolean rad, inventor;
+  private boolean annoying, rad, inventor;
   private String expression, expressionOld;
   private ArrayList<String> nums, ops, misc;
   
