@@ -8,7 +8,7 @@ class Button{
   }
   
   public String getIdentity(){
-    return "";
+    return (TI.calc.annoying)? identityA : identity;
   }
   
   public void setIdentity(String newIdentity){
