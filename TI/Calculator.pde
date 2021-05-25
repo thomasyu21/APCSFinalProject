@@ -33,11 +33,11 @@ class Calculator{
   }
   
   public String getExpression(){
-    return ""; // placeholder
+    return expression;
   }
   
   public String getExpressionOld(){
-    return ""; // placeholder
+    return expressionOld;
   }
   
   public void buttonClicked(){}
