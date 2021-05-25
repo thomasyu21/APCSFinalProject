@@ -10,3 +10,6 @@ Classwork Log May 24 2021
 - Created processing files for all custom Objects
 	- Began filling in base method headers and instance variables
 - Created gamma() and factorial() Calculator methods
+
+Thomas Yu: May 24
+Began the construstor for the Calculator class and instantiated all variables except for the ArrayList<Button> buttons (the constructor for the Button class has not been implemented yet) and implemented the methods getExpression and getExpressionOld. Also created a basic layout for the UI (only blank rectangles for now). 
