@@ -16,7 +16,7 @@ class Button{
   }
   
   public void setIdentity(String newIdentity){
-  
+    identityA = newIdentity;
   }
   
 }
