@@ -1,17 +1,43 @@
 class Calculator{
   public ArrayList<Button> buttons;
-  private boolean annoying, rad, inventor;
+  private boolean annoying, rad, inv;
   private String expression, expressionOld;
   private ArrayList<String> nums, ops, misc;
   
-  public Calculator(){}
+  public Calculator(){
+    annoying = true;
+    rad = true;
+    expression = "";
+    expressionOld = "";
+    String[] buttonArray = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
+                            "/", "*", "-", "+", 
+                            "pi", "e", "sqrt", "pow", "EXP", 
+                            "sin", "cos", "tan", "log", "ln", "fact", "%",
+                            "(", ")", ".", "ans", "clear", "=", "rad", "inv"};
+    nums = new ArrayList<String>();
+    for (int i = 0; i <= 9; i++){
+      nums.add(buttonArray[i]);
+    }
+    ops = new ArrayList<String>();
+    for (int j = 10; j <= 13; j++){
+      ops.add(buttonArray[j]);
+    }
+    misc = new ArrayList<String>();
+    for (int k = 14; k <= 18; k++){
+      misc.add(buttonArray[k]);
+    }
+    buttons = new ArrayList<Button>();
+    for (int m = 0; m < buttonArray.length; m++){
+      
+    }
+  }
   
   public String getExpression(){
-    return ""; // placeholder
+    return expression;
   }
   
   public String getExpressionOld(){
-    return ""; // placeholder
+    return expressionOld;
   }
   
   public void buttonClicked(){}
