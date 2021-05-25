@@ -6,10 +6,20 @@ Members: Anthony Nosaryev, Thomas Yu
 	
 The TI-∞ is a scientific calculator with two distinct modes. The Normal Mode allows the user to interact with a properly functioning scientific calculator. The other, default mode is called the Annoying Mode. When in the Annoying Mode, the TI-∞ does not operate like a normal calculator, despite having the same user interface. The functions no longer match what is displayed on the buttons. Various buttons have their functions changed entirely, with the rest having their functions shuffled throughout the calculator. 
 
-Classwork Log May 24 2021
-- Created processing files for all custom Objects
-	- Began filling in base method headers and instance variables
-- Created gamma() and factorial() Calculator methods
+CW Log May 24 2021
+- Thomas Yu:
+	- Created TI.pde, Calculato.pde and Button.pde.
+	- Filled in base TI and Button method headers and instance variables. 
+- Anthony Nosaryev: 
+	- Filled in base Calculator method headers and instance variables.
+	- Made gamma() and factorial() methods.
 
-Thomas Yu: May 24
-Began the construstor for the Calculator class and instantiated all variables except for the ArrayList<Button> buttons (the constructor for the Button class has not been implemented yet) and implemented the methods getExpression and getExpressionOld. Also created a basic layout for the UI (only blank rectangles for now). 
+HW Log May 24-25 2021
+- Thomas Yu:
+	- Worked on Calculator() constructor
+	- Instantiated all Calculator instance variables except for ArrayList<Button> buttons due to lack of Button implementation
+	- Implemented getExpression() and getExpressionOld() methods.
+	- Outlined basic UI layout in TI.pde
+- Anthony Nosaryev:
+	- Implemented Button() constructor, fixed instance variable names
+	- Implemented getIdentity() and setIdentity() methods, the former of which needs testing, publicised Calculator variable annoying
