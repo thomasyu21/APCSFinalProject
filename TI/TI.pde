@@ -2,13 +2,14 @@ Calculator calc;
 char bgState;
 color defaultColor;
 color currColor;
-PFont font;
+PFont buttonFont;
+PFont screenFont;
 PImage sinful, cosmic, tanned;
 String[][] caps;
 
 void setup(){
   caps = new String[][]
-  {{"", "", "x!", "(", ")", "%", "CE"},
+  {{"", "", "x!", "(", ")", "%", ""},
    {"Inv", "", "ln", "7", "8", "9", "÷"},
    {"π", "", "log", "4", "5", "6", "×"},
    {"e", "", "√", "1", "2", "3", "-"},
@@ -18,8 +19,9 @@ void setup(){
   defaultColor = color(21, 29, 47);
   currColor = defaultColor;
   background(currColor);
-  font = createFont("OpenSans-Bold.ttf", 22);
-  textFont(font);
+  buttonFont = createFont("OpenSans-Bold.ttf", 22);
+  screenFont = createFont("JetBrainsMono-VariableFont_wght.ttf", 36);
+  textFont(buttonFont);
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   noStroke();
@@ -50,10 +52,13 @@ void draw(){
 }
 
 void updateButtons(){ // updates Rad | Deg and ANN | Try
+  textFont(buttonFont);
   fill(defaultColor);
   noStroke();
+  textFont(buttonFont);
   rect(130, 415, 220, 50, 10); // Rad
   rect(765, 45, 150, 50, 10); // Mode
+  rect(790, 415, 100, 50, 10); // del
   rect(190, 485, 100, 50, 10); // sin(
   rect(190, 555, 100, 50, 10); // cos(
   rect(190, 625, 100, 50, 10); // tan(
@@ -61,6 +66,7 @@ void updateButtons(){ // updates Rad | Deg and ANN | Try
   fill(255, 35);
   rect(130, 415, 220, 50, 10); // Rad
   rect(765, 45, 150, 50, 10); // Mode
+  rect(790, 415, 100, 50, 10); // del
   rect(190, 485, 100, 50, 10); // sin(
   rect(190, 555, 100, 50, 10); // cos(
   rect(190, 625, 100, 50, 10); // tan(
@@ -78,22 +84,70 @@ void updateButtons(){ // updates Rad | Deg and ANN | Try
   fill((calc.annoying)? 150 : 255);
   text("TRY", 802.5, 43);
   fill(255);
+  text((calc.inv)? "CE" : "del", 790, 413); 
   text((calc.inv)? "arcsin" : "sin", 190, 483); 
   text((calc.inv)? "arccos" : "cos", 190, 553); 
   text((calc.inv)? "arctan" : "tan", 190, 623); 
   text((calc.inv)? "Rand" : "Ans", 70, 693); 
 }
-  
 
 void display(){
   textAlign(LEFT, CENTER);
   fill(255);
   rect(430, 230, 820, 280, 20);
   fill(defaultColor);
-  textSize(36);
-  text(calc.getExpression(), 40, 200); // pow, percent and spacing demand this be elaborated on
+  textFont(screenFont);
+  screenExpression();
+  screenExpression();
   textAlign(CENTER, CENTER);
   textSize(22);
+}
+
+void screenExpression(){
+  int pos = -20; // x start: 40 ; y start: 200;
+  int level = 0; // level of power
+  boolean superFirst = false;
+  boolean[] superParent = {true, false, false, false, false};
+  for (String i : calc.getExpression()){
+    if (i.equals("pow")){
+      if (level < 4){
+        if (level == 0) pos += 12;
+        level ++;
+        superFirst = true;
+      }
+    }else{
+      if (level == 0){
+        textSize(40);
+        pos += 25;
+      }else{
+        if (calc.nums.indexOf(i) != -1 || i.equals(".")
+           || superParent[level] || superFirst){
+          textSize(20);
+          pos += 12;
+          superFirst = false;
+          if (i.contains("("))
+            superParent[level] = true;
+        }else{
+          while (superParent[level] == false)
+            level --;
+          pos += 12;
+          if (level == 0){
+            pos += 13;
+            textSize(40);
+          }
+        }
+      }
+      if ((pos + i.length()*25) / 700 > pos / 700)
+        pos += pos % 700;
+      text(i, 40 + pos % 700, (150 - 10*level)+ 80 * (pos / 700));
+      if (level > 0 && (i.equals(")") || 
+         (!superParent[level] && !i.equals(".") && calc.nums.indexOf(i) == -1)))
+        superParent[level] = false;
+      if (level == 0)
+        pos += 13*(i.length()-1);
+      pos += 12*(i.length()-1);
+    }
+  }
 }
 
 void mouseClicked(){
