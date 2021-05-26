@@ -51,11 +51,10 @@ void draw(){
   updateButtons();
 }
 
-void updateButtons(){ // updates Rad | Deg and ANN | Try
+void updateButtons(){ // toggle and inv buttons
   textFont(buttonFont);
   fill(defaultColor);
   noStroke();
-  textFont(buttonFont);
   rect(130, 415, 220, 50, 10); // Rad
   rect(765, 45, 150, 50, 10); // Mode
   rect(790, 415, 100, 50, 10); // del
@@ -104,10 +103,10 @@ void display(){
 }
 
 void screenExpression(){
-  int pos = -20; // x start: 40 ; y start: 200;
-  int level = 0; // level of power
-  boolean superFirst = false;
-  boolean[] superParent = {true, false, false, false, false};
+  int pos = -20;
+  int level = 0; // curr level of power
+  boolean superFirst = false; // first index of power level?
+  boolean[] superParent = {true, false, false, false, false}; // paranthetical?
   for (String i : calc.getExpression()){
     if (i.equals("pow")){
       if (level < 4){
@@ -155,5 +154,5 @@ void mouseClicked(){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2)
       calc.buttonClicked(b.getIdentity());
   }
-  redraw(); // executed at the end, might require some sort of tell before execution
+  redraw();
 }
