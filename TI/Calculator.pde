@@ -43,9 +43,9 @@ class Calculator{
     switch (id){
       case "Mode":   annoying = !annoying;
                      break;
-      case "CE":     expression = ""; // requires elaboration, should be backspace, funcs complicate
+      case "CE":     expression = new ArrayList<String>(); // requires elaboration, should be backspace, funcs complicate
                      break;
-      case "=":      eval();
+      case "=":      eval(expression);
                      break;
       case "Rad":    rad = !rad;
                      break;
@@ -66,7 +66,23 @@ class Calculator{
     }
   }
   
-  private void eval(){}
+  private void eval(ArrayList<String> express){
+     int openPar = express.lastIndexOf("(");
+     int closePar = express.indexOf(")");
+     if (openPar == -1 && closePar == -1){//no parentheses
+       
+     }else{ //both open and close
+        ArrayList<String> temp = new ArrayList<String>();
+        express.remove(closePar);
+        express.remove(openPar);
+        for (int i = openPar; i < closePar-1; closePar--){
+          temp.add(express.remove(i));
+        }
+        eval(temp);
+        express.add(openPar, temp.get(0));
+        eval(express);
+     }
+  }
   
   private void shuffle(){}
   
