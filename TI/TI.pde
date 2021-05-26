@@ -74,7 +74,9 @@ void updateButtons(){ // updates Rad | Deg and ANN | Try
 
 void display(){
   textAlign(LEFT, CENTER);
-  stroke(0);
+  fill(255);
+  rect(430, 230, 820, 280, 20);
+  fill(defaultColor);
   text(calc.getExpression(), 40, 200);
   textAlign(CENTER, CENTER);
 }

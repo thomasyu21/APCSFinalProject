@@ -28,9 +28,12 @@ class Calculator{
     buttons = new ArrayList<Button>();
     for (int m = 0; m < arrButtons.length; m++){
       for (int n = 0; n < arrButtons[0].length; n++){
-        buttons.add(new Button(arrButtons[m][n], (120*n)+70, 415+(70*m), 100, 50));
+        if (arrButtons[m][n] != "Rad" && arrButtons[m][n] != "Deg"){
+          buttons.add(new Button(arrButtons[m][n], (120*n)+70, 415+(70*m), 100, 50));
+        }
       }
     }
+    buttons.add(new Button("Rad", 130, 415, 220, 50));
     buttons.add(new Button("switch", 765, 45, 150, 50));
   }
   
@@ -46,7 +49,19 @@ class Calculator{
     for (Button i : buttons){
       if (mouseX < i.x + i.wid/2 && mouseX > i.x - i.wid/2){
         if (mouseY < i.y + i.hei/2 && mouseY > i.y - i.hei/2){
-          expression += i.getIdentity();
+          if (i.getIdentity().equals("switch")){
+            annoying = !annoying;
+          }else if (i.getIdentity().equals("CE")){
+            expression = "";
+          }else if (i.getIdentity().equals("=")){
+            eval();
+          }else if (i.getIdentity().equals("Rad")){
+            rad = !rad;
+          }else if (i.getIdentity().equals("Inv")){
+            inv = !inv;
+          }else{
+            expression += i.getIdentity();
+          }
         }
       }
     }
