@@ -17,14 +17,18 @@ CW Log May 24 2021
 HW Log May 24 2021
 - Thomas Yu:
 	- Worked on Calculator() constructor
-	- Instantiated all Calculator instance variables except for ArrayList<Button> buttons due to lack of Button implementation
+	- Instantiated all Calculator instance variables except for ArrayList<Button> buttons due to lack of Button implementation.
 	- Implemented getExpression() and getExpressionOld() methods.
-	- Outlined basic UI layout in TI.pde
+	- Outlined basic UI layout in TI.pde.
 - Anthony Nosaryev:
-	- Implemented Button() constructor, fixed instance variable names
-	- Implemented getIdentity() and setIdentity() methods, the former of which needs testing, publicised Calculator variable annoying
+	- Implemented Button() constructor, fixed instance variable names.
+	- Implemented getIdentity() and setIdentity() methods, the former of which needs testing.
+	- Publicised Calculator variable annoying for Button class.
 
 HW Log May 25 2021
 - Thomas Yu:
 	- Instantiated ArrayList<Button> buttons and began implementation of the buttonClicked method.
 	- Implemented the display method, but the exact location where the expression should be displayed is subject to change.
+- Anthony Nosaryev:
+	- Elaborated on UI in default mode, added all button labels, implemented new font, implemented updateButtons() for toggles.
+	- Changed draw() functionality to no longer constantly loop due to poor graphics quality.
