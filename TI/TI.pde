@@ -45,6 +45,7 @@ void setup(){
 }
 
 void draw(){
+  display();
   updateButtons();
 }
 
@@ -72,9 +73,14 @@ void updateButtons(){ // updates Rad | Deg and ANN | Try
   
 
 void display(){
+  textAlign(LEFT, CENTER);
+  stroke(0);
+  text(calc.getExpression(), 40, 200);
+  textAlign(CENTER, CENTER);
 }
 
 void mouseClicked(){
+  calc.buttonClicked();
   redraw(); // executed at the end, might require some sort of tell before execution
 }
 

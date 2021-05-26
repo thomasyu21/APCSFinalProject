@@ -5,6 +5,7 @@ class Button{
   
   public Button(String Identity, int X, int Y, int w, int h){
     identity = Identity;
+    identityA = Identity;
     x = X;
     y = Y;
     wid = w;

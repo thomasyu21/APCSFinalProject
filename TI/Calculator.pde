@@ -31,7 +31,7 @@ class Calculator{
         buttons.add(new Button(arrButtons[m][n], (120*n)+70, 415+(70*m), 100, 50));
       }
     }
-    buttons.add(new Button("switch", 765, 27, 765, 63));
+    buttons.add(new Button("switch", 765, 45, 150, 50));
   }
   
   public String getExpression(){
@@ -42,7 +42,15 @@ class Calculator{
     return expressionOld;
   }
   
-  public void buttonClicked(){}
+  public void buttonClicked(){
+    for (Button i : buttons){
+      if (mouseX < i.x + i.wid/2 && mouseX > i.x - i.wid/2){
+        if (mouseY < i.y + i.hei/2 && mouseY > i.y - i.hei/2){
+          expression += i.getIdentity();
+        }
+      }
+    }
+  }
   
   private void eval(){}
   
