@@ -30,5 +30,7 @@ HW Log May 25 2021
 	- Instantiated ArrayList<Button> buttons and began implementation of the buttonClicked method.
 	- Implemented the display method, but the exact location where the expression should be displayed is subject to change.
 - Anthony Nosaryev:
-	- Elaborated on UI in default mode, added all button labels, implemented new font, implemented updateButtons() for toggles.
+	- Elaborated on UI in default mode, added all button labels, implemented new font, implemented updateButtons() for toggles and inverse functions.
+	- Modified buttonClicked() to be more readable through reliability on mouseClicked().
+	- Fixed error of expression showing function cap Strings instead of intended identity Strings.
 	- Changed draw() functionality to no longer constantly loop due to poor graphics quality.
