@@ -3,7 +3,7 @@ import java.util.Arrays;
 class Calculator{
   public ArrayList<Button> buttons;
   public boolean annoying, rad, inv;
-  private String expression, expressionOld;
+  private String[] expression, expressionOld;
   private ArrayList<String> nums, ops, misc;
   
   public Calculator(){
@@ -32,11 +32,11 @@ class Calculator{
     buttons.add(new Button("Mode", 765, 45, 150, 50));
   }
   
-  public String getExpression(){
+  public String[] getExpression(){
     return expression;
   }
   
-  public String getExpressionOld(){
+  public String[] getExpressionOld(){
     return expressionOld;
   }
   
