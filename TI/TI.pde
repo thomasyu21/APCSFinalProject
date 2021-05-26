@@ -104,15 +104,16 @@ void display(){
 
 void screenExpression(){
   int pos = -20;
-  int level = 0; // curr level of power
-  boolean superFirst = false; // first index of power level?
-  boolean[] superParent = {true, false, false, false, false}; // paranthetical?
+  int level = 0; // curr level of power, [0, 4]
+  boolean levelFirst = false; // first index of power level?
+  boolean[] levelQuan = {true, false, false, false, false}; // paranthetical?
   for (String i : calc.getExpression()){
     if (i.equals("pow")){
       if (level < 4){
-        if (level == 0) pos += 12;
+        if (level == 0)
+          pos += 12;
         level ++;
-        superFirst = true;
+        levelFirst = true;
       }
     }else{
       if (level == 0){
@@ -120,14 +121,14 @@ void screenExpression(){
         pos += 25;
       }else{
         if (calc.nums.indexOf(i) != -1 || i.equals(".")
-           || superParent[level] || superFirst){
+           || levelQuan[level] || levelFirst){
           textSize(20);
           pos += 12;
-          superFirst = false;
+          levelFirst = false;
           if (i.contains("("))
-            superParent[level] = true;
+            levelQuan[level] = true;
         }else{
-          while (superParent[level] == false)
+          while (levelQuan[level] == false)
             level --;
           pos += 12;
           if (level == 0){
@@ -140,8 +141,8 @@ void screenExpression(){
         pos += pos % 700;
       text(i, 40 + pos % 700, (150 - 10*level)+ 80 * (pos / 700));
       if (level > 0 && (i.equals(")") || 
-         (!superParent[level] && !i.equals(".") && calc.nums.indexOf(i) == -1)))
-        superParent[level] = false;
+         (!levelQuan[level] && !i.equals(".") && calc.nums.indexOf(i) == -1)))
+        levelQuan[level] = false;
       if (level == 0)
         pos += 13*(i.length()-1);
       pos += 12*(i.length()-1);
