@@ -5,16 +5,14 @@ class Calculator{
   private String expression, expressionOld;
   private ArrayList<String> nums, ops, misc;
   
-  public Calculator(){
+  public Calculator(String[][] arrButtons){
     annoying = true;
     rad = true;
     expression = "";
     expressionOld = "";
     String[] buttonArray = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
                             "/", "*", "-", "+", 
-                            "pi", "e", "sqrt", "pow", "EXP", 
-                            "sin", "cos", "tan", "log", "ln", "fact", "%",
-                            "(", ")", ".", "ans", "clear", "=", "rad", "inv"};
+                            "pi", "e", "sqrt", "pow", "EXP"};
     nums = new ArrayList<String>();
     for (int i = 0; i <= 9; i++){
       nums.add(buttonArray[i]);
@@ -28,9 +26,12 @@ class Calculator{
       misc.add(buttonArray[k]);
     }
     buttons = new ArrayList<Button>();
-    for (int m = 0; m < buttonArray.length; m++){
-      
+    for (int m = 0; m < arrButtons.length; m++){
+      for (int n = 0; n < arrButtons[0].length; n++){
+        buttons.add(new Button(arrButtons[m][n], (120*n)+70, 415+(70*m), 100, 50));
+      }
     }
+    buttons.add(new Button("switch", 765, 27, 765, 63));
   }
   
   public String getExpression(){

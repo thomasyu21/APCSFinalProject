@@ -7,13 +7,13 @@ PImage sinful, cosmic, tanned;
 String[][] caps;
 
 void setup(){
-  calc = new Calculator();
   caps = new String[][]
   {{"Rad", "Deg", "x!", "(", ")", "%", "CE"},
    {"Inv", "sin", "ln", "7", "8", "9", "÷"},
    {"π", "cos", "log", "4", "5", "6", "×"},
    {"e", "tan", "√", "1", "2", "3", "-"},
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
+  calc = new Calculator(caps);
   size(860, 740);
   defaultColor = color(21, 29, 47);
   currColor = defaultColor;
