@@ -8,13 +8,13 @@ The TI-∞ is a scientific calculator with two distinct modes. The Normal Mode a
 
 CW Log May 24 2021
 - Thomas Yu:
-	- Created TI.pde, Calculato.pde and Button.pde.
+	- Created TI.pde, Calculator.pde and Button.pde.
 	- Filled in base TI and Button method headers and instance variables. 
 - Anthony Nosaryev: 
 	- Filled in base Calculator method headers and instance variables.
 	- Made gamma() and factorial() methods.
 
-HW Log May 24-25 2021
+HW Log May 24 2021
 - Thomas Yu:
 	- Worked on Calculator() constructor
 	- Instantiated all Calculator instance variables except for ArrayList<Button> buttons due to lack of Button implementation
@@ -23,3 +23,8 @@ HW Log May 24-25 2021
 - Anthony Nosaryev:
 	- Implemented Button() constructor, fixed instance variable names
 	- Implemented getIdentity() and setIdentity() methods, the former of which needs testing, publicised Calculator variable annoying
+
+HW Log May 25 2021
+- Thomas Yu:
+	- Instantiated ArrayList<Button> buttons and began implementation of the buttonClicked method.
+	- Implemented the display method, but the exact location where the expression should be displayed is subject to change.
