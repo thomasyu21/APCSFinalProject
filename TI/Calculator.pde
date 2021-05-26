@@ -3,7 +3,8 @@ import java.util.Arrays;
 class Calculator{
   public ArrayList<Button> buttons;
   public boolean annoying, rad, inv;
-  private ArrayList<String> expression, expressionOld, nums, ops, misc;
+  private ArrayList<String> expression, expressionOld, nums, ops, misc, end;
+  private boolean DEBUG = true;
   
   public Calculator(){
     annoying = true;
@@ -19,6 +20,7 @@ class Calculator{
     nums = new ArrayList<String>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow", "E"));
+    end = new ArrayList<String>(Arrays.asList("0", "1", "2", "e", "3", "π", "4", "5", "6", "8", "9", ")", "."));
     buttons = new ArrayList<Button>();
     for (int m = 0; m < buttonArray.length; m++){
       for (int n = 0; n < buttonArray[0].length; n++){
@@ -54,8 +56,18 @@ class Calculator{
                      break;
       case "Inv":    inv = !inv;
                      break;
+      case "pow":    if (expression.size() > 0 && 
+                      end.indexOf(expression.get(expression.size()-1)) != -1)
+                       expression.add(id);
+                     break;
       default:       expression.add((inv)? ammendInv(id) : id);
                      break;
+    }
+    
+    if (DEBUG){
+      for (String i : expression)
+        System.out.print(i);
+      System.out.print("\n");
     }
   }
   
