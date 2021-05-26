@@ -13,7 +13,7 @@ void setup(){
    {"π", "", "log", "4", "5", "6", "×"},
    {"e", "", "√", "1", "2", "3", "-"},
    {"", "EXP", "xⁿ", "0", ".", "=", "+"}};
-  calc = new Calculator(caps);
+  calc = new Calculator();
   size(860, 740);
   defaultColor = color(21, 29, 47);
   currColor = defaultColor;
