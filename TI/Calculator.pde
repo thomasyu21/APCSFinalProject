@@ -1,7 +1,8 @@
+import java.util.Arrays;
+
 class Calculator{
   public ArrayList<Button> buttons;
-  public boolean annoying;
-  private boolean rad, inv;
+  public boolean annoying, rad, inv;
   private String expression, expressionOld;
   private ArrayList<String> nums, ops, misc;
   
@@ -10,31 +11,25 @@ class Calculator{
     rad = true;
     expression = "";
     expressionOld = "";
-    String[] buttonArray = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
-                            "/", "*", "-", "+", 
-                            "pi", "e", "sqrt", "pow", "EXP"};
-    nums = new ArrayList<String>();
-    for (int i = 0; i <= 9; i++){
-      nums.add(buttonArray[i]);
-    }
-    ops = new ArrayList<String>();
-    for (int j = 10; j <= 13; j++){
-      ops.add(buttonArray[j]);
-    }
-    misc = new ArrayList<String>();
-    for (int k = 14; k <= 18; k++){
-      misc.add(buttonArray[k]);
-    }
+    String[][] buttonArray = 
+    {{"Rad", "Rad", "!", "(", ")", "per", "CE"},
+     {"Inv", "sin(", "ln(", "7", "8", "9", "÷"},
+     {"π", "cos(", "log(", "4", "5", "6", "×"},
+     {"e", "tan(", "√(", "1", "2", "3", "-"},
+     {"Ans", "E", "pow", "0", ".", "=", "+"}};
+    nums = new ArrayList<String>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
+    ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
+    misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow", "E"));
     buttons = new ArrayList<Button>();
     for (int m = 0; m < arrButtons.length; m++){
       for (int n = 0; n < arrButtons[0].length; n++){
-        if (arrButtons[m][n] != "Rad" && arrButtons[m][n] != "Deg"){
-          buttons.add(new Button(arrButtons[m][n], (120*n)+70, 415+(70*m), 100, 50));
+        if (!buttonArray[m][n].equals("Rad")){
+          buttons.add(new Button(buttonArray[m][n], (120*n)+70, 415+(70*m), 100, 50));
         }
       }
     }
     buttons.add(new Button("Rad", 130, 415, 220, 50));
-    buttons.add(new Button("switch", 765, 45, 150, 50));
+    buttons.add(new Button("Mode", 765, 45, 150, 50));
   }
   
   public String getExpression(){
@@ -45,25 +40,30 @@ class Calculator{
     return expressionOld;
   }
   
-  public void buttonClicked(){
-    for (Button i : buttons){
-      if (mouseX < i.x + i.wid/2 && mouseX > i.x - i.wid/2){
-        if (mouseY < i.y + i.hei/2 && mouseY > i.y - i.hei/2){
-          if (i.getIdentity().equals("switch")){
-            annoying = !annoying;
-          }else if (i.getIdentity().equals("CE")){
-            expression = "";
-          }else if (i.getIdentity().equals("=")){
-            eval();
-          }else if (i.getIdentity().equals("Rad")){
-            rad = !rad;
-          }else if (i.getIdentity().equals("Inv")){
-            inv = !inv;
-          }else{
-            expression += i.getIdentity();
-          }
-        }
-      }
+  public void buttonClicked(String id){
+    switch (id){
+      case "Mode":   annoying = !annoying;
+                     break;
+      case "CE":     expression = ""; // requires elaboration, should be backspace, funcs complicate
+                     break;
+      case "=":      eval();
+                     break;
+      case "Rad":    rad = !rad;
+                     break;
+      case "Inv":    inv = !inv;
+                     break;
+      default:       expression += (inv)? ammendInv(id) : id;
+                     break;
+    }
+  }
+  
+  private String ammendInv(String id){
+    switch (id){
+      case "sin(": return "arcsin(";
+      case "cos(": return "arccos(";
+      case "tan(": return "arctan(";
+      case "Ans":  return "" + random(1);
+      default:     return id;
     }
   }
   
