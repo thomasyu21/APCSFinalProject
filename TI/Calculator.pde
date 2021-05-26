@@ -43,7 +43,10 @@ class Calculator{
     switch (id){
       case "Mode":   annoying = !annoying;
                      break;
-      case "CE":     expression = new ArrayList<String>(); // requires elaboration, should be backspace, funcs complicate
+      case "CE":     if (inv)
+                       expression = new ArrayList<String>(); // clear
+                     else if (expression.size() > 0)
+                       expression.remove(expression.size()-1); // backspace
                      break;
       case "=":      eval(expression);
                      break;
