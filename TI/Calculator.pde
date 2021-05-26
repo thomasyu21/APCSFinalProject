@@ -6,7 +6,7 @@ class Calculator{
   private String expression, expressionOld;
   private ArrayList<String> nums, ops, misc;
   
-  public Calculator(String[][] arrButtons){
+  public Calculator(){
     annoying = true;
     rad = true;
     expression = "";
