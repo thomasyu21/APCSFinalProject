@@ -3,14 +3,13 @@ import java.util.Arrays;
 class Calculator{
   public ArrayList<Button> buttons;
   public boolean annoying, rad, inv;
-  private String[] expression, expressionOld;
-  private ArrayList<String> nums, ops, misc;
+  private ArrayList<String> expression, expressionOld, nums, ops, misc;
   
   public Calculator(){
     annoying = true;
     rad = true;
-    expression = "";
-    expressionOld = "";
+    expression = new ArrayList<String>();
+    expressionOld = new ArrayList<String>();
     String[][] buttonArray = 
     {{"Rad", "Rad", "!", "(", ")", "%", "CE"},
      {"Inv", "sin(", "ln(", "7", "8", "9", "÷"},
@@ -32,11 +31,11 @@ class Calculator{
     buttons.add(new Button("Mode", 765, 45, 150, 50));
   }
   
-  public String[] getExpression(){
+  public ArrayList<String> getExpression(){
     return expression;
   }
   
-  public String[] getExpressionOld(){
+  public ArrayList<String> getExpressionOld(){
     return expressionOld;
   }
   
@@ -52,7 +51,7 @@ class Calculator{
                      break;
       case "Inv":    inv = !inv;
                      break;
-      default:       expression += (inv)? ammendInv(id) : id;
+      default:       expression.add((inv)? ammendInv(id) : id);
                      break;
     }
   }
