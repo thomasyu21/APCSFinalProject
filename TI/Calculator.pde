@@ -21,8 +21,8 @@ class Calculator{
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow", "E"));
     buttons = new ArrayList<Button>();
-    for (int m = 0; m < arrButtons.length; m++){
-      for (int n = 0; n < arrButtons[0].length; n++){
+    for (int m = 0; m < buttonArray.length; m++){
+      for (int n = 0; n < buttonArray[0].length; n++){
         if (!buttonArray[m][n].equals("Rad")){
           buttons.add(new Button(buttonArray[m][n], (120*n)+70, 415+(70*m), 100, 50));
         }
