@@ -1,7 +1,9 @@
 Calculator calc;
 char bgState;
-PImage sinful, cosmic, tanned;
 color defaultColor;
+color currColor;
+PFont font;
+PImage sinful, cosmic, tanned;
 String[][] caps;
 
 void setup(){
@@ -12,10 +14,12 @@ void setup(){
    {"π", "cos", "log", "4", "5", "6", "×"},
    {"e", "tan", "√", "1", "2", "3", "-"},
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
-  size(860, 720);
+  size(860, 740);
   defaultColor = color(21, 29, 47);
-  background(defaultColor);
-  textSize(18);
+  currColor = defaultColor;
+  background(currColor);
+  font = createFont("OpenSans-Bold.ttf", 22);
+  textFont(font);
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   noStroke();
@@ -26,37 +30,46 @@ void setup(){
           fill(255, 92);
         else
           fill(255, 35);
-        rect((120*i)+70, 395+(70*j), 100, 50, 10);
+        rect((120*i)+70, 415+(70*j), 100, 50, 10);
         fill(255);
-        text(caps[j][i], (120*i)+70, 392+(70*j));
+        text(caps[j][i], (120*i)+70, 412+(70*j));
       }
     }
   }
   fill(255, 35);
-  rect(55, 35, 70, 30, 10);
-  rect(130, 395, 220, 50, 10);
-  rect(765, 35, 150, 30, 10);
-  fill(225);
-  stroke(255, 90);
-  strokeWeight(2);
-  line(130, 377, 130, 413);
-  line(765, 26, 765, 44);
-  rect(430, 210, 820, 280, 20);
+  rect(55, 45, 70, 50, 10); // Name
+  fill(255);
+  text("TI-∞", 55, 43);
+  rect(430, 230, 820, 280, 20); // Screen
+  noLoop();
 }
 
 void draw(){
-  noLoop();
-  fill((calc.rad)? 255 : 150);
-  text("Rad", 70, 392);
-  fill ((calc.rad)? 150 : 255);
-  text("Deg", 190, 392);
-  fill((calc.annoying)? 255 : 150);
-  text("ANN", 727.5, 33);
-  fill((calc.annoying)? 150 : 255);
-  text("TRY", 802.5, 33);
-  // if rad, strong rad, else, strong deg
-  // if inv, certain buttons, else, other buttons
+  updateButtons();
 }
+
+void updateButtons(){ // updates Rad | Deg and ANN | Try
+  fill(defaultColor);
+  noStroke();
+  rect(130, 415, 220, 50, 10);
+  rect(765, 45, 150, 50, 10);
+  fill(255, 35);
+  rect(130, 415, 220, 50, 10); // Rad | Deg
+  rect(765, 45, 150, 50, 10); // ANN | TRY
+  stroke(255, 90);
+  strokeWeight(2);
+  line(130, 397, 130, 433); // Rad | Deg
+  line(765, 27, 765, 63); // ANN | Try
+  fill((calc.rad)? 255 : 150);
+  text("Rad", 70, 412);
+  fill ((calc.rad)? 150 : 255);
+  text("Deg", 190, 412);
+  fill((calc.annoying)? 255 : 150);
+  text("ANN", 727.5, 43);
+  fill((calc.annoying)? 150 : 255);
+  text("TRY", 802.5, 43);
+}
+  
 
 void display(){
 }
