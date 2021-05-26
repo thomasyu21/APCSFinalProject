@@ -12,7 +12,7 @@ class Calculator{
     expression = "";
     expressionOld = "";
     String[][] buttonArray = 
-    {{"Rad", "Rad", "!", "(", ")", "per", "CE"},
+    {{"Rad", "Rad", "!", "(", ")", "%", "CE"},
      {"Inv", "sin(", "ln(", "7", "8", "9", "÷"},
      {"π", "cos(", "log(", "4", "5", "6", "×"},
      {"e", "tan(", "√(", "1", "2", "3", "-"},
