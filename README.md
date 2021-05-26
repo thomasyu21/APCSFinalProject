@@ -34,3 +34,10 @@ HW Log May 25 2021
 	- Modified buttonClicked() to be more readable through reliability on mouseClicked().
 	- Fixed error of expression showing function cap Strings instead of intended identity Strings.
 	- Changed draw() functionality to no longer constantly loop due to poor graphics quality.
+
+CW Log May 26 2021
+- Thomas Yu:
+- Anthony Nosaryev:
+	- Implemented new font for on-screen expression
+	- Converted expression from String to ArrayList<String> for easier processing
+	- Began working on screenExpression(), a method to display the expression with proper spacing and superscripting
