@@ -42,8 +42,10 @@ class Calculator{
   }
   
   public void buttonClicked(String id){
+    boolean newInv = false;
     switch (id){
       case "Mode":   annoying = !annoying;
+                     newInv = inv;
                      break;
       case "CE":     if (inv)
                        expression.clear(); // clear
@@ -53,8 +55,10 @@ class Calculator{
       case "=":      eval(expression);
                      break;
       case "Rad":    rad = !rad;
+                     newInv = inv;
                      break;
       case "Inv":    inv = !inv;
+                     newInv = inv;
                      break;
       case "pow":    if (expression.size() > 0 &&
                       end.indexOf(expression.get(expression.size()-1)) != -1)
@@ -63,6 +67,7 @@ class Calculator{
       default:       expression.add((inv)? ammendInv(id) : id);
                      break;
     }
+    inv = newInv;
     
     if (DEBUG){
       for (String i : expression)
