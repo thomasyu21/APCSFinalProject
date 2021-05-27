@@ -10,7 +10,7 @@ String[][] caps;
 void setup(){
   caps = new String[][]
   {{"", "", "x!", "(", ")", "%", ""},
-   {"Inv", "", "ln", "7", "8", "9", "÷"},
+   {"", "", "ln", "7", "8", "9", "÷"},
    {"π", "", "log", "4", "5", "6", "×"},
    {"e", "", "√", "1", "2", "3", "-"},
    {"", "EXP", "xⁿ", "0", ".", "=", "+"}};
@@ -58,6 +58,7 @@ void updateButtons(){ // toggle and inv buttons
   rect(130, 415, 220, 50, 10); // Rad
   rect(765, 45, 150, 50, 10); // Mode
   rect(790, 415, 100, 50, 10); // del
+  rect(70, 485, 100, 50, 10); // Inv
   rect(190, 485, 100, 50, 10); // sin(
   rect(190, 555, 100, 50, 10); // cos(
   rect(190, 625, 100, 50, 10); // tan(
@@ -66,6 +67,7 @@ void updateButtons(){ // toggle and inv buttons
   rect(130, 415, 220, 50, 10); // Rad
   rect(765, 45, 150, 50, 10); // Mode
   rect(790, 415, 100, 50, 10); // del
+  rect(70, 485, 100, 50, 10); // Inv
   rect(190, 485, 100, 50, 10); // sin(
   rect(190, 555, 100, 50, 10); // cos(
   rect(190, 625, 100, 50, 10); // tan(
@@ -82,6 +84,8 @@ void updateButtons(){ // toggle and inv buttons
   text("ANN", 727.5, 43);
   fill((calc.annoying)? 150 : 255);
   text("TRY", 802.5, 43);
+  fill((calc.inv)? 255 : 150);
+  text("Inv", 70, 483);
   fill(255);
   text((calc.inv)? "CE" : "del", 790, 413); 
   text((calc.inv)? "arcsin" : "sin", 190, 483); 
