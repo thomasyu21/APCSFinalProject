@@ -87,7 +87,7 @@ void updateButtons(){ // toggle and inv buttons
   text((calc.inv)? "arcsin" : "sin", 190, 483); 
   text((calc.inv)? "arccos" : "cos", 190, 553); 
   text((calc.inv)? "arctan" : "tan", 190, 623); 
-  text((calc.inv)? "Rand" : "Ans", 70, 693); 
+  text((calc.inv)? "Rand" : "Ans", 70, 693);
 }
 
 void display(){
@@ -96,17 +96,17 @@ void display(){
   rect(430, 230, 820, 280, 20);
   fill(defaultColor);
   textFont(screenFont);
-  screenExpression();
-  screenExpression();
+  if (!screenExpression()) // expression limited to two screen
+    calc.getExpression().remove(calc.getExpression().size()-1);
   textAlign(CENTER, CENTER);
   textSize(22);
 }
 
-void screenExpression(){
-  int pos = -20;
+boolean screenExpression(){
+  int pos = 20;
   int level = 0; // curr level of power, [0, 4]
   boolean levelFirst = false; // first index of power level?
-  boolean[] levelQuan = {true, false, false, false, false}; // paranthetical?
+  int[] levelQuan = {1, 0, 0, 0, 0}; // how many unresolved left parentheses?
   for (int i = 0; i < calc.getExpression().size(); i ++){
     String str = calc.getExpression().get(i);
     if (str.equals("pow")){
@@ -117,7 +117,7 @@ void screenExpression(){
         levelFirst = true;
         if (i == calc.getExpression().size() - 1){
           textSize(20);
-          text("_", 40 + (pos+13) % 700, (150 - 10*level)+ 80 * ((pos+13) / 700));
+          text("_", 13 + pos % 775, (150 - 10*level)+ 80 * ((pos+13) / 775));
         }
       }
     }else{
@@ -126,14 +126,14 @@ void screenExpression(){
         pos += 25;
       }else{
         if (calc.nums.indexOf(i) != -1 || str.equals(".")
-           || levelQuan[level] || levelFirst){
+           || levelQuan[level] > 0 || levelFirst){
           textSize(20);
           pos += 12;
           levelFirst = false;
           if (str.contains("("))
-            levelQuan[level] = true;
+            levelQuan[level] ++;
         }else{
-          while (levelQuan[level] == false)
+          while (levelQuan[level] == 0)
             level --;
           pos += 12;
           if (level == 0){
@@ -142,17 +142,18 @@ void screenExpression(){
           }
         }
       }
-      if ((pos + str.length()*25) / 700 > pos / 700)
-        pos += pos % 700;
-      text(str, 40 + pos % 700, (150 - 10*level)+ 80 * (pos / 700));
-      if (level > 0 && (str.equals(")") || 
-         (!levelQuan[level] && !str.equals(".") && calc.nums.indexOf(i) == -1)))
-        levelQuan[level] = false;
+      if (pos % 775 + str.length()*25 > 775)
+        pos += 820 - pos % 775;
+      if (pos > 1550) return false;
+      text(str, pos % 775, (150 - 10*level)+ 80 * (pos / 775));
+      if (level > 0 && str.equals(")"))
+        levelQuan[level] --;
       if (level == 0)
         pos += 13*(str.length()-1);
       pos += 12*(str.length()-1);
     }
   }
+  return true;
 }
 
 void mouseClicked(){
