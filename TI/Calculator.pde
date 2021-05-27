@@ -20,7 +20,7 @@ class Calculator{
     nums = new ArrayList<String>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow", "E"));
-    end = new ArrayList<String>(Arrays.asList("0", "1", "2", "e", "3", "π", "4", "5", "6", "8", "9", ")", "."));
+    end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")"));
     buttons = new ArrayList<Button>();
     for (int m = 0; m < buttonArray.length; m++){
       for (int n = 0; n < buttonArray[0].length; n++){
@@ -46,7 +46,7 @@ class Calculator{
       case "Mode":   annoying = !annoying;
                      break;
       case "CE":     if (inv)
-                       expression = new ArrayList<String>(); // clear
+                       expression.clear(); // clear
                      else if (expression.size() > 0)
                        expression.remove(expression.size()-1); // backspace
                      break;
@@ -56,7 +56,7 @@ class Calculator{
                      break;
       case "Inv":    inv = !inv;
                      break;
-      case "pow":    if (expression.size() > 0 && 
+      case "pow":    if (expression.size() > 0 &&
                       end.indexOf(expression.get(expression.size()-1)) != -1)
                        expression.add(id);
                      break;
@@ -76,7 +76,7 @@ class Calculator{
       case "sin(": return "arcsin(";
       case "cos(": return "arccos(";
       case "tan(": return "arctan(";
-      case "Ans":  return "" + random(1);
+      case "Ans":  return randomAdd();
       default:     return id;
     }
   }
@@ -121,5 +121,16 @@ class Calculator{
     if (n < 2)
       return 1;
     return n * factorial(n-1);
+  }
+  
+  private String randomAdd(){
+    String num = "" + random(1);
+    for (int i = 0; i < num.length(); i ++){
+      if (i < num.length() - 1)
+        expression.add(num.substring(i, i+1));
+      else
+        return num.substring(i, i+1);
+    }
+    return "";
   }
 }
