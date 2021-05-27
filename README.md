@@ -47,6 +47,6 @@ CW Log May 26 2021
 HW Log May 26 2021
 - Thomas Yu:
 - Anthony Nosaryev:
-	- Finished screenExpression() aside from box highlighting location of next input.
+	- Finished screenExpression(), whose primary purpose is essentially to facilitate powers/exponents.
 	- Implemented del button with CE as its inverse for more versatility.
 	- Modified Calculator method buttonClicked() to block illegal uses of pow.
