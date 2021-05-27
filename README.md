@@ -37,7 +37,16 @@ HW Log May 25 2021
 
 CW Log May 26 2021
 - Thomas Yu:
+	- Converted expression from String to String[] helped plan its later conversion to ArrayList<String>.
+	- Fixed percent (%) symbol in Calculator String[][] buttonArray.
 - Anthony Nosaryev:
-	- Implemented new font for on-screen expression
-	- Converted expression from String to ArrayList<String> for easier processing
-	- Began working on screenExpression(), a method to display the expression with proper spacing and superscripting
+	- Implemented new font for on-screen expression.
+	- Converted expression from String to ArrayList<String> for easier processing.
+	- Began working on screenExpression(), a method to display the expression with proper spacing and superscripting.
+	
+HW Log May 26 2021
+- Thomas Yu:
+- Anthony Nosaryev:
+	- Finished screenExpression() aside from box highlighting location of next input.
+	- Implemented del button with CE as its inverse for more versatility.
+	- Modified Calculator method buttonClicked() to block illegal uses of pow.
