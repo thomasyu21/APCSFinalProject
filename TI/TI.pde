@@ -107,25 +107,30 @@ void screenExpression(){
   int level = 0; // curr level of power, [0, 4]
   boolean levelFirst = false; // first index of power level?
   boolean[] levelQuan = {true, false, false, false, false}; // paranthetical?
-  for (String i : calc.getExpression()){
-    if (i.equals("pow")){
+  for (int i = 0; i < calc.getExpression().size(); i ++){
+    String str = calc.getExpression().get(i);
+    if (str.equals("pow")){
       if (level < 4){
         if (level == 0)
           pos += 12;
         level ++;
         levelFirst = true;
+        if (i == calc.getExpression().size() - 1){
+          textSize(20);
+          text("_", 40 + (pos+13) % 700, (150 - 10*level)+ 80 * ((pos+13) / 700));
+        }
       }
     }else{
       if (level == 0){
         textSize(40);
         pos += 25;
       }else{
-        if (calc.nums.indexOf(i) != -1 || i.equals(".")
+        if (calc.nums.indexOf(i) != -1 || str.equals(".")
            || levelQuan[level] || levelFirst){
           textSize(20);
           pos += 12;
           levelFirst = false;
-          if (i.contains("("))
+          if (str.contains("("))
             levelQuan[level] = true;
         }else{
           while (levelQuan[level] == false)
@@ -137,15 +142,15 @@ void screenExpression(){
           }
         }
       }
-      if ((pos + i.length()*25) / 700 > pos / 700)
+      if ((pos + str.length()*25) / 700 > pos / 700)
         pos += pos % 700;
-      text(i, 40 + pos % 700, (150 - 10*level)+ 80 * (pos / 700));
-      if (level > 0 && (i.equals(")") || 
-         (!levelQuan[level] && !i.equals(".") && calc.nums.indexOf(i) == -1)))
+      text(str, 40 + pos % 700, (150 - 10*level)+ 80 * (pos / 700));
+      if (level > 0 && (str.equals(")") || 
+         (!levelQuan[level] && !str.equals(".") && calc.nums.indexOf(i) == -1)))
         levelQuan[level] = false;
       if (level == 0)
-        pos += 13*(i.length()-1);
-      pos += 12*(i.length()-1);
+        pos += 13*(str.length()-1);
+      pos += 12*(str.length()-1);
     }
   }
 }
