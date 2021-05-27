@@ -100,13 +100,14 @@ void display(){
   rect(430, 230, 820, 280, 20);
   fill(defaultColor);
   textFont(screenFont);
-  if (!screenExpression()) // expression limited to two screen
-    calc.getExpression().remove(calc.getExpression().size()-1);
+  screenExpression();
+  //if (!screenExpression()) // expression limited to two screen
+  //  calc.getExpression().remove(calc.getExpression().size()-1);
   textAlign(CENTER, CENTER);
   textSize(22);
 }
 
-boolean screenExpression(){
+void screenExpression(){
   int pos = 20;
   int level = 0; // curr level of power, [0, 4]
   boolean levelFirst = false; // first index of power level?
@@ -123,14 +124,15 @@ boolean screenExpression(){
           textSize(20);
           text("_", 13 + pos % 775, (150 - 10*level)+ 80 * ((pos+13) / 775));
         }
-      }
+      }else
+        calc.getExpression().remove(calc.getExpression().size()-1);
     }else{
       if (level == 0){
         textSize(40);
         pos += 25;
       }else{
-        if (calc.nums.indexOf(i) != -1 || str.equals(".")
-           || levelQuan[level] > 0 || levelFirst){
+        if (calc.nums.indexOf(str) > -1 || str.equals(".")
+           || str.equals("-") || levelQuan[level] > 0 || levelFirst){
           textSize(20);
           pos += 12;
           levelFirst = false;
@@ -148,7 +150,10 @@ boolean screenExpression(){
       }
       if (pos % 775 + str.length()*25 > 775)
         pos += 820 - pos % 775;
-      if (pos > 1550) return false;
+      if (pos > 1550){
+        calc.getExpression().remove(calc.getExpression().size()-1);
+        return;
+      }
       text(str, pos % 775, (150 - 10*level)+ 80 * (pos / 775));
       if (level > 0 && str.equals(")"))
         levelQuan[level] --;
@@ -157,7 +162,6 @@ boolean screenExpression(){
       pos += 12*(str.length()-1);
     }
   }
-  return true;
 }
 
 void mouseClicked(){
