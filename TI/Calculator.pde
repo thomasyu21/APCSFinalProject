@@ -19,7 +19,7 @@ class Calculator{
      {"Ans", "E", "pow(", "0", ".", "=", "+"}};
     nums = new ArrayList<String>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
-    misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow", "E"));
+    misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E"));
     end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")"));
     buttons = new ArrayList<Button>();
     for (int m = 0; m < buttonArray.length; m++){
@@ -60,7 +60,7 @@ class Calculator{
       case "Inv":    inv = !inv;
                      newInv = inv;
                      break;
-      case "pow":    if (expression.size() > 0 &&
+      case "pow(":    if (expression.size() > 0 &&
                       end.indexOf(expression.get(expression.size()-1)) != -1)
                        expression.add(id);
                      break;
