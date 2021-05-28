@@ -16,7 +16,7 @@ class Calculator{
      {"Inv", "sin(", "ln(", "7", "8", "9", "÷"},
      {"π", "cos(", "log(", "4", "5", "6", "×"},
      {"e", "tan(", "√(", "1", "2", "3", "-"},
-     {"Ans", "E", "pow", "0", ".", "=", "+"}};
+     {"Ans", "E", "pow(", "0", ".", "=", "+"}};
     nums = new ArrayList<String>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow", "E"));
