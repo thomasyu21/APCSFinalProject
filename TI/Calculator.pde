@@ -87,6 +87,7 @@ class Calculator{
   }
   
   private void eval(){
+    //System.out.println(Arrays.toString(expression.toArray())); for testing
     evalHelp(expression);
    }
   
@@ -94,6 +95,16 @@ class Calculator{
     if (e.indexOf("(") != -1){
       parenthesesCheck(e);
     }
+    /* for testing
+    for (int i = 0; i < e.size(); i++){
+      if (e.get(i).equals("÷")){
+        e.remove(i);
+        int num1 = Integer.parseInt(e.remove(i-1));
+        int num2 = Integer.parseInt(e.remove(i-1));
+        e.add(i-1, num1 / num2 + "");
+      }
+    }
+    */
   }
   
   private void parenthesesCheck(ArrayList<String> e){
@@ -114,10 +125,10 @@ class Calculator{
         }
         expressionSec.remove(expressionSec.indexOf("("));
         expressionSec.remove(expressionSec.lastIndexOf(")"));
-        System.out.println(Arrays.toString(expressionSec.toArray()));
+        //System.out.println(Arrays.toString(expressionSec.toArray())); for testing
         evalHelp(expressionSec);
         e.add(start, expressionSec.get(0));
-        System.out.println(e.get(0));
+        //System.out.println(expressionSec.get(0)); for testing
         numOpen = 0;
         numClose = 0;
       }
