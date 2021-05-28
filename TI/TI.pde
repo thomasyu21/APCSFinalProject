@@ -110,20 +110,18 @@ void display(){
 void screenExpression(){
   int pos = 20;
   int level = 0; // curr level of power, [0, 4]
-  boolean levelFirst = false; // first index of power level?
-  int[] levelQuan = {1, 0, 0, 0, 0}; // how many unresolved left parentheses?
+  int[] levelQuan = {1, 0, 0, 0, 0}; // # unresolved left parentheses;
   for (int i = 0; i < calc.getExpression().size(); i ++){
     String str = calc.getExpression().get(i);
-    if (str.equals("pow")){
+    if (str.equals("pow(")){
       if (level < 4){
         if (level == 0)
           pos += 12;
+        pos += 13;
         level ++;
-        levelFirst = true;
-        if (i == calc.getExpression().size() - 1){
-          textSize(20);
-          text("_", 13 + pos % 775, (150 - 10*level)+ 80 * ((pos+13) / 775));
-        }
+        levelQuan[level] ++;
+        textSize(20);
+        text("(", pos % 775, (150 - 10*level)+ 80 * ((pos) / 775));
       }else
         calc.getExpression().remove(calc.getExpression().size()-1);
     }else{
@@ -131,22 +129,18 @@ void screenExpression(){
         textSize(40);
         pos += 25;
       }else{
-        if (calc.nums.indexOf(str) > -1 || str.equals(".")
-           || str.equals("-") || levelQuan[level] > 0 || levelFirst){
+        pos += 12;
+        if (levelQuan[level] > 0){
           textSize(20);
-          pos += 12;
-          levelFirst = false;
-          if (str.contains("("))
-            levelQuan[level] ++;
         }else{
           while (levelQuan[level] == 0)
             level --;
-          pos += 12;
           if (level == 0){
-            pos += 13;
             textSize(40);
           }
         }
+        if (level > 0 && str.contains("("))
+          levelQuan[level] ++;
       }
       if (pos % 775 + str.length()*25 > 775)
         pos += 820 - pos % 775;
