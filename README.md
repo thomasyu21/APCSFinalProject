@@ -45,8 +45,12 @@ CW Log May 26 2021
 	- Began working on screenExpression(), a method to display the expression with proper spacing and superscripting.
 	
 HW Log May 26 2021
-- Thomas Yu:
 - Anthony Nosaryev:
 	- Finished screenExpression(), whose primary purpose is essentially to facilitate powers/exponents.
 	- Implemented del button with CE as its inverse for more versatility.
 	- Modified Calculator method buttonClicked() to block illegal uses of pow.
+
+HW Log May 27 2021
+- Thomas Yu:
+	- Created helper methods evalHelp (to use recursion in eval) and parenthesesCheck (evaluates the parts of the expression enclosed by a set of parentheses).
+	- Implemented parenthesesCheck. For now it only works if there are equal amounts of open and closed parentheses. 
