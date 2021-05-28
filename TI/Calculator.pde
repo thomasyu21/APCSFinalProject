@@ -52,7 +52,7 @@ class Calculator{
                      else if (expression.size() > 0)
                        expression.remove(expression.size()-1); // backspace
                      break;
-      case "=":      eval(expression);
+      case "=":      eval();
                      break;
       case "Rad":    rad = !rad;
                      newInv = inv;
@@ -86,22 +86,42 @@ class Calculator{
     }
   }
   
-  private void eval(ArrayList<String> express){
-     int openPar = express.lastIndexOf("(");
-     int closePar = express.indexOf(")");
-     if (openPar == -1 && closePar == -1){//no parentheses
-       
-     }else{ //both open and close
-        ArrayList<String> temp = new ArrayList<String>();
-        express.remove(closePar);
-        express.remove(openPar);
-        for (int i = openPar; i < closePar-1; closePar--){
-          temp.add(express.remove(i));
+  private void eval(){
+    evalHelp(expression);
+   }
+  
+  private void evalHelp(ArrayList<String> e){
+    if (e.indexOf("(") != -1){
+      parenthesesCheck(e);
+    }
+  }
+  
+  private void parenthesesCheck(ArrayList<String> e){
+    int numOpen = 0;
+    int numClose = 0;
+    for (int i = 0; i < e.size(); i++){
+      if (e.get(i).equals("(")){
+        numOpen++;
+      }
+      if (e.get(i).equals(")")){
+        numClose++;
+      }
+      if (numOpen > 0 && numOpen == numClose){
+        ArrayList<String> expressionSec = new ArrayList<String>();
+        int start = e.indexOf("(");
+        for (int j = start; j <= i; i--){
+          expressionSec.add(e.remove(j));
         }
-        eval(temp);
-        express.add(openPar, temp.get(0));
-        eval(express);
-     }
+        expressionSec.remove(expressionSec.indexOf("("));
+        expressionSec.remove(expressionSec.lastIndexOf(")"));
+        System.out.println(Arrays.toString(expressionSec.toArray()));
+        evalHelp(expressionSec);
+        e.add(start, expressionSec.get(0));
+        System.out.println(e.get(0));
+        numOpen = 0;
+        numClose = 0;
+      }
+    }
   }
   
   private void shuffle(){}
