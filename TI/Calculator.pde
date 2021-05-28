@@ -88,6 +88,7 @@ class Calculator{
   
   private void eval(){
     //System.out.println(Arrays.toString(expression.toArray())); for testing
+    expressionFix();
     evalHelp(expression);
    }
   
@@ -95,7 +96,7 @@ class Calculator{
     if (e.indexOf("(") != -1){
       parenthesesCheck(e);
     }
-    /* for testing
+    
     for (int i = 0; i < e.size(); i++){
       if (e.get(i).equals("÷")){
         e.remove(i);
@@ -104,7 +105,7 @@ class Calculator{
         e.add(i-1, num1 / num2 + "");
       }
     }
-    */
+    
   }
   
   private void parenthesesCheck(ArrayList<String> e){
@@ -125,13 +126,26 @@ class Calculator{
         }
         expressionSec.remove(expressionSec.indexOf("("));
         expressionSec.remove(expressionSec.lastIndexOf(")"));
-        //System.out.println(Arrays.toString(expressionSec.toArray())); for testing
+        //System.out.println(Arrays.toString(expressionSec.toArray())); 
         evalHelp(expressionSec);
         e.add(start, expressionSec.get(0));
         //System.out.println(expressionSec.get(0)); for testing
         numOpen = 0;
         numClose = 0;
       }
+    }
+  }
+  
+  private void expressionFix(){
+    for (int i = 0; i < expression.size()-1; i++){
+      try{
+        int current = Integer.parseInt(expression.get(i));
+        System.out.println(current);
+        if (nums.contains(expression.get(i+1))){
+          expression.set(i, current + expression.remove(i+1));
+          i--;
+        }
+      }catch (NumberFormatException e){}
     }
   }
   
