@@ -19,12 +19,12 @@ void setup(){
    {"π", "", "log", "4", "5", "6", "×"},
    {"e", "", "√", "1", "2", "3", "-"},
    {"", "EXP", "xⁿ", "0", ".", "=", "+"}};
-  buttonFont = createFont("OpenSans-Bold.ttf", 22);
-  screenFont = createFont("JetBrainsMono-VariableFont_wght.ttf", 36);
-  normal = loadImage("normal.jpg").get(0, 0, width, height);
-  sinful = loadImage("sinful.jpg").get(0, 0, width, height);
-  cosmic = loadImage("cosmic.jpg").get(0, 0, width, height);
-  tanned = loadImage("tanned.jpg").get(0, 0, width, height);
+  buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", 22);
+  screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 36);
+  normal = loadImage("assets/images/normal.jpg").get(0, 0, width, height);
+  sinful = loadImage("assets/images/sinful.jpg").get(0, 0, width, height);
+  cosmic = loadImage("assets/images/cosmic.jpg").get(0, 0, width, height);
+  tanned = loadImage("assets/images/tanned.jpg").get(0, 0, width, height);
   bgState = 'n';
   make();
   
