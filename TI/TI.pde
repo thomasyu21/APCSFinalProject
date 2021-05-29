@@ -54,16 +54,16 @@ void make(){
     for (int j = 0; j < 5; j++){
       if (!(caps[j][i].equals(""))){
         if (i > 2 && i < 6 && j > 0)
-          fill(255, 92);
+          fill(255, 80);
         else
-          fill(255, 35);
+          fill(255, 50);
         rect((120*i)+70, 415+(70*j), 100, 50, 10);
         fill(255);
         text(caps[j][i], (120*i)+70, 412+(70*j));
       }
     }
   }
-  fill(255, 35);
+  fill(255, 50);
   rect(55, 45, 70, 50, 10); // Name
   fill(255);
   text("TI-∞", 55, 43);
@@ -95,7 +95,7 @@ void updateButtons(){ // toggle and inv buttons
   image(buttonClear, 140, 600);
   buttonClear = currBg.get(20, 670, 100, 50); // Ans
   image(buttonClear, 20, 670);
-  fill(255, 35);
+  fill(255, 50);
   rect(130, 415, 220, 50, 10); // Rad
   rect(765, 45, 150, 50, 10); // Mode
   rect(790, 415, 100, 50, 10); // del
