@@ -42,48 +42,95 @@ class Calculator{
   }
   
   public void buttonClicked(String id){
+    if (annoying){
+      buttonClickedAnn(id);
+      return;
+    }
     boolean newInv = false;
     switch (id){
-      case "Mode":   annoying = !annoying;
-                     newInv = inv;
-                     break;
-      case "CE":     if (inv)
-                       expression.clear(); // clear
-                     else if (expression.size() > 0)
-                       expression.remove(expression.size()-1); // backspace
-                     break;
-      case "=":      eval();
-                     break;
-      case "Rad":    rad = !rad;
-                     newInv = inv;
-                     break;
-      case "Inv":    inv = !inv;
-                     newInv = inv;
-                     break;
-      case "pow(":    if (expression.size() > 0 &&
-                      end.indexOf(expression.get(expression.size()-1)) != -1)
-                       expression.add(id);
-                     break;
-      default:       expression.add((inv)? ammendInv(id) : id);
-                     break;
+      case "Mode":
+        annoying = true;
+        scramble();
+        newInv = inv;
+        break;
+      case "CE":
+        if (inv) // clear
+          expression.clear(); 
+        else if (expression.size() > 0) // backspace
+          expression.remove(expression.size()-1);
+        break;
+      case "=":
+        eval(); // before eval, 'process' for ~7 seconds
+        break;
+      case "Rad":
+        rad = !rad;
+        newInv = inv;
+        break;
+      case "Inv":    
+        inv = !inv;
+        newInv = inv;
+        break;
+      case "pow(":
+        if (expression.size() > 0 &&
+            end.indexOf(expression.get(expression.size()-1)) != -1)
+          expression.add(id);
+        break;
+      case "sin(":
+      case "cos(":
+      case "tan(":   
+        expression.add((inv)? "arc"+id : id);
+        break;
+      default:
+        expression.add(id);
+        break;
     }
     inv = newInv;
-    
-    if (DEBUG){
-      for (String i : expression)
-        System.out.print(i);
-      System.out.print("\n");
-    }
   }
   
-  private String ammendInv(String id){
+  public void buttonClickedAnn(String id){
+    boolean newInv = false;
     switch (id){
-      case "sin(": return "arcsin(";
-      case "cos(": return "arccos(";
-      case "tan(": return "arctan(";
-      case "Ans":  return randomAdd();
-      default:     return id;
+      case "Mode":
+        annoying = false;
+        newInv = inv;
+        break;
+      case "CE":
+        if (inv)
+          expression.clear(); // clear
+        else if (expression.size() > 0)
+          expression.remove(expression.size()-1); // backspace
+        break;
+      case "=":
+        eval();
+        scramble();
+        break;
+      case "Rad":
+        rad = !rad;
+        newInv = inv;
+        break;
+      case "Inv":
+        inv = !inv;
+        newInv = inv;
+        break;
+      case "pow(":
+        if (expression.size() > 0 &&
+            end.indexOf(expression.get(expression.size()-1)) != -1)
+          expression.add(id);
+        break;
+      case "sin(":
+      case "cos(":
+      case "tan(":
+        bgState = (inv)? 'n' : id.charAt(0);
+        expression.add((inv)? "arc"+id : id);
+        break;
+      case "Ans":
+        expression.add((inv)? randomAdd() : "Ans");
+        break;
+      default:
+        expression.add(id);
+        break;
     }
+    inv = newInv;
   }
   
   private void eval(){
@@ -149,7 +196,7 @@ class Calculator{
     }
   }
   
-  private void shuffle(){}
+  private void scramble(){}
   
   private double gamma(double n){
     if (n == (int) n)
