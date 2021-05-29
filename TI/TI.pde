@@ -1,26 +1,51 @@
 Calculator calc;
 char bgState;
-color defaultColor;
-color currColor;
 PFont buttonFont;
 PFont screenFont;
-PImage sinful, cosmic, tanned;
+PImage normal;
+PImage sinful;
+PImage cosmic;
+PImage tanned;
+PImage currBg;
 String[][] caps;
 
 void setup(){
+  noLoop();
+  size(860, 740);
+  calc = new Calculator();
   caps = new String[][]
   {{"", "", "x!", "(", ")", "%", ""},
    {"", "", "ln", "7", "8", "9", "÷"},
    {"π", "", "log", "4", "5", "6", "×"},
    {"e", "", "√", "1", "2", "3", "-"},
    {"", "EXP", "xⁿ", "0", ".", "=", "+"}};
-  calc = new Calculator();
-  size(860, 740);
-  defaultColor = color(21, 29, 47);
-  currColor = defaultColor;
-  background(currColor);
   buttonFont = createFont("OpenSans-Bold.ttf", 22);
   screenFont = createFont("JetBrainsMono-VariableFont_wght.ttf", 36);
+  normal = loadImage("normal.jpg").get(0, 0, width, height);
+  sinful = loadImage("sinful.jpg").get(0, 0, width, height);
+  cosmic = loadImage("cosmic.jpg").get(0, 0, width, height);
+  tanned = loadImage("tanned.jpg").get(0, 0, width, height);
+  bgState = 'n';
+  make();
+  
+}
+
+void make(){
+  switch (bgState){
+    case 'n':
+      currBg = normal;
+      break;
+    case 's':
+      currBg = sinful;
+      break;
+    case 'c':
+      currBg = cosmic;
+      break;
+    case 't':
+      currBg = tanned;
+      break;
+  }
+  background(currBg);
   textFont(buttonFont);
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
@@ -42,27 +67,34 @@ void setup(){
   rect(55, 45, 70, 50, 10); // Name
   fill(255);
   text("TI-∞", 55, 43);
-  rect(430, 230, 820, 280, 20); // Screen
-  noLoop();
 }
 
 void draw(){
-  display();
+  make();
   updateButtons();
+  display();
 }
 
 void updateButtons(){ // toggle and inv buttons
+  PImage buttonClear;
   textFont(buttonFont);
-  fill(defaultColor);
   noStroke();
-  rect(130, 415, 220, 50, 10); // Rad
-  rect(765, 45, 150, 50, 10); // Mode
-  rect(790, 415, 100, 50, 10); // del
-  rect(70, 485, 100, 50, 10); // Inv
-  rect(190, 485, 100, 50, 10); // sin(
-  rect(190, 555, 100, 50, 10); // cos(
-  rect(190, 625, 100, 50, 10); // tan(
-  rect(70, 695, 100, 50, 10); // Ans
+  buttonClear = currBg.get(20, 390, 220, 50); // Rad
+  image(buttonClear, 20, 390);
+  buttonClear = currBg.get(690, 20, 150, 50); // Mode
+  image(buttonClear, 690, 20);
+  buttonClear = currBg.get(740, 390, 100, 50); // del
+  image(buttonClear, 740, 390);
+  buttonClear = currBg.get(20, 460, 100, 50); // Inv
+  image(buttonClear, 20, 460);
+  buttonClear = currBg.get(140, 460, 100, 50); // sin(
+  image(buttonClear, 140, 460);
+  buttonClear = currBg.get(140, 530, 100, 50); // cos(
+  image(buttonClear, 140, 530);
+  buttonClear = currBg.get(140, 600, 100, 50); // tan(
+  image(buttonClear, 140, 600);
+  buttonClear = currBg.get(20, 670, 100, 50); // Ans
+  image(buttonClear, 20, 670);
   fill(255, 35);
   rect(130, 415, 220, 50, 10); // Rad
   rect(765, 45, 150, 50, 10); // Mode
@@ -97,8 +129,9 @@ void updateButtons(){ // toggle and inv buttons
 void display(){
   textAlign(LEFT, CENTER);
   fill(255);
+  rectMode(CENTER);
   rect(430, 230, 820, 280, 20);
-  fill(defaultColor);
+  fill(0);
   textFont(screenFont);
   screenExpression();
   //if (!screenExpression()) // expression limited to two screen
@@ -161,7 +194,16 @@ void screenExpression(){
 void mouseClicked(){
   for (Button b : calc.buttons){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2)
-      calc.buttonClicked(b.getIdentity());
+      if (calc.annoying)
+        calc.buttonClickedAnn(b.getIdentity());
+      else
+        calc.buttonClicked(b.getIdentity());
+        
+  }
+  if (calc.DEBUG){
+    for (String i : calc.expression)
+      System.out.print(i);
+    System.out.print("\n");
   }
   redraw();
 }
