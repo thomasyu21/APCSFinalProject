@@ -64,4 +64,7 @@ CW Log May 28 2021
 HW Log May 28 2021
 - Anthony Nosaryev
 	- Finished sinful, cosmic and tanned, allowed for background modificatio with make()
-	
+
+HW Log May 31 2021
+- Thomas Yu
+	- Updated expressionFix() to work with decimal points, add multiplication symbols when implied by parentheses, and add an open parenthesis after every function.
