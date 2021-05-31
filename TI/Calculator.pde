@@ -186,13 +186,17 @@ class Calculator{
     for (int i = 0; i < expression.size()-1; i++){
       try{
         if (!(expression.get(i).contains("."))){
-          int current = Integer.parseInt(expression.get(i));
+          Float current = Float.parseFloat(expression.get(i));
         }
         if (nums.contains(expression.get(i+1)) || expression.get(i+1).equals(".")){
           expression.set(i, expression.get(i) + expression.remove(i+1));
           i--;
         }
       }catch (NumberFormatException e){}
+      ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "ln(", "log(", "√(", "pow("));
+      if (funcs.contains(expression.get(i))){
+        expression.add(i+1, "(");
+      }
     }
   }
   
