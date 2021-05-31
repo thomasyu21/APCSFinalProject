@@ -144,7 +144,7 @@ class Calculator{
     if (e.indexOf("(") != -1){
       parenthesesCheck(e);
     }
-    
+    /*
     for (int i = 0; i < e.size(); i++){
       if (e.get(i).equals("÷")){
         e.remove(i);
@@ -153,7 +153,7 @@ class Calculator{
         e.add(i-1, num1 / num2 + "");
       }
     }
-    
+    */
   }
   
   private void parenthesesCheck(ArrayList<String> e){
@@ -194,12 +194,12 @@ class Calculator{
         }
       }catch (NumberFormatException e){}
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "ln(", "log(", "√(", "pow("));
+      if ((expression.get(i).equals(")") && !ops.contains(expression.get(i+1))) ||
+          (!ops.contains(expression.get(i)) && (funcs.contains(expression.get(i+1)) || expression.get(i+1).equals("(")))){
+        expression.add(i+1, "×");
+      }
       if (funcs.contains(expression.get(i))){
         expression.add(i+1, "(");
-      }
-      if ((expression.get(i).equals(")") && !ops.contains(expression.get(i+1))) ||
-          (!ops.contains(expression.get(i)) && expression.get(i+1).equals("("))){
-        expression.add(i+1, "×");
       }
     }
   }
