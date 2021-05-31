@@ -197,6 +197,10 @@ class Calculator{
       if (funcs.contains(expression.get(i))){
         expression.add(i+1, "(");
       }
+      if ((expression.get(i).equals(")") && !ops.contains(expression.get(i+1))) ||
+          (!ops.contains(expression.get(i)) && expression.get(i+1).equals("("))){
+        expression.add(i+1, "×");
+      }
     }
   }
   
