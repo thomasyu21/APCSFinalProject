@@ -68,3 +68,9 @@ HW Log May 28 2021
 HW Log May 31 2021
 - Thomas Yu
 	- Updated expressionFix() to work with decimal points, add multiplication symbols when implied by parentheses, and add an open parenthesis after every function.
+	
+HW Log June 1 2021
+- Thomas Yu
+	- Fixed expressionFix() to not add multiplication symbols between two open or two closed parentheses. 
+	- Updated expressionFix() to also add extra closed parentheses to balance out the number of open and closed parentheses.
+	- Updated both buttonClicked methods to not allow closed parentheses to be added when it directly follows an open parentheses or when it would be an extra.
