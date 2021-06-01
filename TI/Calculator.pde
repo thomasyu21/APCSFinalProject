@@ -5,10 +5,13 @@ class Calculator{
   public boolean annoying, rad, inv;
   private ArrayList<String> expression, expressionOld, nums, ops, misc, end;
   private boolean DEBUG = true;
+  private int openParen, closeParen;
   
   public Calculator(){
     annoying = true;
     rad = true;
+    openParen = 0;
+    closeParen = 0;
     expression = new ArrayList<String>();
     expressionOld = new ArrayList<String>();
     String[][] buttonArray = 
@@ -79,9 +82,19 @@ class Calculator{
       case "cos(":
       case "tan(":   
         expression.add((inv)? "arc"+id : id);
+        openParen++;
+        break;
+      case ")":
+        if (openParen > closeParen && !expression.get(expression.size()-1).equals("(")){
+          expression.add(id);
+          closeParen++;
+        }
         break;
       default:
         expression.add(id);
+        if (id.contains("(")){
+          openParen++;
+        }
         break;
     }
     inv = newInv;
@@ -122,12 +135,22 @@ class Calculator{
       case "tan(":
         bgState = (inv)? 'n' : id.charAt(0);
         expression.add((inv)? "arc"+id : id);
+        openParen++;
         break;
       case "Ans":
         expression.add((inv)? randomAdd() : "Ans");
         break;
+      case ")":
+        if (openParen > closeParen && !expression.get(expression.size()-1).equals("(")){
+          expression.add(id);
+          closeParen++;
+        }
+        break;
       default:
         expression.add(id);
+        if (id.contains("(")){
+          openParen++;
+        }
         break;
     }
     inv = newInv;
@@ -194,12 +217,16 @@ class Calculator{
         }
       }catch (NumberFormatException e){}
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "ln(", "log(", "√(", "pow("));
-      if ((expression.get(i).equals(")") && !ops.contains(expression.get(i+1))) ||
-          (!ops.contains(expression.get(i)) && (funcs.contains(expression.get(i+1)) || expression.get(i+1).equals("(")))){
+      if ((expression.get(i).equals(")") && !(ops.contains(expression.get(i+1)) || expression.get(i+1).equals(")")) ||
+          (!(ops.contains(expression.get(i)) || expression.get(i).equals("(")) && (funcs.contains(expression.get(i+1)) || expression.get(i+1).equals("("))))){
         expression.add(i+1, "×");
       }
       if (funcs.contains(expression.get(i))){
         expression.add(i+1, "(");
+      }
+      while (closeParen < openParen){
+        expression.add(")");
+        closeParen++;
       }
     }
   }
