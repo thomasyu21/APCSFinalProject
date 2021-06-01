@@ -11,21 +11,29 @@ String[][] caps;
 
 void setup(){
   noLoop();
-  size(860, 740);
+  /** 
+  * Recommended Size: (FOR WHEN ALL DISPLAY IS RELATIVE
+  * Width: 840 (32 factors!)
+  * Height: 720 (30 factors)
+  *
+  * BOTH DIMENSIONS MUST BE UNDER 1000!!!
+  */
+  size(860, 740); // leave until all display is relative
   calc = new Calculator();
   caps = new String[][]
-  {{"", "", "x!", "(", ")", "%", ""},
-   {"", "", "ln", "7", "8", "9", "÷"},
-   {"π", "", "log", "4", "5", "6", "×"},
-   {"e", "", "√", "1", "2", "3", "-"},
-   {"", "EXP", "xⁿ", "0", ".", "=", "+"}};
-  buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", 22);
+  {{"Rad", "Deg", "x!", "(", ")", "%", "del"},
+   {"Inv", "sin", "ln", "7", "8", "9", "÷"},
+   {"π", "cos", "log", "4", "5", "6", "×"},
+   {"e", "tan", "√", "1", "2", "3", "-"},
+   {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
+  buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", 24);
   screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 36);
   normal = loadImage("assets/images/normal.jpg").get(0, 0, width, height);
   sinful = loadImage("assets/images/sinful.jpg").get(0, 0, width, height);
   cosmic = loadImage("assets/images/cosmic.jpg").get(0, 0, width, height);
   tanned = loadImage("assets/images/tanned.jpg").get(0, 0, width, height);
   bgState = 'n';
+  rectMode(CENTER);
   make();
   
 }
@@ -48,7 +56,21 @@ void make(){
   background(currBg);
   textFont(buttonFont);
   textAlign(CENTER, CENTER);
-  rectMode(CENTER);
+  noStroke();
+  fill(255, 50);
+  rect(130, 415, 220, 50, 10); // Rad
+  rect(765, 45, 150, 50, 10); // Mode
+  rect(55, 45, 70, 50, 10); // Name
+  fill((calc.annoying)? 255 : 150);
+  text("ANN", 727.5, 43);
+  fill((calc.annoying)? 150 : 255);
+  text("TRY", 802.5, 43);
+  fill(255);
+  text("TI-∞", 55, 43);
+  stroke(255, 90);
+  strokeWeight(2);
+  line(130, 397, 130, 433); // Rad
+  line(765, 27, 765, 63); // Mode
   noStroke();
   for (int i = 0; i < 7; i++){
     for (int j = 0; j < 5; j++){
@@ -57,87 +79,71 @@ void make(){
           fill(255, 80);
         else
           fill(255, 50);
-        rect((120*i)+70, 415+(70*j), 100, 50, 10);
-        fill(255);
-        text(caps[j][i], (120*i)+70, 412+(70*j));
+        if (i > 1 || j > 0)
+          rect((120*i)+70, 415+(70*j), 100, 50, 10);
+        switch(caps[j][i]){
+          case "Rad":
+            fill((calc.rad)? 255 : 150);
+            text("Rad", i*120+70, j*70+412);
+            break;
+          case "Deg":
+            fill((calc.rad)? 150 : 255);
+            text("Deg", i*120+70, j*70+412);
+            break;
+          case "del":
+            fill(255);
+            text((calc.inv)? "CE":"del", i*120+70, j*70+412);
+            break;
+          case "Inv":
+            fill((calc.inv)? 255 : 150);
+            text("Inv", i*120+70, j*70+412);
+            break;
+          case "sin":
+          case "cos":
+          case "tan":
+            fill(255);
+            text((calc.inv)? "arc"+caps[j][i]:caps[j][i], i*120+70, j*70+412);
+            break;
+          case "Ans":
+            fill(255);
+            text((calc.inv)? "Rand" : "Ans", i*120+70, j*70+412);
+            break;
+          default:
+            fill(255);
+            text(caps[j][i], i*120+70, j*70+412);
+            break;
+        }
       }
     }
   }
-  fill(255, 50);
-  rect(55, 45, 70, 50, 10); // Name
-  fill(255);
-  text("TI-∞", 55, 43);
 }
 
 void draw(){
-  make();
-  updateButtons();
-  display();
+  make(); // display buttons
+  screen(); // display updated screen expression
+  //coords(); // display x and y pos of cursor
 }
 
-void updateButtons(){ // toggle and inv buttons
-  PImage buttonClear;
-  textFont(buttonFont);
-  noStroke();
-  buttonClear = currBg.get(20, 390, 220, 50); // Rad
-  image(buttonClear, 20, 390);
-  buttonClear = currBg.get(690, 20, 150, 50); // Mode
-  image(buttonClear, 690, 20);
-  buttonClear = currBg.get(740, 390, 100, 50); // del
-  image(buttonClear, 740, 390);
-  buttonClear = currBg.get(20, 460, 100, 50); // Inv
-  image(buttonClear, 20, 460);
-  buttonClear = currBg.get(140, 460, 100, 50); // sin(
-  image(buttonClear, 140, 460);
-  buttonClear = currBg.get(140, 530, 100, 50); // cos(
-  image(buttonClear, 140, 530);
-  buttonClear = currBg.get(140, 600, 100, 50); // tan(
-  image(buttonClear, 140, 600);
-  buttonClear = currBg.get(20, 670, 100, 50); // Ans
-  image(buttonClear, 20, 670);
-  fill(255, 50);
-  rect(130, 415, 220, 50, 10); // Rad
-  rect(765, 45, 150, 50, 10); // Mode
-  rect(790, 415, 100, 50, 10); // del
-  rect(70, 485, 100, 50, 10); // Inv
-  rect(190, 485, 100, 50, 10); // sin(
-  rect(190, 555, 100, 50, 10); // cos(
-  rect(190, 625, 100, 50, 10); // tan(
-  rect(70, 695, 100, 50, 10); // Ans
-  stroke(255, 90);
-  strokeWeight(2);
-  line(130, 397, 130, 433); // Rad
-  line(765, 27, 765, 63); // Mode
-  fill((calc.rad)? 255 : 150);
-  text("Rad", 70, 412);
-  fill ((calc.rad)? 150 : 255);
-  text("Deg", 190, 412);
-  fill((calc.annoying)? 255 : 150);
-  text("ANN", 727.5, 43);
-  fill((calc.annoying)? 150 : 255);
-  text("TRY", 802.5, 43);
-  fill((calc.inv)? 255 : 150);
-  text("Inv", 70, 483);
-  fill(255);
-  text((calc.inv)? "CE" : "del", 790, 413); 
-  text((calc.inv)? "arcsin" : "sin", 190, 483); 
-  text((calc.inv)? "arccos" : "cos", 190, 553); 
-  text((calc.inv)? "arctan" : "tan", 190, 623); 
-  text((calc.inv)? "Rand" : "Ans", 70, 693);
-}
-
-void display(){
+void screen(){
   textAlign(LEFT, CENTER);
   fill(255);
-  rectMode(CENTER);
   rect(430, 230, 820, 280, 20);
   fill(0);
   textFont(screenFont);
   screenExpression();
-  //if (!screenExpression()) // expression limited to two screen
-  //  calc.getExpression().remove(calc.getExpression().size()-1);
   textAlign(CENTER, CENTER);
   textSize(22);
+}
+
+void coords(){
+  fill(255);
+  rect(mouseX, mouseY+25, 80, 50);
+  fill(255, 0, 0);
+  circle(mouseX, mouseY, 3);
+  fill(0);
+  textSize(15);
+  text("X: "+mouseX, mouseX, mouseY+15);
+  text("Y: "+mouseY, mouseX, mouseY+30);
 }
 
 void screenExpression(){
@@ -191,7 +197,7 @@ void screenExpression(){
   }
 }
 
-void mouseClicked(){
+void mouseReleased(){
   for (Button b : calc.buttons){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2)
       if (calc.annoying)
