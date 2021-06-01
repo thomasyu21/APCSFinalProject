@@ -54,3 +54,17 @@ HW Log May 27 2021
 - Thomas Yu:
 	- Created helper methods evalHelp (to use recursion in eval) and parenthesesCheck (evaluates the parts of the expression enclosed by a set of parentheses).
 	- Implemented parenthesesCheck. For now it only works if there are equal amounts of open and closed parentheses. 
+
+CW Log May 28 2021
+- Thomas Yu:
+	- Created expressionFix() to combine numbers to facilitate calculations.
+- Anthony Nosaryev:
+	- Began working on PImages sinful, cosmic and tanned, began working on modifying background calculations to allow for modification of background.
+
+HW Log May 28 2021
+- Anthony Nosaryev
+	- Finished sinful, cosmic and tanned, allowed for background modificatio with make()
+
+HW Log May 31 2021
+- Thomas Yu
+	- Updated expressionFix() to work with decimal points, add multiplication symbols when implied by parentheses, and add an open parenthesis after every function.

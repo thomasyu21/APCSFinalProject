@@ -134,25 +134,26 @@ class Calculator{
   }
   
   private void eval(){
-    //System.out.println(Arrays.toString(expression.toArray())); for testing
     expressionFix();
+    //System.out.println(Arrays.toString(expression.toArray()));
     evalHelp(expression);
+    //System.out.println(Arrays.toString(expression.toArray()));
    }
   
   private void evalHelp(ArrayList<String> e){
     if (e.indexOf("(") != -1){
       parenthesesCheck(e);
     }
-    
+    /*
     for (int i = 0; i < e.size(); i++){
       if (e.get(i).equals("÷")){
         e.remove(i);
-        int num1 = Integer.parseInt(e.remove(i-1));
-        int num2 = Integer.parseInt(e.remove(i-1));
+        float num1 = Float.parseFloat(e.remove(i-1));
+        float num2 = Float.parseFloat(e.remove(i-1));
         e.add(i-1, num1 / num2 + "");
       }
     }
-    
+    */
   }
   
   private void parenthesesCheck(ArrayList<String> e){
@@ -173,10 +174,8 @@ class Calculator{
         }
         expressionSec.remove(expressionSec.indexOf("("));
         expressionSec.remove(expressionSec.lastIndexOf(")"));
-        //System.out.println(Arrays.toString(expressionSec.toArray())); 
         evalHelp(expressionSec);
         e.add(start, expressionSec.get(0));
-        //System.out.println(expressionSec.get(0)); for testing
         numOpen = 0;
         numClose = 0;
       }
@@ -186,13 +185,22 @@ class Calculator{
   private void expressionFix(){
     for (int i = 0; i < expression.size()-1; i++){
       try{
-        int current = Integer.parseInt(expression.get(i));
-        System.out.println(current);
-        if (nums.contains(expression.get(i+1))){
-          expression.set(i, current + expression.remove(i+1));
+        if (!(expression.get(i).contains("."))){
+          Float current = Float.parseFloat(expression.get(i));
+        }
+        if (nums.contains(expression.get(i+1)) || expression.get(i+1).equals(".")){
+          expression.set(i, expression.get(i) + expression.remove(i+1));
           i--;
         }
       }catch (NumberFormatException e){}
+      ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "ln(", "log(", "√(", "pow("));
+      if ((expression.get(i).equals(")") && !ops.contains(expression.get(i+1))) ||
+          (!ops.contains(expression.get(i)) && (funcs.contains(expression.get(i+1)) || expression.get(i+1).equals("(")))){
+        expression.add(i+1, "×");
+      }
+      if (funcs.contains(expression.get(i))){
+        expression.add(i+1, "(");
+      }
     }
   }
   
