@@ -54,10 +54,20 @@ class Calculator{
         newInv = inv;
         break;
       case "CE":
-        if (inv) // clear
+        if (inv){ // clear
           expression.clear(); 
-        else if (expression.size() > 0) // backspace
+          openParen = 0;
+          closeParen = 0;
+        }
+        else if (expression.size() > 0){ // backspace
+          if (expression.get(expression.size()-1).equals("(")){
+            openParen--;
+          }
+          if (expression.get(expression.size()-1).equals(")")){
+            closeParen--;
+          }
           expression.remove(expression.size()-1);
+        }
         break;
       case "=":
         if (!annoying){
@@ -93,7 +103,7 @@ class Calculator{
         expression.add((inv)? randomAdd() : "Ans");
         break;
       case ")":
-        if (openParen > closeParen && !expression.get(expression.size()-1).equals("(")){
+        if (openParen > closeParen && !expression.get(expression.size()-1).contains("(")){
           expression.add(id);
           closeParen++;
         }
