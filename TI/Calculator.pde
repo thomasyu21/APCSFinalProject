@@ -34,6 +34,7 @@ class Calculator{
         }
       }
     }
+    scramble();
   }
   
   public ArrayList<String> getExpression(){
@@ -45,10 +46,6 @@ class Calculator{
   }
   
   public void buttonClicked(String id){
-    if (annoying){
-      buttonClickedAnn(id);
-      return;
-    }
     boolean newInv = false;
     switch (id){
       case "Mode":
@@ -63,59 +60,9 @@ class Calculator{
           expression.remove(expression.size()-1);
         break;
       case "=":
-        eval(); // before eval, 'process' for ~7 seconds
-        break;
-      case "Rad":
-        rad = !rad;
-        newInv = inv;
-        break;
-      case "Inv":    
-        inv = !inv;
-        newInv = inv;
-        break;
-      case "pow(":
-        if (expression.size() > 0 &&
-            end.indexOf(expression.get(expression.size()-1)) != -1)
-          expression.add(id);
-        break;
-      case "sin(":
-      case "cos(":
-      case "tan(":   
-        expression.add((inv)? "arc"+id : id);
-        openParen++;
-        break;
-      case "Ans":
-        expression.add((inv)? randomAdd() : "Ans");
-      case ")":
-        if (openParen > closeParen && !expression.get(expression.size()-1).equals("(")){
-          expression.add(id);
-          closeParen++;
+        if (!annoying){
+          //before eval, 'process' for ~7 seconds
         }
-        break;
-      default:
-        expression.add(id);
-        if (id.contains("(")){
-          openParen++;
-        }
-        break;
-    }
-    inv = newInv;
-  }
-  
-  public void buttonClickedAnn(String id){
-    boolean newInv = false;
-    switch (id){
-      case "Mode":
-        annoying = false;
-        newInv = inv;
-        break;
-      case "CE":
-        if (inv)
-          expression.clear(); // clear
-        else if (expression.size() > 0)
-          expression.remove(expression.size()-1); // backspace
-        break;
-      case "=":
         eval();
         scramble();
         break;
@@ -129,13 +76,16 @@ class Calculator{
         break;
       case "pow(":
         if (expression.size() > 0 &&
-            end.indexOf(expression.get(expression.size()-1)) != -1)
+            end.contains(expression.get(expression.size()-1))){
           expression.add(id);
+          openParen++;
+        }
         break;
       case "sin(":
       case "cos(":
       case "tan(":
-        bgState = (inv)? 'n' : id.charAt(0);
+        if (annoying)
+          bgState = (inv)? 'n' : id.charAt(0);
         expression.add((inv)? "arc"+id : id);
         openParen++;
         break;
@@ -234,21 +184,23 @@ class Calculator{
   }
   
   private void scramble(){
-    Collections.shuffle(nums);
-    Collections.shuffle(ops);
-    Collections.shuffle(misc);
-    for (Button b : buttons){
-      if (nums.contains(b.getIdentity())){
-        b.setIdentity(nums.get(0));
-        nums.add(nums.remove(0));
-      }
-      else if (ops.contains(b.getIdentity())){
-        b.setIdentity(ops.get(0));
-        ops.add(ops.remove(0));
-      }
-      else if (misc.contains(b.getIdentity())){
-        b.setIdentity(misc.get(0));
-        misc.add(misc.remove(0));
+    if (annoying){
+      Collections.shuffle(nums);
+      Collections.shuffle(ops);
+      Collections.shuffle(misc);
+      for (Button b : buttons){
+        if (nums.contains(b.getIdentity(annoying))){
+          b.setIdentity(nums.get(0));
+          nums.add(nums.remove(0));
+        }
+        else if (ops.contains(b.getIdentity(annoying))){
+          b.setIdentity(ops.get(0));
+          ops.add(ops.remove(0));
+        }
+        else if (misc.contains(b.getIdentity(annoying))){
+          b.setIdentity(misc.get(0));
+          misc.add(misc.remove(0));
+        }
       }
     }
   }
