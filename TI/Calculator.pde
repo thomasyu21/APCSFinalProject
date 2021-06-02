@@ -25,7 +25,7 @@ class Calculator{
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E", "!"));
     end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")"));
     buttons = new ArrayList<Button>();
-    buttons.add(new Button("Mode", 765, 45, 150, 50));
+    buttons.add(new Button("Mode", 730, 45, 220, 50));
     buttons.add(new Button("Rad", 130, 415, 220, 50));
     for (int m = 0; m < buttonArray.length; m++){
       for (int n = 0; n < buttonArray[0].length; n++){
@@ -50,6 +50,10 @@ class Calculator{
     switch (id){
       case "Mode":
         annoying = !annoying;
+        if (bgState == 'a')
+          bgState = 'n';
+        else if (bgState == 'n')
+          bgState = 'a';
         scramble();
         newInv = inv;
         break;
@@ -95,7 +99,7 @@ class Calculator{
       case "cos(":
       case "tan(":
         if (annoying)
-          bgState = (inv)? 'n' : id.charAt(0);
+          bgState = (inv)? 'a' : id.charAt(0);
         expression.add((inv)? "arc"+id : id);
         openParen++;
         break;
