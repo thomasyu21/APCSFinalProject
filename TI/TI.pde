@@ -200,11 +200,7 @@ void screenExpression(){
 void mouseReleased(){
   for (Button b : calc.buttons){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2)
-      if (calc.annoying)
-        calc.buttonClickedAnn(b.getIdentity());
-      else
-        calc.buttonClicked(b.getIdentity());
-        
+      calc.buttonClicked(b.getIdentity(calc.annoying)); 
   }
   if (calc.DEBUG){
     for (String i : calc.expression)
