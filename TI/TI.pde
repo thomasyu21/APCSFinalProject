@@ -30,7 +30,7 @@ void setup(){
   screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 36);
   normal = loadImage("assets/images/normal.jpg").get(0, 0, width, height);
   sinful = loadImage("assets/images/sinful.jpg").get(0, 0, width, height);
-  cosmic = loadImage("assets/images/cosmic.jpg").get(0, 0, width, height);
+  cosmic = loadImage("assets/images/cosmic.jpg").get((1000-width)/2, 0, width, height);
   tanned = loadImage("assets/images/tanned.jpg").get(0, 0, width, height);
   bgState = 'n';
   rectMode(CENTER);
