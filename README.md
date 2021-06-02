@@ -74,3 +74,7 @@ HW Log June 1 2021
 	- Fixed expressionFix() to not add multiplication symbols between two open or two closed parentheses. 
 	- Updated expressionFix() to also add extra closed parentheses to balance out the number of open and closed parentheses.
 	- Updated both buttonClicked methods to not allow closed parentheses to be added when it directly follows an open parentheses or when it would be an extra.
+- Anthony Nosaryev
+	- Combined updateButtons() functionality into make(), thereby significantly cleaning up button creation.
+	- Combined buttonClicked() methods for processing speed
+	- Implemented scramble() to shuffle button values in Annoying Mode.
