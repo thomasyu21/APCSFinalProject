@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Calculator{
   public ArrayList<Button> buttons;
@@ -22,7 +22,7 @@ class Calculator{
      {"Ans", "E", "pow(", "0", ".", "=", "+"}};
     nums = new ArrayList<String>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
-    misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E"));
+    misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E", "!"));
     end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")"));
     buttons = new ArrayList<Button>();
     buttons.add(new Button("Mode", 765, 45, 150, 50));
@@ -52,7 +52,7 @@ class Calculator{
     boolean newInv = false;
     switch (id){
       case "Mode":
-        annoying = true;
+        annoying = !annoying;
         scramble();
         newInv = inv;
         break;
@@ -233,7 +233,25 @@ class Calculator{
     }
   }
   
-  private void scramble(){}
+  private void scramble(){
+    Collections.shuffle(nums);
+    Collections.shuffle(ops);
+    Collections.shuffle(misc);
+    for (Button b : buttons){
+      if (nums.contains(b.getIdentity())){
+        b.setIdentity(nums.get(0));
+        nums.add(nums.remove(0));
+      }
+      else if (ops.contains(b.getIdentity())){
+        b.setIdentity(ops.get(0));
+        ops.add(ops.remove(0));
+      }
+      else if (misc.contains(b.getIdentity())){
+        b.setIdentity(misc.get(0));
+        misc.add(misc.remove(0));
+      }
+    }
+  }
   
   private double gamma(double n){
     if (n == (int) n)
