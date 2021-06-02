@@ -12,8 +12,8 @@ class Button{
     hei = h;
   }
   
-  public String getIdentity(){
-    return (calc.annoying)? identityA : identity;
+  public String getIdentity(boolean ann){
+    return (ann)? identityA : identity;
   }
   
   public void setIdentity(String newIdentity){
