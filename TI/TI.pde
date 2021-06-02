@@ -2,11 +2,7 @@ Calculator calc;
 char bgState;
 PFont buttonFont;
 PFont screenFont;
-PImage normal;
-PImage sinful;
-PImage cosmic;
-PImage tanned;
-PImage currBg;
+PImage anndef, normal, sinful, cosmic, tanned, currBg;
 String[][] caps;
 
 void setup(){
@@ -28,11 +24,15 @@ void setup(){
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
   buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", 24);
   screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 36);
+  anndef = loadImage("assets/images/anndef.jpg").get(0, 0, width, height);
   normal = loadImage("assets/images/normal.jpg").get(0, 0, width, height);
   sinful = loadImage("assets/images/sinful.jpg").get(0, 0, width, height);
   cosmic = loadImage("assets/images/cosmic.jpg").get((1000-width)/2, 0, width, height);
   tanned = loadImage("assets/images/tanned.jpg").get(0, 0, width, height);
-  bgState = 'n';
+  if (calc.annoying)
+    bgState = 'a';
+  else
+    bgState = 'n';
   rectMode(CENTER);
   make();
   
@@ -40,6 +40,9 @@ void setup(){
 
 void make(){
   switch (bgState){
+    case 'a':
+      currBg = anndef;
+      break;
     case 'n':
       currBg = normal;
       break;
@@ -59,18 +62,18 @@ void make(){
   noStroke();
   fill(255, 50);
   rect(130, 415, 220, 50, 10); // Rad
-  rect(765, 45, 150, 50, 10); // Mode
+  rect(730, 45, 220, 50, 10); // Mode
   rect(55, 45, 70, 50, 10); // Name
   fill((calc.annoying)? 255 : 150);
-  text("ANN", 727.5, 43);
+  text("Annoy", 675, 43);
   fill((calc.annoying)? 150 : 255);
-  text("TRY", 802.5, 43);
+  text("Work", 785, 43);
   fill(255);
   text("TI-∞", 55, 43);
   stroke(255, 90);
   strokeWeight(2);
   line(130, 397, 130, 433); // Rad
-  line(765, 27, 765, 63); // Mode
+  line(730, 27, 730, 63); // Mode
   noStroke();
   for (int i = 0; i < 7; i++){
     for (int j = 0; j < 5; j++){
