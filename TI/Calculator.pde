@@ -60,10 +60,10 @@ class Calculator{
           closeParen = 0;
         }
         else if (expression.size() > 0){ // backspace
-          if (expression.get(expression.size()-1).equals("(")){
+          if (expression.get(expression.size()-1).contains("(")){
             openParen--;
           }
-          if (expression.get(expression.size()-1).equals(")")){
+          if (expression.get(expression.size()-1).contains(")")){
             closeParen--;
           }
           expression.remove(expression.size()-1);
