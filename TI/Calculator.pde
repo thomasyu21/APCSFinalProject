@@ -14,6 +14,7 @@ class Calculator{
     closeParen = 0;
     expression = new ArrayList<String>();
     expressionOld = new ArrayList<String>();
+    expressionOld.add("0");
     String[][] buttonArray = 
     {{"Rad", "Rad", "!", "(", ")", "%", "CE"},
      {"Inv", "sin(", "ln(", "7", "8", "9", "÷"},
@@ -128,10 +129,9 @@ class Calculator{
   
   private void eval(){
     expressionFix();
-    System.out.println(Arrays.toString(expression.toArray()));
     evalHelp(expression);
-    System.out.println(Arrays.toString(expression.toArray()));
-   }
+    expressionOld.add(expression.get(0));
+  }
   
   private void evalHelp(ArrayList<String> e){
     if (e.indexOf("(") != -1){
@@ -284,6 +284,16 @@ class Calculator{
   
   private void expressionFix(){
     for (int j = 0; j < expression.size(); j++){
+      if (expression.get(j).equals("-")){
+        try{
+          Float current = Float.parseFloat(expression.get(j-1));
+        }catch (Exception e){
+          expression.set(j, "-"+expression.remove(j+1));
+        }
+      }
+      if (expression.get(j).equals("Ans")){
+        expression.set(j, expressionOld.get(expressionOld.size()-1));
+      }
       if (expression.get(j).equals("π")){
         expression.set(j, ""+PI);
       }
