@@ -1,5 +1,6 @@
 Calculator calc;
 char bgState;
+boolean solve;
 float gx, gy, lx, ly, dx, dy;
 PFont buttonFont;
 PFont screenFont;
@@ -29,6 +30,7 @@ void setup(){
    {"π", "cos", "log", "4", "5", "6", "×"},
    {"e", "tan", "√", "1", "2", "3", "-"},
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
+  solve = false;
   buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", width/35);
   screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 3*width/70);
   anndef = loadImage("assets/images/anndef.jpg");
@@ -139,7 +141,6 @@ void draw(){
 }
 
 void screen(){
-  textAlign(LEFT, CENTER);
   fill(0);
   textFont(screenFont);
   screenExpression();
@@ -159,12 +160,14 @@ void coords(){
 }
 
 void screenExpression(){
+  textAlign(LEFT, CENTER);
   int pos = (int) gx;
   int max = width - (int) gx*4;
   int level = 0; // curr level of power, [0, 4]
   int[] levelQuan = {1, 0, 0, 0, 0}; // # unresolved left parentheses;
-  for (int i = 0; i < calc.getExpression().size(); i ++){
-    String str = calc.getExpression().get(i);
+  ArrayList<String> screxp = (solve)? calc.getExpressionOld() : calc.getExpression();
+  for (int i = 0; i < screxp.size(); i ++){
+    String str = screxp.get(i);
     if (str.equals("pow(")){
       if (level < 4){
         if (level == 0)
@@ -175,7 +178,7 @@ void screenExpression(){
         textSize(width/40);
         text("(", pos % max, height/5 - height*level/72 + height*(pos/max)/10);
       }else
-        calc.getExpression().remove(calc.getExpression().size()-1);
+        screxp.remove(screxp.size()-1);
     }else{
       if (level == 0){
         textSize(width/21);
@@ -197,7 +200,7 @@ void screenExpression(){
       if (pos % max + str.length()*width/35 > max)
         pos += (width - 2*gx) - pos % max;
       if (pos > 2*max){
-        calc.getExpression().remove(calc.getExpression().size()-1);
+        screxp.remove(screxp.size()-1);
         return;
       }
       text(str, pos % max, height/5 - height*level/72 + height*(pos/max)/10);
@@ -208,20 +211,29 @@ void screenExpression(){
       pos += (str.length()-1)*width/70;
     }
   }
+  textSize(width/21);
+  if (solve){
+    textAlign(RIGHT, CENTER);
+    text(calc.ans, max, 2*height/5);
+    textAlign(LEFT, CENTER);
+  }else{
+    text("Ans: "+calc.ans, (int) gx*2, 2*height/5);
+  }
 }
 
 void mouseReleased(){
   for (Button b : calc.buttons){
-    if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2)
-      calc.buttonClicked(b.getIdentity(calc.annoying)); 
+    if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2){
+      calc.buttonClicked(b.getIdentity(calc.annoying));
+      solve = b.getIdentity(calc.annoying).equals("=");
+    }
   }
+  System.out.println(Float.parseFloat(""+PI));
   redraw();
 }
 
 void expDebug(){
-  if (calc.DEBUG){
-    for (String i : calc.expression)
-      System.out.print(i);
-    System.out.print("\n");
-  }
+  for (String i : calc.expression)
+    System.out.print(i);
+  System.out.print("\n");
 }
