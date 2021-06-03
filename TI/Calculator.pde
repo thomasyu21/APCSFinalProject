@@ -128,7 +128,7 @@ class Calculator{
   
   private void eval(){
     expressionFix();
-    //System.out.println(Arrays.toString(expression.toArray()));
+    System.out.println(Arrays.toString(expression.toArray()));
     evalHelp(expression);
     //System.out.println(Arrays.toString(expression.toArray()));
    }
@@ -137,16 +137,97 @@ class Calculator{
     if (e.indexOf("(") != -1){
       parenthesesCheck(e);
     }
-    /*
-    for (int i = 0; i < e.size(); i++){
-      if (e.get(i).equals("÷")){
-        e.remove(i);
-        float num1 = Float.parseFloat(e.remove(i-1));
-        float num2 = Float.parseFloat(e.remove(i-1));
-        e.add(i-1, num1 / num2 + "");
+    try{
+      for (int i = 0; i < e.size(); i++){
+        switch (e.get(i)){
+          case "sin(": 
+            if (rad){
+              e.set(i, ""+sin(Float.parseFloat(e.remove(i+1))));
+            }else{
+              e.set(i, ""+sin(radians(Float.parseFloat(e.remove(i+1)))));
+            }
+            i--;
+            break;
+          case "cos(": 
+            if (rad){
+              e.set(i, ""+cos(Float.parseFloat(e.remove(i+1))));
+            }else{
+              e.set(i, ""+cos(radians(Float.parseFloat(e.remove(i+1)))));
+            }
+            i--;
+            break;
+          case "tan(": 
+            if (rad){
+              e.set(i, ""+tan(Float.parseFloat(e.remove(i+1))));
+            }else{
+              e.set(i, ""+tan(radians(Float.parseFloat(e.remove(i+1)))));
+            }
+            i--;
+            break;
+          case "arcsin(": 
+            if (rad){
+              e.set(i, ""+asin(Float.parseFloat(e.remove(i+1))));
+            }else{
+              e.set(i, ""+degrees(asin(Float.parseFloat(e.remove(i+1)))));
+            }
+            i--;
+            break;
+          case "arccos(": 
+            if (rad){
+              e.set(i, ""+acos(Float.parseFloat(e.remove(i+1))));
+            }else{
+              e.set(i, ""+degrees(acos(Float.parseFloat(e.remove(i+1)))));
+            }
+            i--;
+            break;
+          case "arctan(": 
+            if (rad){
+              e.set(i, ""+atan(Float.parseFloat(e.remove(i+1))));
+            }else{
+              e.set(i, ""+degrees(atan(Float.parseFloat(e.remove(i+1)))));
+            }
+            i--;
+            break;
+          case "pow(":
+            e.set(i-1, ""+Math.pow(Float.parseFloat(e.remove(i-1)), Float.parseFloat(e.remove(i))));
+            i-=2;
+            break;
+          case "√(":
+            e.set(i, ""+sqrt(Float.parseFloat(e.remove(i+1))));
+            i--;
+            break;
+          case "!":
+            e.set(i, ""+gamma(Float.parseFloat(e.remove(i+1))));
+            i--;
+            break;
+          case "log(":
+            e.set(i, ""+Math.log10(Float.parseFloat(e.remove(i+1))));
+            i--;
+            break;
+          case "ln(":
+            e.set(i, ""+log(Float.parseFloat(e.remove(i+1))));
+            i--;
+            break;
+          case "%":
+            e.set(i-1, ""+(Float.parseFloat(e.remove(i-1))/100.0));
+            i--;
+            break;
+          case "E":
+            e.set(i-1, ""+Float.parseFloat(e.remove(i-1))*pow(10, Float.parseFloat(e.remove(i))));
+            i--;
+            break;
+        }
       }
+      for (int j = 0; j < e.size(); j++){
+        //multiplication, division
+      }
+      for (int k = 0; k < e.size(); k++){
+        //addition, subtraction
+      }
+    }catch (Exception a){
+      expression.clear();
+      expression.add("ERROR");
     }
-    */
   }
   
   private void parenthesesCheck(ArrayList<String> e){
@@ -186,12 +267,12 @@ class Calculator{
           i--;
         }
       }catch (NumberFormatException e){}
-      ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "ln(", "log(", "√(", "pow("));
+      ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
       if ((expression.get(i).equals(")") && !(ops.contains(expression.get(i+1)) || expression.get(i+1).equals(")")) ||
           (!(ops.contains(expression.get(i)) || expression.get(i).equals("(")) && (funcs.contains(expression.get(i+1)) || expression.get(i+1).equals("("))))){
         expression.add(i+1, "×");
       }
-      if (funcs.contains(expression.get(i))){
+      if (funcs.contains(expression.get(i)) || expression.get(i).equals("pow(")){
         expression.add(i+1, "(");
       }
       while (closeParen < openParen){
