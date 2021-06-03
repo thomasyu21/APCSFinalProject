@@ -142,70 +142,70 @@ class Calculator{
         switch (e.get(i)){
           case "sin(": 
             if (rad){
-              e.set(i, ""+sin(Float.parseFloat(e.remove(i+1))%(PI*2)));
+              e.set(i, cut(sin(Float.parseFloat(e.remove(i+1))%(PI*2))));
             }else{
-              e.set(i, ""+sin(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
+              e.set(i, cut(sin(radians(Float.parseFloat(e.remove(i+1)))%(PI*2))));
             }
             i--;
             break;
           case "cos(": 
              if (rad){
-              e.set(i, ""+cos(Float.parseFloat(e.remove(i+1))%(PI*2)));
+              e.set(i, cut(cos(Float.parseFloat(e.remove(i+1))%(PI*2))));
             }else{
-              e.set(i, ""+cos(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
+              e.set(i, cut(cos(radians(Float.parseFloat(e.remove(i+1)))%(PI*2))));
             }
             i--;
             break;
           case "tan(": 
             if (rad){
-              e.set(i, ""+tan(Float.parseFloat(e.remove(i+1))%(PI*2)));
+              e.set(i, cut(tan(Float.parseFloat(e.remove(i+1))%(PI*2))));
             }else{
-              e.set(i, ""+tan(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
+              e.set(i, cut(tan(radians(Float.parseFloat(e.remove(i+1)))%(PI*2))));
             }
             i--;
             break;
           case "arcsin(": 
             if (rad){
-              e.set(i, ""+asin(Float.parseFloat(e.remove(i+1))));
+              e.set(i, cut(asin(Float.parseFloat(e.remove(i+1)))));
             }else{
-              e.set(i, ""+degrees(asin(Float.parseFloat(e.remove(i+1)))));
+              e.set(i, cut(degrees(asin(Float.parseFloat(e.remove(i+1))))));
             }
             i--;
             break;
           case "arccos(": 
             if (rad){
-              e.set(i, ""+acos(Float.parseFloat(e.remove(i+1))));
+              e.set(i, cut(acos(Float.parseFloat(e.remove(i+1)))));
             }else{
-              e.set(i, ""+degrees(acos(Float.parseFloat(e.remove(i+1)))));
+              e.set(i, cut(degrees(acos(Float.parseFloat(e.remove(i+1))))));
             }
             i--;
             break;
           case "arctan(": 
             if (rad){
-              e.set(i, ""+atan(Float.parseFloat(e.remove(i+1))));
+              e.set(i, cut(atan(Float.parseFloat(e.remove(i+1)))));
             }else{
-              e.set(i, ""+degrees(atan(Float.parseFloat(e.remove(i+1)))));
+              e.set(i, cut(degrees(atan(Float.parseFloat(e.remove(i+1))))));
             }
             i--;
             break;
           case "pow(":
-            e.set(i-1, ""+Math.pow(Float.parseFloat(e.remove(i-1)), Float.parseFloat(e.remove(i))));
+            e.set(i-1, cut(pow(Float.parseFloat(e.remove(i-1)), Float.parseFloat(e.remove(i)))));
             i-=2;
             break;
           case "√(":
-            e.set(i, ""+sqrt(Float.parseFloat(e.remove(i+1))));
+            e.set(i, cut(sqrt(Float.parseFloat(e.remove(i+1)))));
             i--;
             break;
           case "!":
-            e.set(i-1, ""+gamma(Float.parseFloat(e.remove(i-1))));
+            e.set(i-1, gamma(Float.parseFloat(e.remove(i-1))));
             i--;
             break;
           case "log(":
-            e.set(i, ""+Math.log10(Float.parseFloat(e.remove(i+1))));
+            e.set(i, cut((float)Math.log10(Float.parseFloat(e.remove(i+1)))));
             i--;
             break;
           case "ln(":
-            e.set(i, ""+log(Float.parseFloat(e.remove(i+1))));
+            e.set(i, cut(log(Float.parseFloat(e.remove(i+1)))));
             i--;
             break;
           case "%":
@@ -342,19 +342,32 @@ class Calculator{
     }
   }
   
-  private double gamma(double n){
+  private String cut(float num){
+    String str = "" + num;
+    if (str.contains("E-") && 
+        Integer.parseInt(str.substring(str.indexOf("E-")+2)) > 6)
+      return "" + 0.0;
+    if (!str.contains("E") && str.contains(".") && str.indexOf(".")+6 < str.length())
+      return str.substring(0, str.indexOf(".") + 7);
+    return str;
+  }
+  
+  private String gamma(double n){
     if (n == (int) n)
-      return factorial((int) n);
+      return "" + factorial((int) n);
     n ++;
     double g = (Math.pow((n + 4.5), n - 0.5)
              * Math.pow(Math.E, -(n + 4.5))
              * Math.sqrt(2*Math.PI));
     g *= 1.0 + 76.18009173/(n + 0) - 86.50532033/(n + 1) + 24.01409822/(n + 2)
              - 1.231739516/(n + 3) + 0.00120858003/(n + 4) - 0.00000536382/(n + 5);
-    int s = (int) Math.log10(g);
-    if (g > 1)
-      s ++;
-    return (g - (g % Math.pow(10, -9+s)));
+    String str = "" + g;
+    return str.substring(0, str.indexOf(".") + 10);
+    
+    //int s = (int) Math.log10(g);
+    //if (g > 1)
+    //  s ++;
+    //return (g - (g % Math.pow(10, -9+s)));
   }
 
   
