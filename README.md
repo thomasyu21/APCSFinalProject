@@ -78,3 +78,13 @@ HW Log June 1 2021
 	- Combined updateButtons() functionality into make(), thereby significantly cleaning up button creation.
 	- Combined buttonClicked() methods for processing speed
 	- Implemented scramble() to shuffle button values in Annoying Mode.
+
+CW Log June 2 2021
+- Thomas Yu
+	- Fixed oversights with openParen and closeParen, particularly after deleting parentheses and replacing them.
+- Anthony Nosaryev
+	- Changed cosmic.jpg to something nicer, made anndef.jpg
+
+HW Log June 2 2021
+- Anthony Nosaryev
+	- Reworked TI to display all features relative to the size rather than at specific coordinates.
