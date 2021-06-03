@@ -270,7 +270,9 @@ class Calculator{
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
       if ((expression.get(i).equals(")") && !(ops.contains(expression.get(i+1)) || expression.get(i+1).equals(")")) ||
           (!(ops.contains(expression.get(i)) || expression.get(i).equals("(")) && (funcs.contains(expression.get(i+1)) || expression.get(i+1).equals("("))))){
-        expression.add(i+1, "×");
+        if (!expression.get(i+1).equals("pow(")){
+          expression.add(i+1, "×");
+        }
       }
       if (funcs.contains(expression.get(i)) || expression.get(i).equals("pow(")){
         expression.add(i+1, "(");
