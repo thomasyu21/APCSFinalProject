@@ -130,7 +130,7 @@ class Calculator{
     expressionFix();
     System.out.println(Arrays.toString(expression.toArray()));
     evalHelp(expression);
-    //System.out.println(Arrays.toString(expression.toArray()));
+    System.out.println(Arrays.toString(expression.toArray()));
    }
   
   private void evalHelp(ArrayList<String> e){
@@ -142,25 +142,25 @@ class Calculator{
         switch (e.get(i)){
           case "sin(": 
             if (rad){
-              e.set(i, ""+sin(Float.parseFloat(e.remove(i+1))));
+              e.set(i, ""+sin(Float.parseFloat(e.remove(i+1))%(PI*2)));
             }else{
-              e.set(i, ""+sin(radians(Float.parseFloat(e.remove(i+1)))));
+              e.set(i, ""+sin(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
             }
             i--;
             break;
           case "cos(": 
             if (rad){
-              e.set(i, ""+cos(Float.parseFloat(e.remove(i+1))));
+              e.set(i, ""+cos(Float.parseFloat(e.remove(i+1))%(PI*2)));
             }else{
-              e.set(i, ""+cos(radians(Float.parseFloat(e.remove(i+1)))));
+              e.set(i, ""+cos(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
             }
             i--;
             break;
           case "tan(": 
             if (rad){
-              e.set(i, ""+tan(Float.parseFloat(e.remove(i+1))));
+              e.set(i, ""+tan(Float.parseFloat(e.remove(i+1))%(PI*2)));
             }else{
-              e.set(i, ""+tan(radians(Float.parseFloat(e.remove(i+1)))));
+              e.set(i, ""+tan(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
             }
             i--;
             break;
