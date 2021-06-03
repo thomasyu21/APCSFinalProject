@@ -197,7 +197,7 @@ class Calculator{
             i--;
             break;
           case "!":
-            e.set(i, ""+gamma(Float.parseFloat(e.remove(i+1))));
+            e.set(i-1, ""+gamma(Float.parseFloat(e.remove(i-1))));
             i--;
             break;
           case "log(":
