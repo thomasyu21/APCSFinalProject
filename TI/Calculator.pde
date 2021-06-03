@@ -283,6 +283,14 @@ class Calculator{
   }
   
   private void expressionFix(){
+    for (int j = 0; j < expression.size()-1; j++){
+      if (expression.get(j).equals("π")){
+        expression.set(j, ""+PI);
+      }
+      if (expression.get(j).equals("e")){
+        expression.set(j, ""+exp(1.0));
+      }
+    }
     for (int i = 0; i < expression.size()-1; i++){
       try{
         if (!(expression.get(i).contains("."))){
