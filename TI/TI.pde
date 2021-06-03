@@ -8,15 +8,16 @@ String[][] caps;
 
 void setup(){
   noLoop();
+  surface.setTitle(":)");
   /** 
   * Recommended Size:
   * Width: 840 (32 factors!)
   * Height: 720 (30 factors)
-  *
+  */
+  size(840, 720);
+  /**
   * BOTH DIMENSIONS MUST BE UNDER 1000!!!
   */
-  size(1000, 1000);
-  surface.setTitle(":)");
   gx = width/40;
   gy = height/40;
   lx = 4*width/35;
@@ -133,7 +134,7 @@ void make(){
 
 void draw(){
   make(); // display buttons
-  //screen(); // display updated screen expression
+  screen(); // display updated screen expression
   //coords(); // display x and y pos of cursor
 }
 
@@ -158,7 +159,8 @@ void coords(){
 }
 
 void screenExpression(){
-  int pos = 20;
+  int pos = (int) gx;
+  int max = width - (int) gx*4;
   int level = 0; // curr level of power, [0, 4]
   int[] levelQuan = {1, 0, 0, 0, 0}; // # unresolved left parentheses;
   for (int i = 0; i < calc.getExpression().size(); i ++){
@@ -166,44 +168,44 @@ void screenExpression(){
     if (str.equals("pow(")){
       if (level < 4){
         if (level == 0)
-          pos += 12;
-        pos += 13;
+          pos += width/70;
+        pos += width/70;
         level ++;
         levelQuan[level] ++;
-        textSize(20);
-        text("(", pos % 775, (150 - 10*level)+ 80 * ((pos) / 775));
+        textSize(width/40);
+        text("(", pos % max, height/5 - height*level/72 + height*(pos/max)/10);
       }else
         calc.getExpression().remove(calc.getExpression().size()-1);
     }else{
       if (level == 0){
-        textSize(40);
-        pos += 25;
+        textSize(width/21);
+        pos += width/35;
       }else{
-        pos += 12;
+        pos += width/70;
         if (levelQuan[level] > 0){
-          textSize(20);
+          textSize(width/40);
         }else{
           while (levelQuan[level] == 0)
             level --;
           if (level == 0){
-            textSize(40);
+            textSize(width/21);
           }
         }
         if (level > 0 && str.contains("("))
           levelQuan[level] ++;
       }
-      if (pos % 775 + str.length()*25 > 775)
-        pos += 820 - pos % 775;
-      if (pos > 1550){
+      if (pos % max + str.length()*width/35 > max)
+        pos += (width - 2*gx) - pos % max;
+      if (pos > 2*max){
         calc.getExpression().remove(calc.getExpression().size()-1);
         return;
       }
-      text(str, pos % 775, (150 - 10*level)+ 80 * (pos / 775));
+      text(str, pos % max, height/5 - height*level/72 + height*(pos/max)/10);
       if (level > 0 && str.equals(")"))
         levelQuan[level] --;
       if (level == 0)
-        pos += 13*(str.length()-1);
-      pos += 12*(str.length()-1);
+        pos += (str.length()-1)*width/70;
+      pos += (str.length()-1)*width/70;
     }
   }
 }
