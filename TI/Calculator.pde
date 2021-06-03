@@ -117,6 +117,16 @@ class Calculator{
           closeParen++;
         }
         break;
+      case ".":
+        if (place(id)){
+          expression.add(id);
+        }
+        break;
+      case "E":
+        if (expression.size() > 0 && nums.contains(expression.get(expression.size()-1)) && place(id)){
+          expression.add(id);
+        }
+        break;
       default:
         expression.add(id);
         if (id.contains("(")){
@@ -125,6 +135,21 @@ class Calculator{
         break;
     }
     inv = newInv;
+  }
+  
+  private boolean place(String s){
+    boolean place = true;
+    for (int j = expression.size()-1; j >= 0; j--){
+          if (!nums.contains(expression.get(j))){
+            if (expression.get(j).equals(s)){
+              j = -1;
+              place = false;
+            }else{
+              j = -1;
+            }
+          }
+        }
+    return place;
   }
   
   private void eval(){
