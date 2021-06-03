@@ -7,17 +7,15 @@ PImage anndef, normal, sinful, cosmic, tanned, currBg;
 String[][] caps;
 
 void setup(){
-  noLoop();
-  surface.setTitle(":)");
   /** 
   * Recommended Size:
   * Width: 840 (32 factors!)
   * Height: 720 (30 factors)
   */
   size(840, 720);
-  /**
-  * BOTH DIMENSIONS MUST BE UNDER 1000!!!
-  */
+  
+  noLoop();
+  surface.setTitle(":)");
   gx = width/40;
   gy = height/40;
   lx = 4*width/35;
@@ -33,11 +31,11 @@ void setup(){
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
   buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", width/35);
   screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 3*width/70);
-  anndef = loadImage("assets/images/anndef.jpg").get(0, 0, width, height);
-  normal = loadImage("assets/images/normal.jpg").get(0, 0, width, height);
-  sinful = loadImage("assets/images/sinful.jpg").get(0, 0, width, height);
-  cosmic = loadImage("assets/images/cosmic.jpg").get((1000-width)/2, 0, width, height);
-  tanned = loadImage("assets/images/tanned.jpg").get(0, 0, width, height);
+  anndef = loadImage("assets/images/anndef.jpg");
+  normal = loadImage("assets/images/normal.jpg");
+  sinful = loadImage("assets/images/sinful.jpg");
+  cosmic = loadImage("assets/images/cosmic.jpg");
+  tanned = loadImage("assets/images/tanned.jpg");
   if (calc.annoying)
     bgState = 'a';
   else
@@ -65,8 +63,9 @@ void make(){
       currBg = tanned;
       break;
   }
-  float ty = height/200;
+  currBg.resize(width, height);
   background(currBg);
+  float ty = height/200;
   textFont(buttonFont);
   textAlign(CENTER, CENTER);
   noStroke();
