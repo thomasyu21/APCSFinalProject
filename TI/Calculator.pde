@@ -288,7 +288,7 @@ class Calculator{
         try{
           Float current = Float.parseFloat(expression.get(j-1));
         }catch (Exception e){
-          expression.add(j, "0");
+          expression.set(j, "-"+expression.remove(j+1));
         }
       }
       if (expression.get(j).equals("π")){
