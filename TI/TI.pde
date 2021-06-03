@@ -1,5 +1,6 @@
 Calculator calc;
 char bgState;
+float gx, gy, lx, ly, dx, dy;
 PFont buttonFont;
 PFont screenFont;
 PImage anndef, normal, sinful, cosmic, tanned, currBg;
@@ -8,13 +9,20 @@ String[][] caps;
 void setup(){
   noLoop();
   /** 
-  * Recommended Size: (FOR WHEN ALL DISPLAY IS RELATIVE
+  * Recommended Size:
   * Width: 840 (32 factors!)
   * Height: 720 (30 factors)
   *
   * BOTH DIMENSIONS MUST BE UNDER 1000!!!
   */
-  size(860, 740); // leave until all display is relative
+  size(1000, 1000);
+  surface.setTitle(":)");
+  gx = width/40;
+  gy = height/40;
+  lx = 4*width/35;
+  ly = 3*gy;
+  dx = gx + lx;
+  dy = gy + ly;
   calc = new Calculator();
   caps = new String[][]
   {{"Rad", "Deg", "x!", "(", ")", "%", "del"},
@@ -22,8 +30,8 @@ void setup(){
    {"π", "cos", "log", "4", "5", "6", "×"},
    {"e", "tan", "√", "1", "2", "3", "-"},
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
-  buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", 24);
-  screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 36);
+  buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", width/35);
+  screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 3*width/70);
   anndef = loadImage("assets/images/anndef.jpg").get(0, 0, width, height);
   normal = loadImage("assets/images/normal.jpg").get(0, 0, width, height);
   sinful = loadImage("assets/images/sinful.jpg").get(0, 0, width, height);
@@ -56,24 +64,26 @@ void make(){
       currBg = tanned;
       break;
   }
+  float ty = height/200;
   background(currBg);
   textFont(buttonFont);
   textAlign(CENTER, CENTER);
   noStroke();
   fill(255, 50);
-  rect(130, 415, 220, 50, 10); // Rad
-  rect(730, 45, 220, 50, 10); // Mode
-  rect(55, 45, 70, 50, 10); // Name
+  rect(dx + gx/2, 5*dy + ly/2, 2*lx + gx, ly, 10); // Rad
+  rect(6*dx + gx/2, gy + ly/2, 2*lx + gx, ly, 10); // Mode
+  rect(gx+lx/2, gy+ly/2, lx, ly, 10); // Name
   fill((calc.annoying)? 255 : 150);
-  text("Annoy", 675, 43);
+  text("Annoy", 11*dx/2 + 3*gx/4, gy + ly/2 - ty);
   fill((calc.annoying)? 150 : 255);
-  text("Work", 785, 43);
+  text("Work", 13*dx/2 + gx/4, gy + ly/2 - ty);
   fill(255);
-  text("TI-∞", 55, 43);
+  text("TI-∞", gx + lx/2, gy + ly/2 - ty);
+  rect(width/2, 3*dy, width - 2*gx, 4*ly + 2*gy, 20); // Screen
   stroke(255, 90);
   strokeWeight(2);
-  line(130, 397, 130, 433); // Rad
-  line(730, 27, 730, 63); // Mode
+  line(dx + gx/2, 5*dy + 5*ly/6, dx + gx/2, 5*dy + ly/6); // Rad
+  line(6*dx + gx/2, gy + 5*ly/6, 6*dx + gx/2, gy + 1*ly/6); // Mode
   noStroke();
   for (int i = 0; i < 7; i++){
     for (int j = 0; j < 5; j++){
@@ -83,37 +93,37 @@ void make(){
         else
           fill(255, 50);
         if (i > 1 || j > 0)
-          rect((120*i)+70, 415+(70*j), 100, 50, 10);
+          rect((i+1)*dx - lx/2, (j+5)*dy + ly/2, lx, ly, 10);
         switch(caps[j][i]){
           case "Rad":
             fill((calc.rad)? 255 : 150);
-            text("Rad", i*120+70, j*70+412);
+            text("Rad", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
           case "Deg":
             fill((calc.rad)? 150 : 255);
-            text("Deg", i*120+70, j*70+412);
+            text("Deg", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
           case "del":
             fill(255);
-            text((calc.inv)? "CE":"del", i*120+70, j*70+412);
+            text((calc.inv)? "CE":"del", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
           case "Inv":
             fill((calc.inv)? 255 : 150);
-            text("Inv", i*120+70, j*70+412);
+            text("Inv", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
           case "sin":
           case "cos":
           case "tan":
             fill(255);
-            text((calc.inv)? "arc"+caps[j][i]:caps[j][i], i*120+70, j*70+412);
+            text((calc.inv)? "arc"+caps[j][i]:caps[j][i], (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
           case "Ans":
             fill(255);
-            text((calc.inv)? "Rand" : "Ans", i*120+70, j*70+412);
+            text((calc.inv)? "Rand" : "Ans", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
           default:
             fill(255);
-            text(caps[j][i], i*120+70, j*70+412);
+            text(caps[j][i], (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
         }
       }
@@ -123,14 +133,12 @@ void make(){
 
 void draw(){
   make(); // display buttons
-  screen(); // display updated screen expression
+  //screen(); // display updated screen expression
   //coords(); // display x and y pos of cursor
 }
 
 void screen(){
   textAlign(LEFT, CENTER);
-  fill(255);
-  rect(430, 230, 820, 280, 20);
   fill(0);
   textFont(screenFont);
   screenExpression();
