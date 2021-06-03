@@ -134,6 +134,7 @@ void make(){
 void draw(){
   make(); // display buttons
   screen(); // display updated screen expression
+  expDebug(); // Print out the expression in console
   //coords(); // display x and y pos of cursor
 }
 
@@ -214,10 +215,13 @@ void mouseReleased(){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2)
       calc.buttonClicked(b.getIdentity(calc.annoying)); 
   }
+  redraw();
+}
+
+void expDebug(){
   if (calc.DEBUG){
     for (String i : calc.expression)
       System.out.print(i);
     System.out.print("\n");
   }
-  redraw();
 }
