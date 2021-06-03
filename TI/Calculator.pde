@@ -284,6 +284,13 @@ class Calculator{
   
   private void expressionFix(){
     for (int j = 0; j < expression.size(); j++){
+      if (expression.get(j).equals("-")){
+        try{
+          Float current = Float.parseFloat(expression.get(j-1));
+        }catch (Exception e){
+          expression.add(j, "0");
+        }
+      }
       if (expression.get(j).equals("π")){
         expression.set(j, ""+PI);
       }
