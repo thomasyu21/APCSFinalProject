@@ -1,17 +1,18 @@
 import java.util.*;
 
 class Calculator{
+  public String ans;
   public ArrayList<Button> buttons;
   public boolean annoying, rad, inv;
-  private ArrayList<String> expression, expressionOld, nums, ops, misc, end;
-  private boolean DEBUG = true;
   private int openParen, closeParen;
+  private ArrayList<String> expression, expressionOld, nums, ops, misc, end;
   
   public Calculator(){
     annoying = true;
     rad = true;
     openParen = 0;
     closeParen = 0;
+    ans = "0.0";
     expression = new ArrayList<String>();
     expressionOld = new ArrayList<String>();
     expressionOld.add("0");
@@ -82,6 +83,7 @@ class Calculator{
         if (!annoying){
           //before eval, 'process' for ~7 seconds
         }
+        expressionOld = new ArrayList<String>(expression); // makes copy
         eval();
         scramble();
         break;
@@ -155,7 +157,7 @@ class Calculator{
   private void eval(){
     expressionFix();
     evalHelp(expression);
-    expressionOld.add(expression.get(0));
+    ans = expression.remove(0);
   }
   
   private void evalHelp(ArrayList<String> e){
@@ -317,7 +319,7 @@ class Calculator{
         }
       }
       if (expression.get(j).equals("Ans")){
-        expression.set(j, expressionOld.get(expressionOld.size()-1));
+        expression.set(j, ans);
       }
       if (expression.get(j).equals("π")){
         expression.set(j, ""+PI);
