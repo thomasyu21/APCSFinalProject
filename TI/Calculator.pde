@@ -149,7 +149,7 @@ class Calculator{
             i--;
             break;
           case "cos(": 
-            if (rad){
+             if (rad){
               e.set(i, ""+cos(Float.parseFloat(e.remove(i+1))%(PI*2)));
             }else{
               e.set(i, ""+cos(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
@@ -283,7 +283,7 @@ class Calculator{
   }
   
   private void expressionFix(){
-    for (int j = 0; j < expression.size()-1; j++){
+    for (int j = 0; j < expression.size(); j++){
       if (expression.get(j).equals("π")){
         expression.set(j, ""+PI);
       }
@@ -301,15 +301,17 @@ class Calculator{
           i--;
         }
       }catch (NumberFormatException e){}
+    }
+    for (int k = 0; k < expression.size()-1; k++){
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
-      if ((expression.get(i).equals(")") && !(ops.contains(expression.get(i+1)) || expression.get(i+1).equals(")")) ||
-          (!(ops.contains(expression.get(i)) || expression.get(i).equals("(")) && (funcs.contains(expression.get(i+1)) || expression.get(i+1).equals("("))))){
-        if (!expression.get(i+1).equals("pow(")){
-          expression.add(i+1, "×");
+      if ((expression.get(k).equals(")") && !(ops.contains(expression.get(k+1)) || expression.get(k+1).equals(")")) ||
+          (!(ops.contains(expression.get(k)) || expression.get(k).equals("(")) && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("("))))){
+        if (!expression.get(k+1).equals("pow(")){
+          expression.add(k+1, "×");
         }
       }
-      if (funcs.contains(expression.get(i)) || expression.get(i).equals("pow(")){
-        expression.add(i+1, "(");
+      if (funcs.contains(expression.get(k)) || expression.get(k).equals("pow(")){
+        expression.add(k+1, "(");
       }
       while (closeParen < openParen){
         expression.add(")");
