@@ -219,10 +219,36 @@ class Calculator{
         }
       }
       for (int j = 0; j < e.size(); j++){
-        //multiplication, division
+        switch (e.get(j)){
+          case "×":
+            float num1 = Float.parseFloat(e.remove(j-1));
+            float num2 = Float.parseFloat(e.remove(j));
+            e.set(j-1, num1*num2 + "");
+            j--;
+            break;
+          case "÷":
+            float num3 = Float.parseFloat(e.remove(j-1));
+            float num4 = Float.parseFloat(e.remove(j));
+            e.set(j-1, num3/num4 + "");
+            j--;
+            break;
+        }
       }
       for (int k = 0; k < e.size(); k++){
-        //addition, subtraction
+        switch (e.get(k)){
+          case "+":
+            float num1 = Float.parseFloat(e.remove(k-1));
+            float num2 = Float.parseFloat(e.remove(k));
+            e.set(k-1, num1+num2 + "");
+            k--;
+            break;
+          case "-":
+            float num3 = Float.parseFloat(e.remove(k-1));
+            float num4 = Float.parseFloat(e.remove(k));
+            e.set(k-1, num3-num4 + "");
+            k--;
+            break;
+        }
       }
     }catch (Exception a){
       expression.clear();
