@@ -25,12 +25,12 @@ class Calculator{
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E", "!"));
     end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")"));
     buttons = new ArrayList<Button>();
-    buttons.add(new Button("Mode", 730, 45, 220, 50));
-    buttons.add(new Button("Rad", 130, 415, 220, 50));
+    buttons.add(new Button("Mode", 6*dx + gx/2, gy + ly/2, 2*lx + gx, ly));
+    buttons.add(new Button("Rad", dx + gx/2, 5*dy + ly/2, 2*lx + gx, ly));
     for (int m = 0; m < buttonArray.length; m++){
       for (int n = 0; n < buttonArray[0].length; n++){
         if (!buttonArray[m][n].equals("Rad")){
-          buttons.add(new Button(buttonArray[m][n], (120*n)+70, 415+(70*m), 100, 50));
+          buttons.add(new Button(buttonArray[m][n], (n+1)*dx - lx/2, (m+5)*dy + ly/2, lx, ly));
         }
       }
     }
@@ -50,10 +50,14 @@ class Calculator{
     switch (id){
       case "Mode":
         annoying = !annoying;
-        if (bgState == 'a')
+        if (bgState == 'a'){
+          surface.setTitle(":|");
           bgState = 'n';
-        else if (bgState == 'n')
+        }
+        else if (bgState == 'n'){
+          surface.setTitle(":)");
           bgState = 'a';
+        }
         scramble();
         newInv = inv;
         break;
