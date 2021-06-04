@@ -135,8 +135,8 @@ void mouseReleased(){
 void draw(){
   make(); // display buttons
   screen(); // display updated screen expression
+  coords(); // display x and y pos of cursor
   expDebug(); // Print out the expression in console
-  //coords(); // display x and y pos of cursor
 }
 
 void screen(){
@@ -210,18 +210,15 @@ void screen(){
 }
 
 void coords(){
-  fill(255);
-  rect(mouseX, mouseY+25, 80, 50);
   fill(255, 0, 0);
-  circle(mouseX, mouseY, 3);
-  fill(0);
-  textSize(15);
-  text("X: "+mouseX, mouseX, mouseY+15);
-  text("Y: "+mouseY, mouseX, mouseY+30);
+  circle(mouseX, mouseY, 5);
+  System.out.println("\n\nX: "+mouseX+"\tY: "+mouseY);
 }
 
 void expDebug(){
-  for (String i : calc.expression)
+  for (String i : (solve)? calc.expressionOld : calc.expression)
     System.out.print(i);
+  if (solve)
+    System.out.print(" = "+calc.ans);
   System.out.print("\n");
 }
