@@ -157,7 +157,9 @@ class Calculator{
   private void eval(){
     expressionFix();
     evalHelp(expression);
-    ans = expression.remove(0);
+    if (!expression.get(0).equals("ERROR"))
+      ans = expression.remove(0);
+    expression.clear();
   }
   
   private void evalHelp(ArrayList<String> e){
@@ -240,7 +242,7 @@ class Calculator{
             i--;
             break;
           case "E":
-            e.set(i-1, ""+Float.parseFloat(e.remove(i-1))*pow(10, Float.parseFloat(e.remove(i))));
+            e.set(i-1, cut(Float.parseFloat(e.remove(i-1))*pow(10, Float.parseFloat(e.remove(i)))));
             i--;
             break;
         }
@@ -315,7 +317,20 @@ class Calculator{
         try{
           Float current = Float.parseFloat(expression.get(j-1));
         }catch (Exception e){
-          expression.set(j, "-"+expression.remove(j+1));
+          switch(expression.get(j+1)){
+            case "Ans":
+              expression.set(j, "-"+ans);
+              break;
+            case "π":
+              expression.set(j, "-"+PI);
+              break;
+            case "e":
+              expression.set(j, "-"+exp(1.0));
+              break;
+            default:
+              expression.set(j, "-"+expression.get(j+1));
+          }
+          expression.remove(j+1);
         }
       }
       if (expression.get(j).equals("Ans")){
