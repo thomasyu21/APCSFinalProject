@@ -88,3 +88,8 @@ CW Log June 2 2021
 HW Log June 2 2021
 - Anthony Nosaryev
 	- Reworked TI to display all features relative to the size rather than at specific coordinates.
+	
+HW Log June 3 2021
+- Thomas Yu
+	- Implemented the evalHelp method.
+	- Updated expressionFix to account for negative numbers, Ans, pi, and e.

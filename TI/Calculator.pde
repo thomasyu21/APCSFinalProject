@@ -140,6 +140,14 @@ class Calculator{
           expression.add(id);
         }
         break;
+      case "+":
+      case "-":
+      case "×":
+      case "÷":
+        if (expression.size() > 0 && !ops.contains(expression.get(expression.size()-1))){
+          expression.add(id);
+        }
+        break;
       default:
         expression.add(id);
         if (id.contains("(")){
@@ -290,6 +298,7 @@ class Calculator{
             break;
         }
       }
+      Float.parseFloat(e.get(0));
     }catch (Exception a){
       expression.clear();
       expression.add("ERROR");
