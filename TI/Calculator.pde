@@ -2,14 +2,11 @@ import java.util.*;
 
 class Calculator{
   public ArrayList<Button> buttons;
-  public boolean annoying, rad, inv;
   private int openParen, closeParen;
   public String ans, ansOld;
   private ArrayList<String> expression, expressionOld, nums, ops, backops, misc, end;
   
   public Calculator(){
-    annoying = true;
-    rad = true;
     openParen = 0;
     closeParen = 0;
     ans = "0.0";
@@ -411,15 +408,15 @@ class Calculator{
       Collections.shuffle(ops);
       Collections.shuffle(misc);
       for (Button b : buttons){
-        if (nums.contains(b.getIdentity(annoying))){
+        if (nums.contains(b.getIdentity())){
           b.setIdentity(nums.get(0));
           nums.add(nums.remove(0));
         }
-        else if (ops.contains(b.getIdentity(annoying))){
+        else if (ops.contains(b.getIdentity())){
           b.setIdentity(ops.get(0));
           ops.add(ops.remove(0));
         }
-        else if (misc.contains(b.getIdentity(annoying))){
+        else if (misc.contains(b.getIdentity())){
           b.setIdentity(misc.get(0));
           misc.add(misc.remove(0));
         }
