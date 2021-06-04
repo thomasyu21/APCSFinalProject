@@ -96,38 +96,34 @@ void make(){
           fill(255, 50);
         if (i > 1 || j > 0)
           rect((i+1)*dx - lx/2, (j+5)*dy + ly/2, lx, ly, 10);
-        switch(caps[j][i]){
+        String cap = caps[j][i];
+        switch(cap){
           case "Rad":
-            fill((calc.rad)? 255 : 150);
-            text("Rad", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
-            break;
           case "Deg":
-            fill((calc.rad)? 150 : 255);
-            text("Deg", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
+            fill((calc.rad ^ cap.equals("Deg"))? 255 : 150);
             break;
           case "del":
             fill(255);
-            text((calc.inv)? "CE":"del", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
+            if (calc.inv) cap = "CE";
             break;
           case "Inv":
             fill((calc.inv)? 255 : 150);
-            text("Inv", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
           case "sin":
           case "cos":
           case "tan":
             fill(255);
-            text((calc.inv)? "arc"+caps[j][i]:caps[j][i], (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
+            if (calc.inv) cap = "arc"+cap;
             break;
           case "Ans":
             fill(255);
-            text((calc.inv)? "Rand" : "Ans", (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
+            if (calc.inv) cap = "Rand";
             break;
           default:
             fill(255);
-            text(caps[j][i], (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
             break;
         }
+        text(cap, (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
       }
     }
   }
