@@ -133,6 +133,16 @@ void make(){
   }
 }
 
+void mouseReleased(){
+  for (Button b : calc.buttons){
+    if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2){
+      calc.buttonClicked(b.getIdentity(calc.annoying));
+      solve = b.getIdentity(calc.annoying).equals("=");
+    }
+  }
+  redraw();
+}
+
 void draw(){
   make(); // display buttons
   screen(); // display updated screen expression
@@ -143,23 +153,6 @@ void draw(){
 void screen(){
   fill(0);
   textFont(screenFont);
-  screenExpression();
-  textAlign(CENTER, CENTER);
-  textSize(22);
-}
-
-void coords(){
-  fill(255);
-  rect(mouseX, mouseY+25, 80, 50);
-  fill(255, 0, 0);
-  circle(mouseX, mouseY, 3);
-  fill(0);
-  textSize(15);
-  text("X: "+mouseX, mouseX, mouseY+15);
-  text("Y: "+mouseY, mouseX, mouseY+30);
-}
-
-void screenExpression(){
   textAlign(LEFT, CENTER);
   int pos = (int) gx;
   int max = width - (int) gx*4;
@@ -219,16 +212,23 @@ void screenExpression(){
   }else{
     text("Ans: "+calc.ans, (int) gx*2, 2*height/5);
   }
+  if (calc.ans.equals("ERROR")
+    ||calc.ans.equals("Infinity")
+    ||calc.ans.equals("NaN"))
+    calc.ans = calc.ansOld;
+  textAlign(CENTER, CENTER);
+  textSize(22);
 }
 
-void mouseReleased(){
-  for (Button b : calc.buttons){
-    if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2){
-      calc.buttonClicked(b.getIdentity(calc.annoying));
-      solve = b.getIdentity(calc.annoying).equals("=");
-    }
-  }
-  redraw();
+void coords(){
+  fill(255);
+  rect(mouseX, mouseY+25, 80, 50);
+  fill(255, 0, 0);
+  circle(mouseX, mouseY, 3);
+  fill(0);
+  textSize(15);
+  text("X: "+mouseX, mouseX, mouseY+15);
+  text("Y: "+mouseY, mouseX, mouseY+30);
 }
 
 void expDebug(){
