@@ -5,7 +5,7 @@ class Calculator{
   public boolean annoying, rad, inv;
   private int openParen, closeParen;
   public String ans, ansOld;
-  private ArrayList<String> expression, expressionOld, nums, ops, misc, end;
+  private ArrayList<String> expression, expressionOld, nums, ops, backops, misc, end;
   
   public Calculator(){
     annoying = true;
@@ -24,8 +24,9 @@ class Calculator{
      {"Ans", "E", "pow(", "0", ".", "=", "+"}};
     nums = new ArrayList<String>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
+    backops = new ArrayList<String>(Arrays.asList("pow(", "!", "%"));
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E", "!"));
-    end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")"));
+    end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")", "%", "!"));
     buttons = new ArrayList<Button>();
     buttons.add(new Button("Mode", 6*dx + gx/2, gy + ly/2, 2*lx + gx, ly));
     buttons.add(new Button("Rad", dx + gx/2, 5*dy + ly/2, 2*lx + gx, ly));
@@ -120,13 +121,14 @@ class Calculator{
         }
         break;
       case "-":
-        if (expression.isEmpty() ^ !expression.get(expression.size()-1).equals("-"))
+        if (expression.size() == 0 || (!expression.isEmpty() && !expression.get(expression.size()-1).equals("-")))
           expression.add(id);
           break;
       case "+":
       case "×":
       case "÷":
       case "%":
+      case "!":
         if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1)))
           expression.add(id);
         break;
@@ -136,7 +138,7 @@ class Calculator{
         }
         break;
       case "E":
-        if (expression.size() > 0 && nums.contains(expression.get(expression.size()-1)) && place(id)){
+        if (expression.size() > 0 && end.contains(expression.get(expression.size()-1)) && place(id)){
           expression.add(id);
         }
         break;
@@ -147,6 +149,10 @@ class Calculator{
         }
         break;
     }
+    if (!(id.equals("CE") || ops.contains(id) || backops.contains(id) || expression.size() < 2) && (
+        expression.get(expression.size()-2).equals("!") ||
+        expression.get(expression.size()-2).equals("%")))
+      expression.add(expression.size()-1, "×");
     inv = newInv;
   }
   
@@ -382,7 +388,8 @@ class Calculator{
     }
     for (int k = 0; k < expression.size()-1; k++){
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
-      if ((expression.get(k).equals(")") && !(ops.contains(expression.get(k+1)) || expression.get(k+1).equals(")"))) ||
+      ArrayList<String> neOps = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷", "%", "!", "E")); 
+      if ((expression.get(k).equals(")") && !(neOps.contains(expression.get(k+1)) || expression.get(k+1).equals(")"))) ||
           (end.contains(expression.get(k)) && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("(")))){
         if (!expression.get(k+1).equals("pow(")){
           expression.add(k+1, "×");
