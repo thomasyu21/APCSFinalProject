@@ -382,8 +382,8 @@ class Calculator{
     }
     for (int k = 0; k < expression.size()-1; k++){
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
-      if ((expression.get(k).equals(")") && !(ops.contains(expression.get(k+1)) || expression.get(k+1).equals(")")) ||
-          (!(ops.contains(expression.get(k)) || expression.get(k).equals("(")) && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("("))))){
+      if ((expression.get(k).equals(")") && !(ops.contains(expression.get(k+1)) || expression.get(k+1).equals(")"))) ||
+          (!expression.get(k).contains("(") && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("(")))){
         if (!expression.get(k+1).equals("pow(")){
           expression.add(k+1, "×");
         }
