@@ -210,12 +210,12 @@ void screen(){
     text(calc.ans, max, 2*height/5);
     textAlign(LEFT, CENTER);
   }else{
+    if (calc.ans.equals("ERROR")
+      ||calc.ans.equals("Infinity")
+      ||calc.ans.equals("NaN"))
+      calc.ans = calc.ansOld;
     text("Ans: "+calc.ans, (int) gx*2, 2*height/5);
   }
-  if (calc.ans.equals("ERROR")
-    ||calc.ans.equals("Infinity")
-    ||calc.ans.equals("NaN"))
-    calc.ans = calc.ansOld;
   textAlign(CENTER, CENTER);
   textSize(22);
 }
