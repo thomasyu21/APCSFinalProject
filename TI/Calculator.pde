@@ -129,6 +129,14 @@ class Calculator{
           expression.add(id);
         }
         break;
+      case "+":
+      case "-":
+      case "×":
+      case "÷":
+        if (expression.size() > 0 && !ops.contains(expression.get(expression.size()-1))){
+          expression.add(id);
+        }
+        break;
       default:
         expression.add(id);
         if (id.contains("(")){
@@ -157,8 +165,7 @@ class Calculator{
   private void eval(){
     expressionFix();
     evalHelp(expression);
-    if (!expression.get(0).equals("ERROR"))
-      ans = expression.remove(0);
+    ans = expression.remove(0);
     expression.clear();
   }
   
@@ -279,6 +286,7 @@ class Calculator{
             break;
         }
       }
+      Float.parseFloat(e.get(0));
     }catch (Exception a){
       expression.clear();
       expression.add("ERROR");
