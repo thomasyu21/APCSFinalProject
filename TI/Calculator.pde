@@ -120,7 +120,7 @@ class Calculator{
         }
         break;
       case "-":
-        if (expression.size() == 0 || (!expression.isEmpty() && !expression.get(expression.size()-1).equals("-")))
+        if (expression.isEmpty() ^ !expression.get(expression.size()-1).equals("-"))
           expression.add(id);
           break;
       case "+":
@@ -304,7 +304,7 @@ class Calculator{
       if (e.get(i).equals("(")){
         numOpen++;
       }
-      if (e.get(i).equals(")")){
+      else if (e.get(i).equals(")")){
         numClose++;
       }
       if (numOpen > 0 && numOpen == numClose){
@@ -327,7 +327,7 @@ class Calculator{
     for (int j = 0; j < expression.size(); j++){
       if (expression.get(j).equals("-")){
         try{
-          Float current = Float.parseFloat(expression.get(j-1));
+          Float.parseFloat(expression.get(j-1));
         }catch (Exception e){
           if (expression.size() > 1){
           switch(expression.get(j+1)){
@@ -372,7 +372,7 @@ class Calculator{
     for (int i = 0; i < expression.size()-1; i++){
       try{
         if (!(expression.get(i).contains("."))){
-          Float current = Float.parseFloat(expression.get(i));
+          Float.parseFloat(expression.get(i));
         }
         if (nums.contains(expression.get(i+1)) || expression.get(i+1).equals(".")){
           expression.set(i, expression.get(i) + expression.remove(i+1));
@@ -383,7 +383,7 @@ class Calculator{
     for (int k = 0; k < expression.size()-1; k++){
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
       if ((expression.get(k).equals(")") && !(ops.contains(expression.get(k+1)) || expression.get(k+1).equals(")"))) ||
-          (!expression.get(k).contains("(") && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("(")))){
+          (end.contains(expression.get(k)) && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("(")))){
         if (!expression.get(k+1).equals("pow(")){
           expression.add(k+1, "×");
         }
@@ -439,8 +439,7 @@ class Calculator{
              * Math.sqrt(2*Math.PI));
     g *= 1.0 + 76.18009173/(n + 0) - 86.50532033/(n + 1) + 24.01409822/(n + 2)
              - 1.231739516/(n + 3) + 0.00120858003/(n + 4) - 0.00000536382/(n + 5);
-    String str = "" + g;
-    return str.substring(0, str.indexOf(".") + 10);
+    return cut((float) g);
     
     //int s = (int) Math.log10(g);
     //if (g > 1)
