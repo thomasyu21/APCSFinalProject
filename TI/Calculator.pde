@@ -120,7 +120,7 @@ class Calculator{
         }
         break;
       case "-":
-        if (!expression.isEmpty() && !expression.get(expression.size()-1).equals("-"))
+        if (expression.size() == 0 || (!expression.isEmpty() && !expression.get(expression.size()-1).equals("-")))
           expression.add(id);
           break;
       case "+":
@@ -329,30 +329,44 @@ class Calculator{
         try{
           Float current = Float.parseFloat(expression.get(j-1));
         }catch (Exception e){
+          if (expression.size() > 1){
           switch(expression.get(j+1)){
             case "Ans":
               expression.set(j, "-"+ans);
+              expression.add(j+1, ")");
+              expression.add(j, "(");
               break;
             case "π":
               expression.set(j, "-"+PI);
+              expression.add(j+1, ")");
+              expression.add(j, "(");
               break;
             case "e":
               expression.set(j, "-"+exp(1.0));
+              expression.add(j+1, ")");
+              expression.add(j, "(");
               break;
             default:
               expression.set(j, "-"+expression.get(j+1));
           }
-          expression.remove(j+1);
+            expression.remove(j+1);
+          }
         }
       }
       if (expression.get(j).equals("Ans")){
         expression.set(j, ans);
+        expression.add(j+1, ")");
+        expression.add(j, "(");
       }
       if (expression.get(j).equals("π")){
         expression.set(j, ""+PI);
+        expression.add(j+1, ")");
+        expression.add(j, "(");
       }
       if (expression.get(j).equals("e")){
         expression.set(j, ""+exp(1.0));
+        expression.add(j+1, ")");
+        expression.add(j, "(");
       }
     }
     for (int i = 0; i < expression.size()-1; i++){
@@ -377,10 +391,10 @@ class Calculator{
       if (funcs.contains(expression.get(k)) || expression.get(k).equals("pow(")){
         expression.add(k+1, "(");
       }
-      while (closeParen < openParen){
-        expression.add(")");
-        closeParen++;
-      }
+    }
+    while (closeParen < openParen){
+      expression.add(")");
+      closeParen++;
     }
   }
   
