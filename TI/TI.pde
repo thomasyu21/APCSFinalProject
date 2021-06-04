@@ -1,9 +1,8 @@
 Calculator calc;
 char bgState;
-boolean solve;
 float gx, gy, lx, ly, dx, dy;
-PFont buttonFont;
-PFont screenFont;
+boolean annoying, rad, inv, solve;
+PFont buttonFont, screenFont;
 PImage anndef, normal, sinful, cosmic, tanned, currBg;
 String[][] caps;
 
@@ -23,6 +22,10 @@ void setup(){
   ly = 3*gy;
   dx = gx + lx;
   dy = gy + ly;
+  annoying = true;
+  rad = true;
+  inv = false;
+  solve = false;
   calc = new Calculator();
   caps = new String[][]
   {{"Rad", "Deg", "x!", "(", ")", "%", "del"},
@@ -30,7 +33,6 @@ void setup(){
    {"π", "cos", "log", "4", "5", "6", "×"},
    {"e", "tan", "√", "1", "2", "3", "-"},
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
-  solve = false;
   buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", width/35);
   screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 3*width/70);
   anndef = loadImage("assets/images/anndef.jpg");
@@ -38,16 +40,13 @@ void setup(){
   sinful = loadImage("assets/images/sinful.jpg");
   cosmic = loadImage("assets/images/cosmic.jpg");
   tanned = loadImage("assets/images/tanned.jpg");
-  if (calc.annoying)
-    bgState = 'a';
-  else
-    bgState = 'n';
+  bgState = (annoying)? 'a' : 'n';
   rectMode(CENTER);
   make();
-  
 }
 
 void make(){
+  float ty = height/200;
   switch (bgState){
     case 'a':
       currBg = anndef;
@@ -67,7 +66,6 @@ void make(){
   }
   currBg.resize(width, height);
   background(currBg);
-  float ty = height/200;
   textFont(buttonFont);
   textAlign(CENTER, CENTER);
   noStroke();
@@ -75,9 +73,9 @@ void make(){
   rect(dx + gx/2, 5*dy + ly/2, 2*lx + gx, ly, 10); // Rad
   rect(6*dx + gx/2, gy + ly/2, 2*lx + gx, ly, 10); // Mode
   rect(gx+lx/2, gy+ly/2, lx, ly, 10); // Name
-  fill((calc.annoying)? 255 : 150);
+  fill((annoying)? 255 : 150);
   text("Annoy", 11*dx/2 + 3*gx/4, gy + ly/2 - ty);
-  fill((calc.annoying)? 150 : 255);
+  fill((annoying)? 150 : 255);
   text("Work", 13*dx/2 + gx/4, gy + ly/2 - ty);
   fill(255);
   text("TI-∞", gx + lx/2, gy + ly/2 - ty);
@@ -89,42 +87,37 @@ void make(){
   noStroke();
   for (int i = 0; i < 7; i++){
     for (int j = 0; j < 5; j++){
-      if (!(caps[j][i].equals(""))){
-        if (i > 2 && i < 6 && j > 0)
-          fill(255, 80);
-        else
-          fill(255, 50);
-        if (i > 1 || j > 0)
-          rect((i+1)*dx - lx/2, (j+5)*dy + ly/2, lx, ly, 10);
-        String cap = caps[j][i];
-        switch(cap){
-          case "Rad":
-          case "Deg":
-            fill((calc.rad ^ cap.equals("Deg"))? 255 : 150);
-            break;
-          case "del":
-            fill(255);
-            if (calc.inv) cap = "CE";
-            break;
-          case "Inv":
-            fill((calc.inv)? 255 : 150);
-            break;
-          case "sin":
-          case "cos":
-          case "tan":
-            fill(255);
-            if (calc.inv) cap = "arc"+cap;
-            break;
-          case "Ans":
-            fill(255);
-            if (calc.inv) cap = "Rand";
-            break;
-          default:
-            fill(255);
-            break;
-        }
-        text(cap, (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
+      fill(255, (i > 2 && i < 6 && j > 0)? 80 : 50);
+      if (i > 1 || j > 0)
+        rect((i+1)*dx - lx/2, (j+5)*dy + ly/2, lx, ly, 10);
+      String cap = caps[j][i];
+      switch(cap){
+        case "Rad":
+        case "Deg":
+          fill((rad ^ cap.equals("Deg"))? 255 : 150);
+          break;
+        case "del":
+          fill(255);
+          if (inv) cap = "CE";
+          break;
+        case "Inv":
+          fill((inv)? 255 : 150);
+          break;
+        case "sin":
+        case "cos":
+        case "tan":
+          fill(255);
+          if (inv) cap = "arc"+cap;
+          break;
+        case "Ans":
+          fill(255);
+          if (inv) cap = "Rand";
+          break;
+        default:
+          fill(255);
+          break;
       }
+      text(cap, (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
     }
   }
 }
@@ -132,8 +125,8 @@ void make(){
 void mouseReleased(){
   for (Button b : calc.buttons){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2){
-      calc.buttonClicked(b.getIdentity(calc.annoying));
-      solve = b.getIdentity(calc.annoying).equals("=");
+      calc.buttonClicked(b.getIdentity());
+      solve = b.getIdentity().equals("=");
     }
   }
   redraw();
