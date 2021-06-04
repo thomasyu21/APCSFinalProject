@@ -228,7 +228,6 @@ void mouseReleased(){
       solve = b.getIdentity(calc.annoying).equals("=");
     }
   }
-  System.out.println(Float.parseFloat(""+PI));
   redraw();
 }
 
