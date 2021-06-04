@@ -1,10 +1,10 @@
 import java.util.*;
 
 class Calculator{
-  public String ans;
   public ArrayList<Button> buttons;
   public boolean annoying, rad, inv;
   private int openParen, closeParen;
+  public String ans, ansOld;
   private ArrayList<String> expression, expressionOld, nums, ops, misc, end;
   
   public Calculator(){
@@ -119,6 +119,17 @@ class Calculator{
           closeParen++;
         }
         break;
+      case "-":
+        if (!expression.isEmpty() && !expression.get(expression.size()-1).equals("-"))
+          expression.add(id);
+          break;
+      case "+":
+      case "×":
+      case "÷":
+      case "%":
+        if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1)))
+          expression.add(id);
+        break;
       case ".":
         if (place(id)){
           expression.add(id);
@@ -157,8 +168,8 @@ class Calculator{
   private void eval(){
     expressionFix();
     evalHelp(expression);
-    if (!expression.get(0).equals("ERROR"))
-      ans = expression.remove(0);
+    ansOld = ans;
+    ans = expression.remove(0);
     expression.clear();
   }
   
