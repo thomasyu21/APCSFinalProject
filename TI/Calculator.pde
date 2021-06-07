@@ -417,7 +417,7 @@ class Calculator{
     }
   }
   
-  private void expressionSwap(String id){
+  private void alterExpression(String id){
     if (id.equals("Rad")){
       if (rad){
         for (int i = 0; i < expression.size(); i++){
