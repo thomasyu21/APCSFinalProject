@@ -169,6 +169,9 @@ class Calculator{
   }
   
   private void eval(){
+    if (annoying){
+      annoyingExpressionFix();
+    }
     expressionFix();
     evalHelp(expression);
     ansOld = ans;
@@ -399,6 +402,18 @@ class Calculator{
     while (closeParen < openParen){
       expression.add(")");
       closeParen++;
+    }
+  }
+  
+  private void annoyingExpressionFix(){
+    if (expression.contains("%")){
+      expression.clear();
+      expression.add("99999999999999999999");
+    }
+    for (int i = 0; i < expression.size(); i++){
+      if (expression.get(i).equals(".")){
+        expression.set(i, "×");
+      }
     }
   }
   
