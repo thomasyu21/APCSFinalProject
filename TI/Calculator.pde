@@ -22,7 +22,7 @@ class Calculator{
     nums = new ArrayList<String>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
     backops = new ArrayList<String>(Arrays.asList("pow(", "!", "%"));
-    misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E", "!"));
+    misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E"));
     end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")", "%", "!"));
     buttons = new ArrayList<Button>();
     buttons.add(new Button("Mode", 6*dx + gx/2, gy + ly/2, 2*lx + gx, ly));
@@ -86,6 +86,9 @@ class Calculator{
         scramble();
         break;
       case "Rad":
+        if (annoying){
+          alterExpression(id);
+        }
         rad = !rad;
         newInv = inv;
         break;
@@ -128,6 +131,7 @@ class Calculator{
       case "!":
         if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1)))
           expression.add(id);
+          alterExpression(id);
         break;
       case ".":
         if (place(id)){
