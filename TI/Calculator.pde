@@ -417,6 +417,29 @@ class Calculator{
     }
   }
   
+  private void expressionSwap(String id){
+    if (id.equals("Rad")){
+      if (rad){
+        for (int i = 0; i < expression.size(); i++){
+          try{
+            expression.set(i, ""+degrees(Float.parseFloat(expression.get(i))));
+          }catch(NumberFormatException e){}
+        }
+      }else{
+        for (int j = 0; j < expression.size(); j++){
+          try{
+            expression.set(j, ""+radians(Float.parseFloat(expression.get(j))));
+          }catch(NumberFormatException e){}
+        }
+      }
+    }
+    if (id.equals("!")){
+      for (int k = 0; k < expression.size(); k++){
+          expression.set(k, expression.get(k).toUpperCase());
+      }
+    }
+  }
+  
   private void scramble(){
     if (annoying){
       Collections.shuffle(nums);
