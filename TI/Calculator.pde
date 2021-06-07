@@ -178,8 +178,15 @@ class Calculator{
     }
     expressionFix();
     evalHelp(expression);
-    ansOld = ans;
-    ans = expression.remove(0);
+    if (annoying){
+      if (Math.random() > 0.5){
+        ansOld = ans;
+        ans = expression.remove(0);
+      }
+    }else{
+      ansOld = ans;
+      ans = expression.remove(0);
+    }
     expression.clear();
   }
   
