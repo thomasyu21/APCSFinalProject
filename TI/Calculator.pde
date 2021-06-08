@@ -369,32 +369,36 @@ class Calculator{
   
   private void expressionFix(){
     for (int j = 0; j < expression.size(); j++){
-      expression.set(j, expression.get(j).toLowerCase());
+      if (!(expression.get(j).equals("Ans") || expression.get(j).equals("E"))){
+        expression.set(j, expression.get(j).toLowerCase());
+      }
       if (expression.get(j).equals("-")){
         try{
           Float.parseFloat(expression.get(j-1));
         }catch (Exception e){
-          if (expression.size() > 1){
-          switch(expression.get(j+1)){
-            case "Ans":
-              expression.set(j, "-"+ans);
-              expression.add(j+1, ")");
-              expression.add(j, "(");
-              break;
-            case "π":
-              expression.set(j, "-"+PI);
-              expression.add(j+1, ")");
-              expression.add(j, "(");
-              break;
-            case "e":
-              expression.set(j, "-"+exp(1.0));
-              expression.add(j+1, ")");
-              expression.add(j, "(");
-              break;
-            default:
-              expression.set(j, "-"+expression.get(j+1));
-          }
-            expression.remove(j+1);
+          if (j == 0 || !end.contains(expression.get(j-1))){
+            if (expression.size() > 1){
+            switch(expression.get(j+1)){
+              case "Ans":
+                expression.set(j, "-"+ans);
+                expression.add(j+1, ")");
+                expression.add(j, "(");
+                break;
+              case "π":
+                expression.set(j, "-"+PI);
+                expression.add(j+1, ")");
+                expression.add(j, "(");
+                break;
+              case "e":
+                expression.set(j, "-"+exp(1.0));
+                expression.add(j+1, ")");
+                expression.add(j, "(");
+                break;
+              default:
+                expression.set(j, "-"+expression.get(j+1));
+            }
+              expression.remove(j+1);
+            }
           }
         }
       }
