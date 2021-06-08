@@ -126,6 +126,12 @@ class Calculator{
         expression.add((inv)? "arc"+id : id);
         openParen++;
         break;
+      case "log(":
+      case "ln(":
+        if (annoying)
+          bgState = (id.contains("o"))? 'l' : 'e';
+        openParen++;
+        break;
       case "Ans":
         expression.add((inv)? randomAdd() : "Ans");
         break;
