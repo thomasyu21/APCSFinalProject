@@ -151,7 +151,7 @@ class Calculator{
       case "÷":
       case "%":
       case "!":
-        if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1)) && place("!"))
+        if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1)) && place(id))
           expression.add(id);
         if (annoying)
           alterExpression(id);
@@ -173,7 +173,7 @@ class Calculator{
         }
         break;
     }
-    if (!(id.equals("CE") || ops.contains(id) || backops.contains(id) || expression.size() < 2) && (
+    if (!(id.equals("CE") || ops.contains(id) || backops.contains(id) || expression.size() < 2 || id.equals(")")) && (
         expression.get(expression.size()-2).equals("!") ||
         expression.get(expression.size()-2).equals("%")))
       expression.add(expression.size()-1, "×");
