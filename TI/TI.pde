@@ -3,7 +3,7 @@ char bgState;
 float gx, gy, lx, ly, dx, dy;
 boolean annoying, rad, inv, solve;
 PFont buttonFont, screenFont;
-PImage anndef, normal, sinful, cosmic, tanned, currBg;
+PImage currBg, anndef, normal, sinful, cosmic, tanned, logged, eulers;
 String[][] caps;
 
 void setup(){
@@ -40,6 +40,8 @@ void setup(){
   sinful = loadImage("assets/images/sinful.jpg");
   cosmic = loadImage("assets/images/cosmic.jpg");
   tanned = loadImage("assets/images/tanned.jpg");
+  logged = loadImage("assets/images/logged.jpg");
+  eulers = loadImage("assets/images/eulers.jpg");
   bgState = (annoying)? 'a' : 'n';
   rectMode(CENTER);
   make();
@@ -62,6 +64,12 @@ void make(){
       break;
     case 't':
       currBg = tanned;
+      break;
+    case 'l':
+      currBg = logged;
+      break;
+    case 'e':
+      currBg = eulers;
       break;
   }
   currBg.resize(width, height);
