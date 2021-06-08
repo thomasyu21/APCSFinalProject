@@ -130,6 +130,7 @@ class Calculator{
       case "ln(":
         if (annoying)
           bgState = (id.contains("o"))? 'l' : 'e';
+        expression.add(id);
         openParen++;
         break;
       case "Ans":
@@ -150,8 +151,9 @@ class Calculator{
       case "÷":
       case "%":
       case "!":
-        if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1)))
+        if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1)) && place("!"))
           expression.add(id);
+        if (annoying)
           alterExpression(id);
         break;
       case ".":
@@ -367,6 +369,7 @@ class Calculator{
   
   private void expressionFix(){
     for (int j = 0; j < expression.size(); j++){
+      expression.set(j, expression.get(j).toLowerCase());
       if (expression.get(j).equals("-")){
         try{
           Float.parseFloat(expression.get(j-1));
