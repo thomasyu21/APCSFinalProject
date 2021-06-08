@@ -62,6 +62,19 @@ class Calculator{
         newInv = inv;
         break;
       case "CE":
+        if (annoying){
+          double temp = Math.random();
+          System.out.println(temp);
+          if (temp < 0.2){
+            //black out the screen
+          }
+          if (temp < 0.3){
+            expression.clear();
+          }
+          if (temp < 0.5){
+            //remove last button pressed
+          }
+        }
         if (inv){ // clear
           expression.clear(); 
           openParen = 0;
@@ -87,7 +100,9 @@ class Calculator{
         break;
       case "Rad":
         if (annoying){
+          numberCombine();
           alterExpression(id);
+          numberSplit();
         }
         rad = !rad;
         newInv = inv;
@@ -262,7 +277,11 @@ class Calculator{
             i--;
             break;
           case "ln(":
-            e.set(i, cut(log(Float.parseFloat(e.remove(i+1)))));
+            if (annoying){ 
+              e.set(i, cut((float)(Math.log10(exp(1.0))/Math.log10(Float.parseFloat(e.remove(i+1))))));
+            }else{
+              e.set(i, cut(log(Float.parseFloat(e.remove(i+1)))));
+            }
             i--;
             break;
           case "%":
@@ -370,10 +389,33 @@ class Calculator{
           }
         }
       }
+    }
+    numberCombine();
+    for (int k = 0; k < expression.size()-1; k++){
+      ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
+      ArrayList<String> neOps = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷", "%", "!", "E")); 
+      if ((expression.get(k).equals(")") && !(neOps.contains(expression.get(k+1)) || expression.get(k+1).equals(")"))) ||
+          (end.contains(expression.get(k)) && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("(")))){
+        if (!expression.get(k+1).equals("pow(")){
+          expression.add(k+1, "×");
+        }
+      }
+      if (funcs.contains(expression.get(k)) || expression.get(k).equals("pow(")){
+        expression.add(k+1, "(");
+      }
+    }
+    while (closeParen < openParen){
+      expression.add(")");
+      closeParen++;
+    }
+  }
+  
+  private void numberCombine(){
+    for (int j = 0; j < expression.size(); j++){
       if (expression.get(j).equals("Ans")){
-        expression.set(j, ans);
-        expression.add(j+1, ")");
-        expression.add(j, "(");
+          expression.set(j, ans);
+          expression.add(j+1, ")");
+          expression.add(j, "(");
       }
       if (expression.get(j).equals("π")){
         expression.set(j, ""+PI);
@@ -396,23 +438,6 @@ class Calculator{
           i--;
         }
       }catch (NumberFormatException e){}
-    }
-    for (int k = 0; k < expression.size()-1; k++){
-      ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
-      ArrayList<String> neOps = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷", "%", "!", "E")); 
-      if ((expression.get(k).equals(")") && !(neOps.contains(expression.get(k+1)) || expression.get(k+1).equals(")"))) ||
-          (end.contains(expression.get(k)) && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("(")))){
-        if (!expression.get(k+1).equals("pow(")){
-          expression.add(k+1, "×");
-        }
-      }
-      if (funcs.contains(expression.get(k)) || expression.get(k).equals("pow(")){
-        expression.add(k+1, "(");
-      }
-    }
-    while (closeParen < openParen){
-      expression.add(")");
-      closeParen++;
     }
   }
   
@@ -448,6 +473,18 @@ class Calculator{
       for (int k = 0; k < expression.size(); k++){
           expression.set(k, expression.get(k).toUpperCase());
       }
+    }
+  }
+  
+  private void numberSplit(){
+    for (int i = 0; i < expression.size(); i++){
+      try{
+        Float test = Float.parseFloat(expression.get(i));
+        String current = expression.remove(i);
+        for (int j = current.length()-1; j >= 0; j--){
+          expression.add(i, current.substring(j, j+1));
+        }
+      }catch (NumberFormatException e){}
     }
   }
   
