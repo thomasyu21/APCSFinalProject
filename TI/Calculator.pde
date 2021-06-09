@@ -130,6 +130,7 @@ class Calculator{
       case "ln(":
         if (annoying)
           bgState = (id.contains("o"))? 'l' : 'e';
+        expression.add(id);
         openParen++;
         break;
       case "Ans":
@@ -150,9 +151,11 @@ class Calculator{
       case "÷":
       case "%":
       case "!":
-        if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1)))
+        if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1))){
+          big = true;
           expression.add(id);
           alterExpression(id);
+        }
         break;
       case ".":
         if (place(id)){
