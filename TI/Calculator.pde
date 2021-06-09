@@ -173,7 +173,7 @@ class Calculator{
         }
         break;
     }
-    if (!(id.equals("CE") || ops.contains(id) || backops.contains(id) || expression.size() < 2 || id.equals(")")) && (
+    if (!(id.equals("CE") || ops.contains(id) || backops.contains(id) || expression.size() < 2 || id.equals(")") || id.equals("Mode")) && (
         expression.get(expression.size()-2).equals("!") ||
         expression.get(expression.size()-2).equals("%")))
       expression.add(expression.size()-1, "×");
