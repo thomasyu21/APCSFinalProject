@@ -370,26 +370,8 @@ class Calculator{
         }catch (Exception e){
           if (j == 0 || !end.contains(expression.get(j-1))){
             if (expression.size() > 1){
-            switch(expression.get(j+1)){
-              case "Ans":
-                expression.set(j, "-"+ans);
-                expression.add(j+1, ")");
-                expression.add(j, "(");
-                break;
-              case "π":
-                expression.set(j, "-"+PI);
-                expression.add(j+1, ")");
-                expression.add(j, "(");
-                break;
-              case "e":
-                expression.set(j, "-"+exp(1.0));
-                expression.add(j+1, ")");
-                expression.add(j, "(");
-                break;
-              default:
-                expression.set(j, "-"+expression.get(j+1));
-            }
-              expression.remove(j+1);
+               expression.set(j, "-1");
+               expression.add(j+1, "×");
             }
           }
         }
