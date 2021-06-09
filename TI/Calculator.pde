@@ -156,6 +156,8 @@ class Calculator{
       case "E":
         if (expression.size() > 0 && end.contains(expression.get(expression.size()-1)) && place(id)){
           expression.add(id);
+          expression.add("(");
+          openParen++;
         }
         break;
       default:
