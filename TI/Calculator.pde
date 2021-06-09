@@ -65,18 +65,13 @@ class Calculator{
         if (annoying){
           double temp = Math.random();
           System.out.println(temp);
-          if (temp < 0.2){
-            //black out the screen
-          }
-          if (temp < 0.3){
+          if (temp < 0.3)
             expression.clear();
-          }
-          if (temp < 0.5){
-            //remove last button pressed
-          }
+          else if (temp >= 0.8)
+            exit();
         }
-        if (inv){ // clear
-          expression.clear(); 
+        if (inv){ // clear expression
+          expression.clear();
           openParen = 0;
           closeParen = 0;
         }
