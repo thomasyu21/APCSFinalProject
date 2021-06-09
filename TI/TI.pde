@@ -1,7 +1,7 @@
 Calculator calc;
 char bgState;
 float gx, gy, lx, ly, dx, dy;
-boolean annoying, rad, inv, solve;
+boolean annoying, rad, inv, solve, big;
 PFont buttonFont, screenFont;
 PImage currBg, anndef, normal, sinful, cosmic, tanned, logged, eulers;
 String[][] caps;
@@ -26,6 +26,7 @@ void setup(){
   rad = true;
   inv = false;
   solve = false;
+  big = false;
   calc = new Calculator();
   caps = new String[][]
   {{"Rad", "Deg", "x!", "(", ")", "%", "del"},
@@ -33,8 +34,8 @@ void setup(){
    {"π", "cos", "log", "4", "5", "6", "×"},
    {"e", "tan", "√", "1", "2", "3", "-"},
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
-  buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", width/35);
-  screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 3*width/70);
+  buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", 1);
+  screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 1);
   anndef = loadImage("assets/images/anndef.jpg");
   normal = loadImage("assets/images/normal.jpg");
   sinful = loadImage("assets/images/sinful.jpg");
@@ -77,6 +78,7 @@ void make(){
   textFont(buttonFont);
   textAlign(CENTER, CENTER);
   noStroke();
+  textSize((big)? 2*width/35 : width/35);
   fill(255, 50);
   rect(dx + gx/2, 5*dy + ly/2, 2*lx + gx, ly, 10); // Rad
   rect(6*dx + gx/2, gy + ly/2, 2*lx + gx, ly, 10); // Mode
@@ -143,7 +145,7 @@ void mouseReleased(){
 void draw(){
   make(); // display buttons
   screen(); // display updated screen expression
-  coords(); // display x and y pos of cursor
+  coords(); // print out x and y positions of cursor in console
   expDebug(); // Print out the expression in console
 }
 
@@ -151,8 +153,8 @@ void screen(){
   fill(0);
   textFont(screenFont);
   textAlign(LEFT, CENTER);
-  int pos = (int) gx;
-  int max = width - (int) gx*4;
+  int pos = (int) gx*2;
+  int max = width - pos;
   int level = 0; // curr level of power, [0, 4]
   int[] levelQuan = {1, 0, 0, 0, 0}; // # unresolved left parentheses;
   ArrayList<String> screxp = (solve)? calc.getExpressionOld() : calc.getExpression();
@@ -160,45 +162,34 @@ void screen(){
     String str = screxp.get(i);
     if (str.equals("pow(")){
       if (level < 4){
-        if (level == 0)
-          pos += width/70;
-        pos += width/70;
         level ++;
         levelQuan[level] ++;
         textSize(width/40);
-        text("(", pos % max, height/5 - height*level/72 + height*(pos/max)/10);
-      }else
-        screxp.remove(screxp.size()-1);
-    }else{
-      if (level == 0){
-        textSize(width/21);
-        pos += width/35;
+        str = "(";
       }else{
-        pos += width/70;
-        if (levelQuan[level] > 0){
-          textSize(width/40);
-        }else{
-          while (levelQuan[level] == 0)
-            level --;
-          if (level == 0){
-            textSize(width/21);
-          }
-        }
-        if (level > 0 && str.contains("("))
-          levelQuan[level] ++;
+        screxp.remove(screxp.size()-1);
       }
-      if (pos % max + str.length()*width/35 > max)
-        pos += (width - 2*gx) - pos % max;
+    }else{
+      while (levelQuan[level] == 0)
+        level --;
+      if (level > 0 && str.contains("("))
+        levelQuan[level] ++;
+    }
+    if (pos % max + str.length()*width/21 > max){
+      pos += width - pos % max;
       if (pos > 2*max){
         screxp.remove(screxp.size()-1);
         return;
       }
-      text(str, pos % max, height/5 - height*level/72 + height*(pos/max)/10);
-      if (level > 0 && str.equals(")"))
-        levelQuan[level] --;
-      if (level == 0)
-        pos += (str.length()-1)*width/70;
-      pos += (str.length()-1)*width/70;
+    }
+    textSize((level == 0)? width/21 : width/40);
+    text(str, pos % max, height/5 - height*level/72 + height*(pos/max)/10);
+    if (level > 0 && str.equals(")"))
+      levelQuan[level] --;
+    if (level == 0){
+      pos += (str.length())*width/35;
+    }else{
+      pos += (str.length())*width/70;
     }
   }
   textSize(width/21);
@@ -214,12 +205,11 @@ void screen(){
     text("Ans: "+calc.ans, (int) gx*2, 2*height/5);
   }
   textAlign(CENTER, CENTER);
-  textSize(22);
 }
 
 void coords(){
   fill(255, 0, 0);
-  circle(mouseX, mouseY, 5);
+  // circle(mouseX, mouseY, 5); // Optionally draws a dot at current position
   System.out.println("\n\nX: "+mouseX+"\tY: "+mouseY);
 }
 
