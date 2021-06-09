@@ -93,3 +93,16 @@ HW Log June 3 2021
 - Thomas Yu
 	- Implemented the evalHelp method.
 	- Updated expressionFix to account for negative numbers, Ans, pi, and e.
+
+HW Log June 6 2021
+- Thomas Yu
+	- Began implementing annoying mode functions (Rad|Deg swap, !, and %).
+	
+CW Log June 7 2021
+- Thomas Yu
+	- Implemented annoying mode functions for ln(), history not saving, and the entire line clearing.
+	
+HW Log June 8 2021
+- Thomas Yu
+	- Fixed some issues introduced by annoying mode functions to allow calculations to properly occur.
+	- Fixes issues with unwanted multiplication symbols being added into the expression.
