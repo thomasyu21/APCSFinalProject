@@ -84,9 +84,9 @@ void make(){
   rect(6*dx + gx/2, gy + ly/2, 2*lx + gx, ly, 10); // Mode
   rect(gx+lx/2, gy+ly/2, lx, ly, 10); // Name
   fill((annoying)? 255 : 150);
-  text("Annoy", 11*dx/2 + 3*gx/4, gy + ly/2 - ty);
+  text((big)? "ANNOY" : "Annoy", 11*dx/2 + 3*gx/4, gy + ly/2 - ty);
   fill((annoying)? 150 : 255);
-  text("Work", 13*dx/2 + gx/4, gy + ly/2 - ty);
+  text((big)? "WORK" : "Work", 13*dx/2 + gx/4, gy + ly/2 - ty);
   fill(255);
   text("TI-∞", gx + lx/2, gy + ly/2 - ty);
   rect(width/2, 3*dy, width - 2*gx, 4*ly + 2*gy, 20); // Screen
@@ -127,6 +127,8 @@ void make(){
           fill(255);
           break;
       }
+      if (big)
+        cap = cap.toUpperCase();
       text(cap, (i+1)*dx - lx/2, (j+5)*dy + ly/2 - ty);
     }
   }
