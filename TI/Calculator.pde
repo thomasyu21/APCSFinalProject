@@ -157,7 +157,6 @@ class Calculator{
         }
         if (annoying)
           alterExpression(id);
-        }
         break;
       case ".":
         if (place(id)){
