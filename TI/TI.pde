@@ -1,8 +1,9 @@
 Calculator calc;
 char bgState;
 float gx, gy, lx, ly, dx, dy;
-boolean annoying, rad, inv, solve, big;
+boolean annoying, rad, inv, solve, struggle, big;
 PFont buttonFont, screenFont;
+String line;
 PImage currBg, anndef, normal, sinful, cosmic, tanned, logged, eulers;
 String[][] caps;
 
@@ -26,7 +27,9 @@ void setup(){
   rad = true;
   inv = false;
   solve = false;
+  struggle = false;
   big = false;
+  line = "";
   calc = new Calculator();
   caps = new String[][]
   {{"Rad", "Deg", "x!", "(", ")", "%", "del"},
@@ -139,16 +142,30 @@ void mouseReleased(){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2){
       calc.buttonClicked(b.getIdentity());
       solve = b.getIdentity().equals("=");
+      struggle = solve && !annoying;
     }
   }
-  redraw();
+  if (struggle) struggle();
+  else redraw();
 }
 
 void draw(){
-  make(); // display buttons
-  screen(); // display updated screen expression
-  coords(); // print out x and y positions of cursor in console
-  expDebug(); // Print out the expression in console
+  if (struggle){
+    textFont(screenFont);
+    textSize(width/21);
+    textAlign(LEFT, CENTER);
+    fill(255);
+    System.out.println(line);
+    rect(width/2, 3*dy, width - 2*gx, 4*ly + 2*gy, 20); // Screen
+    fill(0);
+    text(line, 2*gx, height/5);
+  }else{
+    System.out.println("lol no");
+    make(); // display buttons
+    screen(); // display updated screen expression
+    coords(); // print out x and y positions of cursor in console
+    expDebug(); // Print out the expression in console
+  }
 }
 
 void screen(){
@@ -207,6 +224,25 @@ void screen(){
     text("Ans: "+calc.ans, (int) gx*2, 2*height/5);
   }
   textAlign(CENTER, CENTER);
+}
+
+void struggle(){
+  loop();
+  BufferedReader txt = createReader("assets/text/work.txt");
+  String curr;
+  try{
+    while ((curr = txt.readLine()) != null){
+      if (random(4) < 1){
+        line = curr;
+        System.out.println("\t"+line);
+        delay((int)sq(random(5, 20))); // exponential variation
+      }
+    }
+  }catch (IOException e){}
+  noLoop();
+  System.out.println("hello?");
+  struggle = false;
+  redraw();
 }
 
 void coords(){
