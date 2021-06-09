@@ -457,7 +457,9 @@ class Calculator{
   private void annoyingExpressionFix(){
     if (expression.contains("%")){
       expression.clear();
-      expression.add("99999999999999999999");
+      expression.add("1");
+      expression.add("÷");
+      expression.add("0");
     }
     for (int i = 0; i < expression.size(); i++){
       if (expression.get(i).equals(".")){
