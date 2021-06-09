@@ -86,9 +86,6 @@ class Calculator{
         }
         break;
       case "=":
-        if (!annoying){
-          //before eval, 'process' for ~7 seconds
-        }
         expressionOld = new ArrayList<String>(expression); // makes copy
         eval();
         scramble();
@@ -141,13 +138,13 @@ class Calculator{
         if (expression.size() == 0 || (!expression.isEmpty() && !expression.get(expression.size()-1).equals("-")))
           expression.add(id);
           break;
+      case "!":
+          big = true;
       case "+":
       case "×":
       case "÷":
       case "%":
-      case "!":
         if (!expression.isEmpty() && end.contains(expression.get(expression.size()-1))){
-          big = true;
           expression.add(id);
         }
         break;
