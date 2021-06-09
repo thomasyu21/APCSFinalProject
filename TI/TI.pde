@@ -1,7 +1,7 @@
 Calculator calc;
 char bgState;
 float gx, gy, lx, ly, dx, dy;
-boolean annoying, rad, inv, solve, struggle, big;
+boolean annoying, rad, inv, solve, big;
 PFont buttonFont, screenFont;
 PImage currBg, anndef, normal, sinful, cosmic, tanned, logged, eulers;
 String[][] caps;
@@ -139,7 +139,6 @@ void mouseReleased(){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2){
       calc.buttonClicked(b.getIdentity());
       solve = b.getIdentity().equals("=");
-      struggle = solve && !annoying;
     }
   }
   redraw();
@@ -147,8 +146,6 @@ void mouseReleased(){
 
 void draw(){
   make(); // display buttons
-  if (struggle)
-    struggle();
   screen(); // display updated screen expression
   coords(); // print out x and y positions of cursor in console
   expDebug(); // Print out the expression in console
@@ -210,30 +207,6 @@ void screen(){
     text("Ans: "+calc.ans, (int) gx*2, 2*height/5);
   }
   textAlign(CENTER, CENTER);
-}
-
-void struggle(){
-  textFont(screenFont);
-  textSize(width/21);
-  textAlign(LEFT, CENTER);
-  BufferedReader txt = createReader("assets/text/work.txt");
-  String line;
-  try{
-    while ((line = txt.readLine()) != null){
-      if (random(4) < 1){
-        fill(255);
-        System.out.println(line);
-        rect(width/2, 3*dy, width - 2*gx, 4*ly + 2*gy, 20); // Screen
-        fill(0);
-        text(line, 2*gx, height/5);
-        delay((int)sq(random(5, 20))); // exponential variation
-      }
-    }
-  }catch (IOException e){
-  }
-  fill(255);
-  rect(width/2, 3*dy, width - 2*gx, 4*ly + 2*gy, 20);
-  struggle = false;
 }
 
 void coords(){
