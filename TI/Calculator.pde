@@ -155,8 +155,6 @@ class Calculator{
           big = true;
           expression.add(id);
         }
-        if (annoying)
-          alterExpression(id);
         break;
       case ".":
         if (place(id)){
@@ -482,11 +480,6 @@ class Calculator{
             expression.set(j, ""+radians(Float.parseFloat(expression.get(j))));
           }catch(NumberFormatException e){}
         }
-      }
-    }
-    if (id.equals("!")){
-      for (int k = 0; k < expression.size(); k++){
-          expression.set(k, expression.get(k).toUpperCase());
       }
     }
   }
