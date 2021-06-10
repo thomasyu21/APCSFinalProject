@@ -4,7 +4,7 @@ class Calculator{
   public ArrayList<Button> buttons;
   private int openParen, closeParen;
   public String ans, ansOld;
-  private ArrayList<String> expression, expressionOld, nums, ops, backops, misc, end;
+  private ArrayList<String> expression, expressionOld, nums, ops, backops, misc, start, end;
   
   public Calculator(){
     openParen = 0;
@@ -23,6 +23,7 @@ class Calculator{
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
     backops = new ArrayList<String>(Arrays.asList("pow(", "!", "%"));
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E"));
+    start = new ArrayList<String>(Arrays.asList("(", "sin(", "cos(", "tan(", "arcsin(", "arccos", "arctan", "log(", "ln(", "√(", "pow("));
     end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")", "%", "!"));
     buttons = new ArrayList<Button>();
     buttons.add(new Button("Mode", 6*dx + gx/2, gy + ly/2, 2*lx + gx, ly));
@@ -64,7 +65,6 @@ class Calculator{
       case "CE":
         if (annoying){
           double temp = Math.random();
-          System.out.println(temp);
           if (temp < 0.3)
             expression.clear();
           else if (temp >= 0.8)
@@ -86,7 +86,7 @@ class Calculator{
         }
         break;
       case "=":
-        expressionOld = new ArrayList<String>(expression); // makes copy
+        expressionOld = new ArrayList<String>(expression); // copies
         eval();
         scramble();
         break;
@@ -139,7 +139,8 @@ class Calculator{
           expression.add(id);
           break;
       case "!":
-          big = true;
+          if (annoying)
+            big = true;
       case "+":
       case "×":
       case "÷":
@@ -167,7 +168,8 @@ class Calculator{
         }
         break;
     }
-    if (!(id.equals("CE") || ops.contains(id) || backops.contains(id) || expression.size() < 2 || id.equals(")") || id.equals("Mode")) && (
+    if (!(id.equals("CE")|| id.equals("Mode") || id.equals(")") ||
+        ops.contains(id) || backops.contains(id) || expression.size() < 2) && (
         expression.get(expression.size()-2).equals("!") ||
         expression.get(expression.size()-2).equals("%")))
       expression.add(expression.size()-1, "×");
@@ -195,12 +197,7 @@ class Calculator{
     }
     expressionFix();
     evalHelp(expression);
-    if (annoying){
-      if (Math.random() > 0.5){
-        ansOld = ans;
-        ans = expression.remove(0);
-      }
-    }else{
+    if (!annoying || Math.random() > 0.5){
       ansOld = ans;
       ans = expression.remove(0);
     }
@@ -213,87 +210,111 @@ class Calculator{
     }
     try{
       for (int i = 0; i < e.size(); i++){
+        String val = "q";
+        int ind = i;
         switch (e.get(i)){
           case "sin(": 
             if (rad){
-              e.set(i, cut(sin(Float.parseFloat(e.remove(i+1))%(PI*2))));
+              val = cut(sin(Float.parseFloat(e.remove(i+1))%(PI*2)));
             }else{
-              e.set(i, cut(sin(radians(Float.parseFloat(e.remove(i+1)))%(PI*2))));
+              val = cut(sin(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
             }
             i--;
             break;
           case "cos(": 
              if (rad){
-              e.set(i, cut(cos(Float.parseFloat(e.remove(i+1))%(PI*2))));
+              val = cut(cos(Float.parseFloat(e.remove(i+1))%(PI*2)));
             }else{
-              e.set(i, cut(cos(radians(Float.parseFloat(e.remove(i+1)))%(PI*2))));
+              val = cut(cos(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
             }
             i--;
             break;
           case "tan(": 
             if (rad){
-              e.set(i, cut(tan(Float.parseFloat(e.remove(i+1))%(PI*2))));
+              val = cut(tan(Float.parseFloat(e.remove(i+1))%(PI*2)));
             }else{
-              e.set(i, cut(tan(radians(Float.parseFloat(e.remove(i+1)))%(PI*2))));
+              val = cut(tan(radians(Float.parseFloat(e.remove(i+1)))%(PI*2)));
             }
             i--;
             break;
           case "arcsin(": 
             if (rad){
-              e.set(i, cut(asin(Float.parseFloat(e.remove(i+1)))));
+              val = cut(asin(Float.parseFloat(e.remove(i+1))));
             }else{
-              e.set(i, cut(degrees(asin(Float.parseFloat(e.remove(i+1))))));
+              val = cut(degrees(asin(Float.parseFloat(e.remove(i+1)))));
             }
             i--;
             break;
           case "arccos(": 
             if (rad){
-              e.set(i, cut(acos(Float.parseFloat(e.remove(i+1)))));
+              val = cut(acos(Float.parseFloat(e.remove(i+1))));
             }else{
-              e.set(i, cut(degrees(acos(Float.parseFloat(e.remove(i+1))))));
+              val = cut(degrees(acos(Float.parseFloat(e.remove(i+1)))));
             }
             i--;
             break;
           case "arctan(": 
             if (rad){
-              e.set(i, cut(atan(Float.parseFloat(e.remove(i+1)))));
+              val = cut(atan(Float.parseFloat(e.remove(i+1))));
             }else{
-              e.set(i, cut(degrees(atan(Float.parseFloat(e.remove(i+1))))));
+              val = cut(degrees(atan(Float.parseFloat(e.remove(i+1)))));
             }
             i--;
             break;
-          case "pow(":
-            e.set(i-1, cut(pow(Float.parseFloat(e.remove(i-1)), Float.parseFloat(e.remove(i)))));
-            i-=2;
-            break;
           case "√(":
-            e.set(i, cut(sqrt(Float.parseFloat(e.remove(i+1)))));
-            i--;
-            break;
-          case "!":
-            e.set(i-1, gamma(Float.parseFloat(e.remove(i-1))));
+            val = cut(sqrt(Float.parseFloat(e.remove(i+1))));
             i--;
             break;
           case "log(":
-            e.set(i, cut((float)Math.log10(Float.parseFloat(e.remove(i+1)))));
+            val = cut((float)Math.log10(Float.parseFloat(e.remove(i+1))));
             i--;
             break;
           case "ln(":
             if (annoying){ 
-              e.set(i, cut((float)(Math.log10(exp(1.0))/Math.log10(Float.parseFloat(e.remove(i+1))))));
+              val = cut((float)(Math.log10(exp(1.0))/Math.log10(Float.parseFloat(e.remove(i+1)))));
             }else{
-              e.set(i, cut(log(Float.parseFloat(e.remove(i+1)))));
+              val = cut(log(Float.parseFloat(e.remove(i+1))));
             }
             i--;
             break;
+          case "pow(":
+            val = cut(pow(Float.parseFloat(e.remove(i-1)), Float.parseFloat(e.remove(i))));
+            ind = i-1;
+            i-=2;
+            break;
+          case "!":
+            val = gamma(Float.parseFloat(e.remove(i-1)));
+            ind = i-1;
+            i--;
+            break;
           case "%":
-            e.set(i-1, ""+(Float.parseFloat(e.remove(i-1))/100.0));
+            val = ""+(Float.parseFloat(e.remove(i-1))/100.0);
+            ind = i-1;
             i--;
             break;
           case "E":
-            e.set(i-1, cut(Float.parseFloat(e.remove(i-1))*pow(10, Float.parseFloat(e.remove(i)))));
+            val = cut(Float.parseFloat(e.remove(i-1))*pow(10, Float.parseFloat(e.remove(i))));
+            ind = i-1;
             i--;
             break;
+        }
+        if (!val.equals("q")){
+          if (i > -1 && e.get(i).equals("-")){
+            e.set(ind, ""+(-1*Float.parseFloat(val)));
+            e.remove(i);
+            if (i > 0 && end.contains(e.get(i-1)))
+              e.add(i, "+");
+          }else
+            e.set(ind, ""+Float.parseFloat(val));
+        }
+      }
+      for (int i = 0; i < e.size(); i++){
+        if (e.get(i).equals("-")){
+          try{
+            Float.parseFloat(e.get(i-1));
+          }catch (Exception n){
+            e.set(i, (-Float.parseFloat(e.remove(i+1)))+ "");
+          }
         }
       }
       for (int j = 0; j < e.size(); j++){
@@ -362,23 +383,6 @@ class Calculator{
   }
   
   private void expressionFix(){
-    for (int j = 0; j < expression.size(); j++){
-      if (!(expression.get(j).equals("Ans") || expression.get(j).equals("E"))){
-        expression.set(j, expression.get(j).toLowerCase());
-      }
-      if (expression.get(j).equals("-")){
-        try{
-          Float.parseFloat(expression.get(j-1));
-        }catch (Exception e){
-          if (j == 0 || !end.contains(expression.get(j-1))){
-            if (expression.size() > 1){
-               expression.set(j, "-1");
-               expression.add(j+1, "×");
-            }
-          }
-        }
-      }
-    }
     numberCombine();
     for (int k = 0; k < expression.size()-1; k++){
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
@@ -516,11 +520,6 @@ class Calculator{
     g *= 1.0 + 76.18009173/(n + 0) - 86.50532033/(n + 1) + 24.01409822/(n + 2)
              - 1.231739516/(n + 3) + 0.00120858003/(n + 4) - 0.00000536382/(n + 5);
     return cut((float) g);
-    
-    //int s = (int) Math.log10(g);
-    //if (g > 1)
-    //  s ++;
-    //return (g - (g % Math.pow(10, -9+s)));
   }
 
   
