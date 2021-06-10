@@ -155,12 +155,10 @@ void draw(){
     textSize(width/21);
     textAlign(LEFT, CENTER);
     fill(255);
-    System.out.println(line);
     rect(width/2, 3*dy, width - 2*gx, 4*ly + 2*gy, 20); // Screen
     fill(0);
     text(line, 2*gx, height/5);
   }else{
-    System.out.println("lol no");
     make(); // display buttons
     screen(); // display updated screen expression
     coords(); // print out x and y positions of cursor in console
@@ -252,6 +250,13 @@ void coords(){
 }
 
 void expDebug(){
+  // Uncomment the following for additional by-index console info:
+  
+  /*System.out.print("By index: ");
+  for (String i : (solve)? calc.expressionOld : calc.expression)
+    System.out.print(i+", ");
+  System.out.print("\nTogether: ");*/
+  
   for (String i : (solve)? calc.expressionOld : calc.expression)
     System.out.print(i);
   if (solve)
