@@ -124,3 +124,8 @@ HW Log June 8 2021
 - Anthony Nosaryev
 	- Implemented most of the remaining annoying mode features (! amplification, log/ln backgrounds, % output).
 	- Worked on (but ultimately scrapped) normal mode evaluation delay and processing text.
+	
+HW Log June 9 2021
+- Thomas Yu
+	- Worked on how negative numbers are identified.
+	- Made an ( follow E.
