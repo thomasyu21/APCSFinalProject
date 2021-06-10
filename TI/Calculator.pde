@@ -283,6 +283,10 @@ class Calculator{
             i-=2;
             break;
           case "!":
+            if (Float.parseFloat(e.remove(i-1)) < 0){
+              expression.clear();
+              expression.add("ERROR");
+            }
             val = gamma(Float.parseFloat(e.remove(i-1)));
             ind = i-1;
             i--;
@@ -367,17 +371,22 @@ class Calculator{
         numClose++;
       }
       if (numOpen > 0 && numOpen == numClose){
-        ArrayList<String> expressionSec = new ArrayList<String>();
-        int start = e.indexOf("(");
-        for (int j = start; j <= i; i--){
-          expressionSec.add(e.remove(j));
+        if (e.get(i-1).equals("(") && e.get(i).equals(")")){
+          e.remove(i);
+          e.remove(i-1);
+        }else{
+          ArrayList<String> expressionSec = new ArrayList<String>();
+          int start = e.indexOf("(");
+          for (int j = start; j <= i; i--){
+            expressionSec.add(e.remove(j));
+          }
+          expressionSec.remove(expressionSec.indexOf("("));
+          expressionSec.remove(expressionSec.lastIndexOf(")"));
+          evalHelp(expressionSec);
+          e.add(start, expressionSec.get(0));
+          numOpen = 0;
+          numClose = 0;
         }
-        expressionSec.remove(expressionSec.indexOf("("));
-        expressionSec.remove(expressionSec.lastIndexOf(")"));
-        evalHelp(expressionSec);
-        e.add(start, expressionSec.get(0));
-        numOpen = 0;
-        numClose = 0;
       }
     }
   }
