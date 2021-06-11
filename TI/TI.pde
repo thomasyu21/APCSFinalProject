@@ -87,6 +87,12 @@ void make(){
   rect(dx + gx/2, 5*dy + ly/2, 2*lx + gx, ly, 10); // Rad
   rect(6*dx + gx/2, gy + ly/2, 2*lx + gx, ly, 10); // Mode
   rect(gx+lx/2, gy+ly/2, lx, ly, 10); // Name
+  if (calc.getExpressionOld().size() > 0){
+    rect(gx/2+3*dx, gy + ly/2, 4*dx-gx, ly, 10); // Old
+    fill(255);
+    text("Previous Expression", gx+3*dx, gy + ly/2 - ty);
+    calc.buttons.add(new Button("Prev", gx/2+3*dx, gy + ly/2, 4*dx-gx, ly));
+  }
   fill((annoying)? 255 : 150);
   text((big)? "ANNOY" : "Annoy", 11*dx/2 + 3*gx/4, gy + ly/2 - ty);
   fill((annoying)? 150 : 255);
