@@ -116,6 +116,7 @@ HW Log June 6 2021
 CW Log June 7 2021
 - Thomas Yu
 	- Implemented annoying mode functions for ln(), history not saving, and the entire line clearing.
+- *Anrhony Nosaryev was absent taking an AP test.*
 	
 HW Log June 8 2021
 - Thomas Yu
@@ -129,3 +130,7 @@ HW Log June 9 2021
 - Thomas Yu
 	- Worked on how negative numbers are identified.
 	- Made an ( follow E.
+- Anthony Nosaryev
+	- Created Previous Expression button.
+	- Added a highlight to buttons when pressed.
+	- Fixed gamma() functionality, changed input to float instead of double.
