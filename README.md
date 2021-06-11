@@ -1,4 +1,4 @@
-[Project Prototype](https://docs.google.com/document/d/1BOmqk9jqNyd38LQKKHu_99XhL30s65ou2DCkFrU8PQA/edit?usp=sharing) | _(<-- Click)
+[Project Prototype](https://docs.google.com/document/d/1BOmqk9jqNyd38LQKKHu_99XhL30s65ou2DCkFrU8PQA/edit?usp=sharing) | _<-- Click_
 
 ## Group:
 - Texan Industries
