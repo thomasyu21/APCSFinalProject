@@ -12,7 +12,6 @@ class Calculator{
     ans = "0.0";
     expression = new ArrayList<String>();
     expressionOld = new ArrayList<String>();
-    //expressionOld.add("0");
     String[][] buttonArray = 
     {{"Rad", "Rad", "!", "(", ")", "%", "CE"},
      {"Inv", "sin(", "ln(", "7", "8", "9", "÷"},
