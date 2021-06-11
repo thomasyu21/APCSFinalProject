@@ -142,7 +142,7 @@ void mouseReleased(){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2){
       calc.buttonClicked(b.getIdentity());
       solve = b.getIdentity().equals("=");
-      struggle = solve && !annoying;
+      //struggle = solve && !annoying;
     }
   }
   if (struggle) struggle();
@@ -196,17 +196,17 @@ void screen(){
       pos += width - pos % max;
       if (pos > 2*max){
         screxp.remove(screxp.size()-1);
-        return;
       }
-    }
-    textSize((level == 0)? width/21 : width/40);
-    text(str, pos % max, height/5 - height*level/72 + height*(pos/max)/10);
-    if (level > 0 && str.equals(")"))
-      levelQuan[level] --;
-    if (level == 0){
-      pos += (str.length())*width/35;
     }else{
-      pos += (str.length())*width/70;
+      textSize((level == 0)? width/21 : width/40);
+      text(str, pos % max, height/5 - height*level/72 + height*(pos/max)/10);
+      if (level > 0 && str.equals(")"))
+        levelQuan[level] --;
+      if (level == 0){
+        pos += (str.length())*width/35;
+      }else{
+        pos += (str.length())*width/70;
+      }
     }
   }
   textSize(width/21);
