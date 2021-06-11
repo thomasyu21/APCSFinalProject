@@ -169,8 +169,14 @@ void draw(){
   select(); // display border around clicked button
   screen(); // display updated screen expression
   coords(); // print out x and y positions of cursor in console
-  expDebug(); // Print out the expression in console
-  
+  expDebug(); // Print out the expression in console  
+}
+
+void select(){
+  noFill();
+  strokeWeight(1.625);
+  stroke(155);
+  rect(ou[0], ou[1], ou[2], ou[3], 10);
 }
 
 void screen(){
@@ -230,13 +236,6 @@ void screen(){
     text("Ans: "+calc.ans, (int) gx*2, 2*height/5);
   }
   textAlign(CENTER, CENTER);
-}
-
-void select(){
-  noFill();
-  strokeWeight(1.625);
-  stroke(155);
-  rect(ou[0], ou[1], ou[2], ou[3], 10);
 }
 
 void coords(){
