@@ -4,7 +4,6 @@ float gx, gy, lx, ly, dx, dy;
 boolean annoying, rad, inv, solve, big;
 float[] ou;
 PFont buttonFont, screenFont;
-String line;
 PImage currBg, anndef, normal, sinful, cosmic, tanned, logged, eulers;
 String[][] caps;
 
@@ -29,7 +28,6 @@ void setup(){
   inv = false;
   solve = false;
   big = false;
-  line = "";
   calc = new Calculator();
   caps = new String[][]
   {{"Rad", "Deg", "x!", "(", ")", "%", "del"},
