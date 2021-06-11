@@ -244,18 +244,20 @@ void struggle(){
 }
 
 void coords(){
-  fill(255, 0, 0);
-  // circle(mouseX, mouseY, 5); // Optionally draws a dot at current position
+  // Uncomment the following for dot at current position upon mouse click
+  
+  // fill(255, 0, 0);
+  // circle(mouseX, mouseY, 5);
   System.out.println("\n\nX: "+mouseX+"\tY: "+mouseY);
 }
 
 void expDebug(){
   // Uncomment the following for additional by-index console info:
   
-  /*System.out.print("By index: ");
-  for (String i : (solve)? calc.expressionOld : calc.expression)
-    System.out.print(i+", ");
-  System.out.print("\nTogether: ");*/
+  //System.out.print("By index: ");
+  //for (String i : (solve)? calc.expressionOld : calc.expression)
+  //  System.out.print(i+", ");
+  //System.out.print("\nTogether: ");
   
   for (String i : (solve)? calc.expressionOld : calc.expression)
     System.out.print(i);
