@@ -4,7 +4,7 @@ class Calculator{
   public ArrayList<Button> buttons;
   private int openParen, closeParen;
   public String ans, ansOld;
-  private ArrayList<String> expression, expressionOld, nums, ops, backops, misc, start, end;
+  private ArrayList<String> expression, expressionOld, nums, ops, backops, misc, end;
   
   public Calculator(){
     openParen = 0;
@@ -23,7 +23,6 @@ class Calculator{
     ops = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷"));
     backops = new ArrayList<String>(Arrays.asList("pow(", "!", "%"));
     misc = new ArrayList<String>(Arrays.asList("π", "e", "√(", "pow(", "E"));
-    start = new ArrayList<String>(Arrays.asList("(", "sin(", "cos(", "tan(", "arcsin(", "arccos", "arctan", "log(", "ln(", "√(", "pow("));
     end = new ArrayList<String>(Arrays.asList("Ans", "0", "1", "2", "e", "3", "π", "4", "5", "6", "7", "8", "9", ")", "%", "!"));
     buttons = new ArrayList<Button>();
     buttons.add(new Button("Mode", 6*dx + gx/2, gy + ly/2, 2*lx + gx, ly));
@@ -283,11 +282,13 @@ class Calculator{
             i-=2;
             break;
           case "!":
-            if (Float.parseFloat(e.remove(i-1)) < 0){
+            float vtemp = Float.parseFloat(e.remove(i-1));
+            if (vtemp < 0 && vtemp == (int)vtemp){
               expression.clear();
               expression.add("ERROR");
+              break;
             }
-            val = gamma(Float.parseFloat(e.remove(i-1)));
+            val = gamma(vtemp);
             ind = i-1;
             i--;
             break;
@@ -478,7 +479,7 @@ class Calculator{
   private void numberSplit(){
     for (int i = 0; i < expression.size(); i++){
       try{
-        Float test = Float.parseFloat(expression.get(i));
+        Float.parseFloat(expression.get(i));
         String current = expression.remove(i);
         for (int j = current.length()-1; j >= 0; j--){
           expression.add(i, current.substring(j, j+1));
@@ -519,16 +520,16 @@ class Calculator{
     return str;
   }
   
-  private String gamma(double n){
+  private String gamma(float n){
     if (n == (int) n)
       return "" + factorial((int) n);
     n ++;
-    double g = (Math.pow((n + 4.5), n - 0.5)
-             * Math.pow(Math.E, -(n + 4.5))
-             * Math.sqrt(2*Math.PI));
+    float g = (pow((n + 4.5), n - 0.5)
+             * pow(exp(1.0), -(n + 4.5))
+             * sqrt(2*PI));
     g *= 1.0 + 76.18009173/(n + 0) - 86.50532033/(n + 1) + 24.01409822/(n + 2)
              - 1.231739516/(n + 3) + 0.00120858003/(n + 4) - 0.00000536382/(n + 5);
-    return cut((float) g);
+    return cut(g);
   }
 
   
