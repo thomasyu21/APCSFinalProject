@@ -416,6 +416,18 @@ class Calculator{
     }
   }
   
+  private void annoyingExpressionFix(){
+    if (expression.contains("%")){
+      expression.clear();
+      expression.add("Infinity");
+    }
+    for (int i = 0; i < expression.size(); i++){
+      if (expression.get(i).equals(".")){
+        expression.set(i, "×");
+      }
+    }
+  }
+  
   private void numberCombine(){
     for (int j = 0; j < expression.size(); j++){
       if (expression.get(j).equals("Ans")){
@@ -444,18 +456,6 @@ class Calculator{
           i--;
         }
       }catch (NumberFormatException e){}
-    }
-  }
-  
-  private void annoyingExpressionFix(){
-    if (expression.contains("%")){
-      expression.clear();
-      expression.add("Infinity");
-    }
-    for (int i = 0; i < expression.size(); i++){
-      if (expression.get(i).equals(".")){
-        expression.set(i, "×");
-      }
     }
   }
   
