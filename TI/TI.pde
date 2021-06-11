@@ -2,6 +2,7 @@ Calculator calc;
 char bgState;
 float gx, gy, lx, ly, dx, dy;
 boolean annoying, rad, inv, solve, big;
+float[] ou;
 PFont buttonFont, screenFont;
 String line;
 PImage currBg, anndef, normal, sinful, cosmic, tanned, logged, eulers;
@@ -36,6 +37,7 @@ void setup(){
    {"π", "cos", "log", "4", "5", "6", "×"},
    {"e", "tan", "√", "1", "2", "3", "-"},
    {"Ans", "EXP", "xⁿ", "0", ".", "=", "+"}};
+  ou = new float[]{0, 0, 0, 0};
   buttonFont = createFont("assets/fonts/OpenSans-Bold.ttf", 1);
   screenFont = createFont("assets/fonts/JetBrainsMono-VariableFont_wght.ttf", 1);
   anndef = loadImage("assets/images/anndef.jpg");
@@ -136,18 +138,31 @@ void make(){
   }
 }
 
-void mouseReleased(){
+void mousePressed(){
+  ou = new float[]{0, 0, 0, 0};
   for (Button b : calc.buttons){
     if (abs(b.x - mouseX) <= b.wid/2 && abs(b.y - mouseY) <= b.hei/2){
-      calc.buttonClicked(b.getIdentity());
-      solve = b.getIdentity().equals("=");
+      ou = new float[]{b.x, b.y, b.wid, b.hei};
     }
   }
   redraw();
 }
 
+void mouseReleased(){
+  for (Button b : calc.buttons){
+    if (abs(b.x - mouseX) <= b.wid/2 && b.x == ou[0]
+      &&abs(b.y - mouseY) <= b.hei/2 && b.y == ou[1]){
+      calc.buttonClicked(b.getIdentity());
+      solve = b.getIdentity().equals("=");
+    }
+  }
+  ou = new float[]{0, 0, 0, 0};
+  redraw();
+}
+
 void draw(){
   make(); // display buttons
+  select(); // display border around clicked button
   screen(); // display updated screen expression
   coords(); // print out x and y positions of cursor in console
   expDebug(); // Print out the expression in console
@@ -211,6 +226,13 @@ void screen(){
     text("Ans: "+calc.ans, (int) gx*2, 2*height/5);
   }
   textAlign(CENTER, CENTER);
+}
+
+void select(){
+  noFill();
+  strokeWeight(1.625);
+  stroke(155);
+  rect(ou[0], ou[1], ou[2], ou[3], 10);
 }
 
 void coords(){
