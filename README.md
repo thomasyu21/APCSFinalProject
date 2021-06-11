@@ -52,7 +52,7 @@ Open TI.pde and click run
 	- Implemented new font for on-screen expression.
 	- Converted expression from String to ArrayList<String> for easier processing.
 	- Began working on `screenExpression()`, a method to display the expression with proper spacing and superscripting.
-	
+
 ## HW Log May 26 2021
 - Anthony Nosaryev:
 	- Finished `screenExpression()`, whose primary purpose is essentially to facilitate powers/exponents.
@@ -77,7 +77,7 @@ Open TI.pde and click run
 ## HW Log May 31 2021
 - Thomas Yu
 	- Updated `expressionFix()` to work with decimal points, add multiplication symbols when implied by parentheses, and add an open parenthesis after every function.
-	
+
 ## HW Log June 1 2021
 - Thomas Yu
 	- Fixed `expressionFix()` to not add multiplication symbols between two open or two closed parentheses. 
@@ -97,7 +97,7 @@ Open TI.pde and click run
 ## HW Log June 2 2021
 - Anthony Nosaryev
 	- Reworked TI to display all features relative to the size rather than at specific coordinates.
-	
+
 ## HW Log June 3 2021
 - Thomas Yu
 	- Implemented the `evalHelp()` method.
@@ -115,12 +115,12 @@ Open TI.pde and click run
 ## HW Log June 6 2021
 - Thomas Yu
 	- Began implementing annoying mode functions (Rad|Deg swap, !, and %).
-	
+
 ## CW Log June 7 2021
 - Thomas Yu
 	- Implemented annoying mode functions for `ln()`, history not saving, and the entire line clearing.
 - *Anthony Nosaryev was absent taking an AP test.*
-	
+
 ## HW Log June 8 2021
 - Thomas Yu
 	- Fixed some issues introduced by annoying mode functions to allow calculations to properly occur.
@@ -128,11 +128,13 @@ Open TI.pde and click run
 - Anthony Nosaryev
 	- Implemented most of the remaining annoying mode features (! amplification, log/ln backgrounds, % output).
 	- Worked on (but ultimately scrapped) normal mode evaluation delay and processing text.
-	
+
 ## HW Log June 9 2021
 - Thomas Yu
 	- Worked on how negative numbers are identified.
 	- Made an ( follow E.
+
+## HW Log June 10 2021
 - Anthony Nosaryev
 	- Created Previous Expression button.
 	- Added a highlight to buttons when pressed.
