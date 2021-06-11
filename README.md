@@ -6,7 +6,8 @@
 ## Members:
 - Anthony Nosaryev, Thomas Yu
 
-The TI-∞ is a scientific calculator with two distinct modes. The Normal Mode allows the user to interact with a properly functioning scientific calculator. The other, default mode is called the Annoying Mode. When in the Annoying Mode, the TI-∞ does not operate like a normal calculator, despite having the same user interface. The functions no longer match what is displayed on the buttons. Various buttons have their functions changed entirely, with the rest having their functions shuffled throughout the calculator. 
+## Description:
+- The TI-∞ is a scientific calculator with two distinct modes. The Normal Mode allows the user to interact with a properly functioning scientific calculator. The other, default mode is called the Annoying Mode. When in the Annoying Mode, the TI-∞ does not operate like a normal calculator, despite having the same user interface. The functions no longer match what is displayed on the buttons. Various buttons have their functions changed entirely, with the rest having their functions shuffled throughout the calculator. 
 
 ## Instructions
 Open TI.pde and click run
