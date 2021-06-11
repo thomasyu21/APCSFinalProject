@@ -12,7 +12,7 @@ class Calculator{
     ans = "0.0";
     expression = new ArrayList<String>();
     expressionOld = new ArrayList<String>();
-    expressionOld.add("0");
+    //expressionOld.add("0");
     String[][] buttonArray = 
     {{"Rad", "Rad", "!", "(", ")", "%", "CE"},
      {"Inv", "sin(", "ln(", "7", "8", "9", "÷"},
@@ -48,6 +48,10 @@ class Calculator{
   public void buttonClicked(String id){
     boolean newInv = false;
     switch (id){
+      case "Prev":
+        expression = new ArrayList<String>(expressionOld);
+        newInv = inv;
+        break;
       case "Mode":
         annoying = !annoying;
         if (bgState == 'a'){
