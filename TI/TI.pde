@@ -225,19 +225,17 @@ void screen(){
 }
 
 void struggle(){
-  loop();
   BufferedReader txt = createReader("assets/text/work.txt");
   String curr;
   try{
     while ((curr = txt.readLine()) != null){
       if (random(4) < 1){
         line = curr;
-        System.out.println("\t"+line);
+        redraw();
         delay((int)sq(random(5, 20))); // exponential variation
       }
     }
   }catch (IOException e){}
-  noLoop();
   System.out.println("hello?");
   struggle = false;
   redraw();
