@@ -173,6 +173,7 @@ void screen(){
         str = "(";
       }else{
         screxp.remove(screxp.size()-1);
+        break;
       }
     }else{
       while (levelQuan[level] == 0)
