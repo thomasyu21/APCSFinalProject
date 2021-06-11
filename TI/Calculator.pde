@@ -401,7 +401,7 @@ class Calculator{
       ArrayList<String> funcs = new ArrayList<String>(Arrays.asList("sin(", "cos(", "tan(", "arcsin(", "arccos(", "arctan(", "ln(", "log(", "√("));
       ArrayList<String> neOps = new ArrayList<String>(Arrays.asList("+", "-", "×", "÷", "%", "!", "E")); 
       if ((expression.get(k).equals(")") && !(neOps.contains(expression.get(k+1)) || expression.get(k+1).equals(")"))) ||
-          (end.contains(expression.get(k)) && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("(")))){
+          ((end.contains(expression.get(k).substring(expression.get(k).length()-1))) && (funcs.contains(expression.get(k+1)) || expression.get(k+1).equals("(")))){
         if (!expression.get(k+1).equals("pow(")){
           expression.add(k+1, "×");
         }
@@ -456,6 +456,11 @@ class Calculator{
           i--;
         }
       }catch (NumberFormatException e){}
+    }
+    for (int i = 0; i < expression.size()-1; i ++){
+      if (expression.get(i).charAt(expression.get(i).length()-1) == '.'){
+        expression.set(i, expression.get(i).substring(0, expression.get(i).length()-1));
+      }
     }
   }
   
